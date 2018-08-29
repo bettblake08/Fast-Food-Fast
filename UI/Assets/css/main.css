@@ -191,24 +191,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 
-.btn_1:hover {
-    opacity: 1.0;
-    background-color: rgb(223, 0, 0);
-    border-color: rgb(223, 0, 0);
-    color: #FFF;
-    -webkit-box-shadow: 0 0.1rem 2rem -0.5rem #000;
-    box-shadow: 0 0.1rem 2rem -0.5rem #000;
-}
-
 .btn_1,
-.btn_1--normal,
 .btn_1--fail,
 .btn_1--success,
 .btn_1--loading,
 .btn_1--warning,
 .btn_1--danger,
-.btn_1--white,
-.btn_1--edulink {
+.btn_1--white{
     width: 100%;
     height: 4rem;
     padding: 0 1rem;
@@ -217,13 +206,6 @@ body::-webkit-scrollbar-thumb {
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
     cursor: pointer;
-}
-
-.btn_1,
-.btn_1--normal {
-    color: rgb(223, 0, 0);
-    border: solid 0.1rem rgb(223, 0, 0);
-    opacity: 0.6;
 }
 
 .btn_1--white {
@@ -243,30 +225,23 @@ body::-webkit-scrollbar-thumb {
 .btn_1--success,
 .btn_1--loading,
 .btn_1--warning,
-.btn_1--danger,
-.btn_1--edulink {
+.btn_1--danger {
     color: #FFF;
     border: solid .1rem transparent;
 }
 
-.btn_1--normal {
-    background-color: transparent;
+.btn_1{
+    color: rgb(223, 0, 0);
+    border: solid 0.1rem rgb(223, 0, 0);
     opacity: 0.6;
+    background-color:transparent;
 }
 
-.btn_1--normal:hover {
+.btn_1:hover {
+    opacity: 1.0;
     background-color: rgb(223, 0, 0);
+    border-color: rgb(223, 0, 0);
     color: #FFF;
-    opacity: 1;
-}
-
-.btn_1--edulink {
-    background-color: rgb(223, 0, 0);
-    opacity: 0.6;
-}
-
-.btn_1--edulink:hover {
-    opacity: 1;
 }
 
 .btn_1--loading {
@@ -314,26 +289,6 @@ body::-webkit-scrollbar-thumb {
     opacity: 1;
 }
 
-.btn_1:hover {
-    opacity: 1.0;
-    background-color: rgb(223, 0, 0);
-    border-color: rgb(223, 0, 0);
-    color: #FFF;
-    box-shadow: ;
-}
-
-.btn_1,.btn_1--normal {
-    width: 100%;
-    height: 4rem;
-    padding: 0 1rem;
-    line-height: 4rem;
-    float: left;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    color: rgb(223, 0, 0);
-    border: solid .1rem rgb(223, 0, 0);
-    opacity: 0.6;
-}
 
 .errorComment--active,
 .errorComment--disabled {
@@ -477,4 +432,220 @@ body::-webkit-scrollbar-thumb {
 
 .header--float .header__title {
     color: rgb(223, 0, 0);
+}
+
+.has-float-label {
+    display: block;
+    position: relative;
+}
+
+.has-float-label label,
+.has-float-label>span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: text;
+    font-size: 75%;
+    opacity: 1;
+    transition: all 0.2s;
+}
+
+.has-float-label select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.has-float-label textarea {
+    width: 100%;
+}
+
+.has-float-label input,
+.has-float-label select,
+.has-float-label textarea {
+    font-size: inherit;
+    padding-top: 1em;
+}
+
+.has-float-label input::placeholder,
+.has-float-label select::placeholder,
+.has-float-label textarea::placeholder {
+    opacity: 1;
+    transition: all 0.2s;
+}
+
+.has-float-label input:placeholder-shown:not(:focus)::placeholder,
+.has-float-label select:placeholder-shown:not(:focus)::placeholder,
+.has-float-label textarea:placeholder-shown:not(:focus)::placeholder {
+    opacity: 0;
+}
+
+.has-float-label input:placeholder-shown:not(:focus)+*,
+.has-float-label select:placeholder-shown:not(:focus)+*,
+.has-float-label textarea:placeholder-shown:not(:focus)+* {
+    font-size: 150%;
+    opacity: 0.5;
+    top: 0.25em;
+}
+
+.has-float-label input:focus,
+.has-float-label select:focus,
+.has-float-label textarea:focus {
+    outline: none;
+}
+
+.has-float-label select {
+    padding-right: 1em;
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.5em bottom 0.25em;
+    background-size: 0.8rem 1rem;
+}
+
+.text_input,
+.text_input--normal,
+.text_input--fail,
+.text_input--success,
+.text_input--warning,
+.text_input--danger,
+.text_input--loading {
+    float: left;
+    width: 100%;
+}
+
+.text_input input,
+.text_input--normal input,
+.text_input--fail input,
+.text_input--success input,
+.text_input--warning input,
+.text_input--danger input,
+.text_input--loading input {
+    border-style: none;
+    width: 100%;
+    height: 4rem;
+    transition: all 0.2s;
+    float: left;
+    clear: both;
+    background-color: transparent;
+}
+
+.text_input input::placeholder,
+.text_input--normal input::placeholder,
+.text_input--fail input::placeholder,
+.text_input--success input::placeholder,
+.text_input--warning input::placeholder,
+.text_input--danger input::placeholder,
+.text_input--loading input::placeholder {
+    color: #ccc;
+}
+
+.text_input,
+.text_input--normal,
+.text_input input,
+.text_input--normal input {
+    color: rgb(223, 0, 0);
+}
+
+.text_input input,
+.text_input--normal input {
+    border-bottom: solid 0.2rem rgb(223, 0, 0);
+}
+
+.text_input input:hover,
+.text_input--normal input:hover {
+    border-bottom-width: 0.3rem;
+}
+
+.text_input--loading,
+.text_input--loading input {
+    color: #00a84f;
+}
+
+.text_input--loading input {
+    border-bottom: solid 0.2rem #00a84f;
+}
+
+.text_input--fail,
+.text_input--fail input {
+    color: #b33030;
+}
+
+.text_input--fail input {
+    border-bottom: solid 0.2rem #b33030;
+}
+
+.text_input--success,
+.text_input--success input {
+    color: #00a84f;
+}
+
+.text_input--success input {
+    border-bottom: solid 0.2rem #00a84f;
+}
+
+.text_input--warning,
+.text_input--warning input {
+    color: #ffd900;
+}
+
+.text_input--warning input {
+    border-bottom: solid 0.2rem #ffd900;
+}
+
+.text_input--danger,
+.text_input--danger input {
+    color: #b33030;
+}
+
+.text_input--danger input {
+    border-bottom: solid 0.2rem #b33030;
+}
+
+.text_input__error--active,
+.text_input__error--disabled {
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.text_input__error--active {
+    width: 100%;
+    float: left;
+    background-color: rgba(216, 77, 71, 1);
+    color: #fff;
+    padding: 1rem;
+    position: relative;
+}
+
+.text_input__error--disabled {
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
+.text_input__comment--active,
+.text_input__comment--disabled {
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.text_input__comment--active {
+    width: 100%;
+    float: left;
+    color: #ccc;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.text_input__comment--disabled {
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
+.text_input__label {
+    display: none;
 }
