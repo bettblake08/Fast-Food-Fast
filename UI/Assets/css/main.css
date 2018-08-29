@@ -1,0 +1,480 @@
+html {
+    font-size: 10px;
+}
+
+@media (max-width: 100em) {
+    html {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 56.25em) {
+    html {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 75em) {
+    html {
+        font-size: 7px;
+    }
+}
+
+@media (max-width: 37.5em) {
+    html {
+        font-size: 6px;
+    }
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+}
+
+
+body::-webkit-scrollbar {
+    width: .2rem;
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0.2rem rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(223, 0, 0);
+    outline: 0.1rem solid rgb(223, 0, 0);
+}
+
+.SB::-webkit-scrollbar-thumb {
+    background-color: rgb(223, 0, 0);
+    outline: 0.1rem solid rgb(223, 0, 0);
+}
+
+.SB::-webkit-scrollbar,
+.SB--dark::-webkit-scrollbar {
+    width: .2rem;
+}
+
+.SB::-webkit-scrollbar-track,
+.SB--dark::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0.2rem rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 0.2rem rgba(0, 0, 0, 0.3);
+}
+
+.SB--dark::-webkit-scrollbar-thumb {
+    background-color: #171717;
+    outline: 0.1rem solid #171717;
+}
+
+.f_banner_1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 2.2rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_title {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 3.8rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_subtitle_1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 2.6rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_label_1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_h1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_h2 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.8rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_h3 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_normal {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_button_1,
+.f_button_2 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    text-wrap: normal;
+}
+
+.f_button_1 {
+    font-size: 1.2rem;
+}
+
+.f_button_2 {
+    font-size: 1.4rem;
+}
+
+.f_input_1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    text-indent: 1rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_input_dd_1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    text-align: left;
+    text-wrap: normal;
+}
+
+.f_input_ta {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    padding: 1rem;
+}
+
+.f_comment_1 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.f_tab_h1,
+.f_tab_h2 {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-align: center;
+    text-wrap: normal;
+}
+
+.f_tab_h1 {
+    font-size: 1.4rem;
+}
+
+.f_tab_h2 {
+    font-size: 1.3rem;
+}
+
+
+.btn_1:hover {
+    opacity: 1.0;
+    background-color: rgb(223, 0, 0);
+    border-color: rgb(223, 0, 0);
+    color: #FFF;
+    -webkit-box-shadow: 0 0.1rem 2rem -0.5rem #000;
+    box-shadow: 0 0.1rem 2rem -0.5rem #000;
+}
+
+.btn_1,
+.btn_1--normal,
+.btn_1--fail,
+.btn_1--success,
+.btn_1--loading,
+.btn_1--warning,
+.btn_1--danger,
+.btn_1--white,
+.btn_1--edulink {
+    width: 100%;
+    height: 4rem;
+    padding: 0 1rem;
+    line-height: 4rem;
+    float: left;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn_1,
+.btn_1--normal {
+    color: rgb(223, 0, 0);
+    border: solid 0.1rem rgb(223, 0, 0);
+    opacity: 0.6;
+}
+
+.btn_1--white {
+    color: #FFF;
+    border: solid 0.1rem #FFF;
+    opacity: 0.6;
+}
+
+.btn_1--white:hover {
+    opacity: 1.0;
+    background-color: rgb(223, 0, 0);
+    border-color: rgb(223, 0, 0);
+    color: #FFF;
+}
+
+.btn_1--fail,
+.btn_1--success,
+.btn_1--loading,
+.btn_1--warning,
+.btn_1--danger,
+.btn_1--edulink {
+    color: #FFF;
+    border: solid .1rem transparent;
+}
+
+.btn_1--normal {
+    background-color: transparent;
+    opacity: 0.6;
+}
+
+.btn_1--normal:hover {
+    background-color: rgb(223, 0, 0);
+    color: #FFF;
+    opacity: 1;
+}
+
+.btn_1--edulink {
+    background-color: rgb(223, 0, 0);
+    opacity: 0.6;
+}
+
+.btn_1--edulink:hover {
+    opacity: 1;
+}
+
+.btn_1--loading {
+    background-color: #00a84f;
+    opacity: 1;
+}
+
+.btn_1--loading:hover {
+    color: #FFF;
+}
+
+.btn_1--fail {
+    background-color: #b33030;
+    opacity: 0.6;
+}
+
+.btn_1--fail:hover {
+    opacity: 1;
+}
+
+.btn_1--success {
+    background-color: #00a84f;
+    opacity: 0.6;
+}
+
+.btn_1--success:hover {
+    opacity: 1;
+}
+
+.btn_1--warning {
+    background-color: #cbb956;
+    opacity: 0.6;
+}
+
+.btn_1--warning:hover {
+    opacity: 1;
+}
+
+.btn_1--danger {
+    background-color: #b33030;
+    opacity: 0.6;
+}
+
+.btn_1--danger:hover {
+    opacity: 1;
+}
+
+.btn_1:hover {
+    opacity: 1.0;
+    background-color: rgb(223, 0, 0);
+    border-color: rgb(223, 0, 0);
+    color: #FFF;
+    box-shadow: ;
+}
+
+.btn_1,.btn_1--normal {
+    width: 100%;
+    height: 4rem;
+    padding: 0 1rem;
+    line-height: 4rem;
+    float: left;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    color: rgb(223, 0, 0);
+    border: solid .1rem rgb(223, 0, 0);
+    opacity: 0.6;
+}
+
+.errorComment--active,
+.errorComment--disabled {
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.errorComment--active {
+    width: 100%;
+    float: left;
+    background-color: #d84d47;
+    color: #FFF;
+    padding: 1rem;
+    position: relative;
+}
+
+.errorComment--disabled {
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
+.header {
+    height: 10vh;
+    width: 100%;
+    z-index: 999;
+    margin: 0 2% 0 0;
+    position: absolute;
+}
+
+.header__right {
+    height: 5vh;
+    float: right;
+    width: 50%;
+    position: relative;
+    padding-right: 3%;
+}
+
+.header__right__text {
+    float: right;
+    margin-right: 3rem;
+    line-height: 10vh;
+    color:#FFF;
+}
+
+@media (max-width: 75em) {
+    .header__right {
+        width: 58%;
+        margin: 0 2% 0 0;
+    }
+}
+
+@media (max-width: 56.25em) {
+    .header__right {
+        width: 58%;
+        margin: 0 2% 0 0;
+    }
+}
+
+@media (max-width: 37.5em) {
+    .header__right {
+        width: 48%;
+        margin: 0 2% 0 0;
+    }
+
+    .header__right__text {
+        margin-right: 2rem;
+    }
+}
+
+.header__signup,
+.header__signin {
+    width: 10rem;
+    height: 100%;
+    float: right;
+    margin: 3vh 1% 2vh 1%;
+}
+
+@media (max-width: 37.5em) {
+    .header__signup,
+    .header__signin {
+        display: none;
+    }
+}
+
+.header__title {
+    float: left;
+    color: #FFF;
+    line-height: 5vh;
+}
+
+.header__left {
+    float: left;
+    height: 5vh;
+    position: absolute;
+    width: 20%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin: 0 15% 0 10%;
+}
+
+@media (max-width: 37.5em) {
+    .header__left {
+        width: 45%;
+        margin: 0 0 0 5%;
+    }
+}
+
+.header--normal,
+.header--float {
+    width: 100%;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+.header--normal {
+    background-color: transparent;
+    position: relative;
+}
+
+.header--normal .header__right__text {
+    color: rgb(223, 0, 0);
+}
+
+.header--normal .header__title {
+    color: rgb(223, 0, 0);
+}
+
+.header--float {
+    background-color: #FFF;
+    -webkit-box-shadow: 0 0.1rem 2rem -0.5rem #000;
+    box-shadow: 0 0.1rem 2rem -0.5rem #000;
+    margin-top: -.5rem;
+    position: fixed;
+}
+
+.header--float .header__right__text {
+    color: rgb(223, 0, 0);
+}
+
+.header--float .header__title {
+    color: rgb(223, 0, 0);
+}
