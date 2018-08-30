@@ -1,0 +1,109 @@
+.content{
+    width: 85%;
+    height:90vh;
+    float: left;
+    overflow: hidden;
+}
+
+.ordersView {
+    padding:5rem 10%;
+    float:left;
+    width:100%;
+}
+
+.ordersView__topBar{
+    width: 100%;
+    float:left;
+    margin-bottom: 3rem;
+    border-bottom: solid .2rem rgb(223, 0, 0);
+}
+
+.ordersView__title{
+    float:left;
+    line-height: 5rem;
+    color:rgb(223, 0, 0);
+}
+
+.order{
+    width:100%;
+    float:left;
+    height: 5rem;
+    margin-bottom: 2rem;
+}
+
+.order__id{
+    width:10%;
+    float:left;
+    color:#FFF;
+    background-color:rgb(223, 0, 0);
+    line-height: 5rem;
+    text-align: center !important;
+}
+
+.order__items {
+    width:45%;
+    float:left;
+    position: relative;
+}
+
+.order__items__title{
+    color:#111;
+    float:left;
+    width:100%;
+    height: 5rem;
+    line-height:5rem;
+    padding:0 2rem;
+}
+
+.order__items__list{
+    position: absolute;
+    top: 5rem;
+    overflow: hidden;
+    z-index:50;
+    height: 0;
+    width:100%;
+    background-color:#FFF;
+}
+
+.order__items:hover .order__items__list {
+    height: auto;
+    border:solid .1rem rgb(223, 0, 0);
+}
+
+.order__item{
+    width:100%;
+    float:left;
+    position: relative;
+    height: 5rem;
+}
+
+.order__item__name{
+    color:#111;
+    float:left;
+    width:100%;
+    height: 100%;
+    padding:0 7rem 0 2rem;
+    line-height: 5rem;
+}
+
+.order__item__quantity{
+    color:#FFF;
+    background-color:rgb(223, 0, 0);
+    width:5rem;
+    height: 100%;
+    position: absolute;
+    z-index:100;
+    right:0;
+    text-align: center !important;
+    line-height: 5rem;
+}
+
+.order__buttons{
+    float:right;
+    height: 100%;
+}
+
+.order__button{
+    float:left;
+    margin-left:1rem;
+}
