@@ -398,6 +398,30 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
+.header__menu{
+    float:right;
+    height:5vh;
+    transform:translateY(-50%);
+    position: absolute;
+    right:15%;
+    top:50%;
+}
+
+.header__menu__link{
+    color:rgb(223, 0, 0);
+    float:left;
+    padding:0 2rem;
+    line-height: 5vh;
+    border-bottom:solid .2rem #FFF;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.header__menu__link:hover{  
+    padding:0 3rem;
+    border-bottom:solid .2rem rgb(223, 0, 0);
+}
+
 .header--normal,
 .header--float {
     width: 100%;
