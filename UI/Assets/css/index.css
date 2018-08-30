@@ -25,7 +25,7 @@
 
 .lview__content {
     float: left;
-    width: 50%;
+    width: 100%;
     padding: 2rem 0;
 }
 
@@ -36,6 +36,8 @@
     margin-bottom: 3rem;
     clear: both;
     text-shadow: 0 0 2rem #000;
+    text-align:center;
+    width:100%;
 }
 
 .lview__body {
@@ -43,10 +45,9 @@
 }
 
 .lview__buttons {
-    position: absolute;
-    z-index: 50;
-    bottom: 20vh;
     float: left;
+    margin-left:50%;
+    transform: translateX(-50%);
 }
 
 .lview__button {
