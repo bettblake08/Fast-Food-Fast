@@ -1,0 +1,28 @@
+.content{
+    float:left;
+    width: 100%;
+}
+
+.orderHistory{
+    width:60%;
+    float:left;
+    margin-left:20%;
+}
+
+.orderHistory__topBar{
+    float:left;
+    width: 100%;
+    margin-bottom: 3rem;
+    border-bottom: solid .2rem rgb(223, 0, 0);
+}
+
+.orderHistory__title{
+    color:rgb(223, 0, 0);
+    float:left;
+    line-height: 5rem;
+}
+
+.orderHistory__view{
+    float:left;
+    width:100%;
+}
