@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link href="../Assets/css/Main/order.css" rel="stylesheet" type="text/css" />
+    <link href="../Assets/css/Main/orderHistory.css" rel="stylesheet" type="text/css" />
     <link href="../Assets/css/main.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -19,7 +19,11 @@
 
     <div class="header header--normal">
         <div class="header__left">
-            <div class="header__title f_banner_1">Fast Food Fast</div>
+            <a href="../index.html">
+                <div class="header__logo">
+                    <img src="../Assets/images/logo.png" alt="FastFoodFast">
+                </div>
+            </a>
         </div>
 
         <div class="header__menu">
@@ -44,15 +48,25 @@
 
         <div class="orderHistory">
             <div class="orderHistory__topBar">
-                <div class="orderHistory__title f_title">Order History</div>
+                <div class="orderHistory__title f_h1">Order History</div>
             </div>
 
             <div class="orderHistory__view">
 
+                <div class="orderHistory__header">
+
+                    <div class="hd__id f_normal">Order Id</div>
+                    <div class="hd__items f_normal">Item List</div>
+                    <div class="hd__total f_normal">Total</div>
+                    <div class="hd__time f_normal">Time</div>
+                    <div class="hd__status f_normal">Status</div>
+
+                </div>
+
                 <!-- Order Item -->
                 <div class="order">
 
-                    <div class="order__id f_normal">1000002</div>
+                    <div class="order__id f_normal">1000001</div>
                     <div class="order__items f_normal">
                         <div class="order__items__title f_normal">Items</div>
 
@@ -60,22 +74,66 @@
                             <div class="order__item f_normal">
                                 <div class="order__item__name f_normal">Chicken Burger</div>
                                 <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
                             </div>
 
                             <div class="order__item f_normal">
                                 <div class="order__item__name f_normal">Beef Burger</div>
                                 <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
                             </div>
 
-                            <div class="order__item f_normal">
+                            <div class="order__item">
                                 <div class="order__item__name f_normal">Coke 350ml</div>
                                 <div class="order__item__quantity f_normal">4</div>
+                                <div class="order__item__price f_normal">KSH 100</div>
                             </div>
 
                         </div>
                     </div>
 
-                    <div class="order__total f_normal"></div>
+                    <div class="order__total f_normal">KSH 2000</div>
+                    <div class="order__time f_normal">19-08-2018 19:35:00</div>
+                    <div class="order__status--cancelled f_normal">Cancelled</div>
+
+                </div>
+                <!-- Order Item -->
+
+
+
+                <!-- Order Item -->
+                <div class="order">
+
+                    <div class="order__id f_normal">1000001</div>
+                    <div class="order__items f_normal">
+                        <div class="order__items__title f_normal">Items</div>
+
+                        <div class="order__items__list">
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Chicken Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
+                            </div>
+
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Beef Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
+                            </div>
+
+                            <div class="order__item">
+                                <div class="order__item__name f_normal">Coke 350ml</div>
+                                <div class="order__item__quantity f_normal">4</div>
+                                <div class="order__item__price f_normal">KSH 100</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="order__total f_normal">KSH 2000</div>
+                    <div class="order__time f_normal">19-08-2018 19:35:00</div>
+                    <div class="order__status--complete f_normal">Complete</div>
+
                 </div>
                 <!-- Order Item -->
 
