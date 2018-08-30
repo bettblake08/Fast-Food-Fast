@@ -15,8 +15,7 @@
     padding:2rem 5rem;
     float: left;
     transform: translateX(-50%);
-    background-color: #FFF;
-    border-radius: 1rem;
+    background-color:#00000094;
 }
 
 @media (max-width: 75em) {
@@ -39,27 +38,21 @@
 
 
 .login__form h1{
-    color: #000;
+    color: #FFF;
     margin-bottom: 4rem;
     float: left;
     text-align: center;
     width:100%;
 }
 
-.login__form .btn_1--normal {
-    color: rgb(223, 0, 0) !important;
-    border: solid 0.1rem rgb(223, 0, 0);
+.login__form .text_input input{
+    color: #FFF !important;
 }
 
 .login__text {
     float: left;
     width: 100%;
     margin-bottom: 3rem;
-}
-
-.login__text .text_input_4--success input,
-    {
-    color: rgb(223, 0, 0) !important;
 }
 
 .login__save {
@@ -80,7 +73,7 @@
 
 .login__link__text {
     float: right;
-    color: #111;
+    color: #FFF;
     line-height: 3rem;
 }
 
