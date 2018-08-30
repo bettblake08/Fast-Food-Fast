@@ -4,25 +4,25 @@ html {
 
 @media (max-width: 100em) {
     html {
-        font-size: 8px;
+        font-size: 9px;
     }
 }
 
 @media (max-width: 56.25em) {
     html {
-        font-size: 8px;
+        font-size: 9px;
     }
 }
 
 @media (max-width: 75em) {
     html {
-        font-size: 7px;
+        font-size: 8px;
     }
 }
 
 @media (max-width: 37.5em) {
     html {
-        font-size: 6px;
+        font-size: 8px;
     }
 }
 
