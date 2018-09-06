@@ -6,7 +6,7 @@ python:
 script:
   - python setup.py build
   - python setup.py install
-  - py.test --doctest-modules coveralls -v --cov coveralls --cov-report term-missing
+  - py.test --cov=Tests/ --cov-report term-missing
 
 after_success: 
   - coveralls
