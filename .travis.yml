@@ -8,7 +8,7 @@ before_scripts:
   - python setup.py install
 
 script: 
-  - py.test --cov=myproj Tests/ --doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
+  - pytest --cov=myproj Tests/ --doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
 
 after_success: 
   - coveralls
