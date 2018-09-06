@@ -4,7 +4,7 @@ from flask import json
 
 class Orders(Resource):
     def get(self):
-        
+        #Fetch all orders endpoint
         for o in orders:
             for i in o['items']:
                 for item in items:
@@ -14,6 +14,7 @@ class Orders(Resource):
         return {'error':0, "content":orders},200
 
     def post(self):
+        #Place an order endpoint
         parser = reqparse.RequestParser()
 
         parser.add_argument("items",
@@ -25,20 +26,24 @@ class Orders(Resource):
         total = 0
         orderItems = []
 
-        for i in json.loads(data['items']):
-            found = False
+        try :
+            for i in json.loads(data['items']):
+                found = False
 
-            for x in items:
-                if i['id'] == x['id']:
-                    found = True
-                    total += x['price'] * i['quantity']
-                    orderItems.append({
-                        'id':i['id'],
-                        'quantity':i['quantity']
-                    })
+                for x in items:
+                    if i['id'] == x['id']:
+                        found = True
 
-            if not found:
-                return {'error': 1, 'error_msg': "Item " + str(i['id']) + " doesn't exist!"}, 200
+                        total += x['price'] * i['quantity']
+                        orderItems.append({
+                            'id':i['id'],
+                            'quantity':i['quantity']
+                        })
+
+                if not found:
+                    return {'error': 1, 'error_msg': "Item " + str(i['id']) + " doesn't exist!"}, 200
+        except:
+            return {'error': 2, 'error_msg':"Items list is invalid. Please check to see all items id and quantity properties."}, 200
 
         newOrder = {
             "id":10001,
