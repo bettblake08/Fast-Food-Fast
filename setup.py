@@ -15,6 +15,8 @@ setup(
     install_requires=[
         "Flask>=1.0.2",
         "Flask-RESTful>=0.3.6",
-        "pytest>=3.7.4"
+        "pytest>=3.7.4",
+        "python-coveralls",
+        "pytest-cov>=2.6.0"
     ]
 )
