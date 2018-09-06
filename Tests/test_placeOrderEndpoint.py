@@ -47,6 +47,30 @@ class TestPlaceOrderEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)["error"] == 1
 
+    def test_using_no_quantity_value_in_item(self, testClient):
+        response = testClient.post('/api/v1/orders', data=json.dumps(
+            {
+                "items": json.dumps(
+                    [{
+                        "id": 101,
+                        "q": 2
+                    }, {
+                        "id": 102,
+                        "quantity": 2
+                    }, {
+                        "id": 103,
+                        "quantity": 4
+                    }]
+                )
+            }
+        ),
+            content_type='application/json'
+        )
+
+        assert response.status_code == 200
+        assert json.loads(response.data)["error"] == 2
+
+
     def test_using_no_items_key(self, testClient):
         response = testClient.post('/api/v1/orders', data=json.dumps(
             {
