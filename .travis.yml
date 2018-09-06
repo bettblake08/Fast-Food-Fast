@@ -3,12 +3,10 @@ language: python
 python:
   - "3.5"
 
-before_scripts:
+script:
   - python setup.py build
   - python setup.py install
-
-script: 
-  - py.test --cov=myproj Tests/ --doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
+  - py.test --doctest-modules coveralls -v --cov coveralls --cov-report term-missing
 
 after_success: 
   - coveralls
