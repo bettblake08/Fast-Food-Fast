@@ -1,5 +1,0 @@
-[
-  "Tests/test_fetch_order_endpoint.py::TestFetchOrderEndpoint::()::test_using_valid_order_id",
-  "Tests/test_fetch_order_endpoint.py::TestFetchOrderEndpoint::()::test_using_invalid_order_id",
-  "Tests/test_fetch_orders_endpoint.py::TestFetchOrdersEndpoint::()::test"
-]
