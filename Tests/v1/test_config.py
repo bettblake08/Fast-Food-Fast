@@ -1,4 +1,3 @@
-import os
 import pytest
 from App.app import app
 
