@@ -1,5 +1,5 @@
 from flask_restful import Resource,reqparse
-from App.Database.db import orders, items
+from App.Database import orders, items
 
 class Order(Resource):
     def get(self,param):

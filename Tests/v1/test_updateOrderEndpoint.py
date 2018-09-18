@@ -1,5 +1,5 @@
-from App.Resources.orders import Orders
-from Tests.test_conf import testClient 
+from App.Api.v1.Resources import Orders
+from Tests.v1.test_config import testClient 
 from flask import json
 
 class TestUpdateOrderEndpoint(object):

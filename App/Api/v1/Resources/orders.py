@@ -1,5 +1,5 @@
 from flask_restful import Resource,reqparse
-from App.Database.db import orders,items
+from App.Database import orders,items
 from flask import json
 
 class Orders(Resource):
