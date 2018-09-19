@@ -17,7 +17,6 @@ setup(
         "Flask-RESTful>=0.3.6",
         "pytest>=3.7.4",
         "coveralls",
-        "pytest-cov>=2.6.0",
-        "codeclimate-test-reporter"
+        "pytest-cov>=2.6.0"
     ]
 )
