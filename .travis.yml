@@ -3,12 +3,21 @@ language: python
 python:
   - "3.5"
 
+env:
+  global:
+    - CODECLIMATE_REPO_TOKEN=[token]
+    - CC_TEST_REPORTER_ID=ea1217942a0c5c575c3dcb56df32dfdfcc5032f78f7bf1050efb72351571ff79
+
 install:
   - python setup.py build
   - python setup.py install
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+
 script:
-  - python -m pytest --cov=Tests/ --cov-report term-missing
+  - python -m pytest --cov=App/Tests/ --cov-report term-missing
 
 after_success: 
   - coveralls
