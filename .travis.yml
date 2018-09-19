@@ -5,7 +5,6 @@ python:
 
 env:
   global:
-    - CODECLIMATE_REPO_TOKEN=[token]
     - CC_TEST_REPORTER_ID=ea1217942a0c5c575c3dcb56df32dfdfcc5032f78f7bf1050efb72351571ff79
 
 install:
@@ -21,3 +20,4 @@ script:
 
 after_success: 
   - coveralls
+  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
