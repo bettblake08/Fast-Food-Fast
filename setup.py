@@ -18,6 +18,7 @@ setup(
         "pytest>=3.7.4",
         "coveralls",
         "pytest-cov>=2.6.0",
-        "pytest-ordering>=0.5"
+        "pytest-ordering>=0.5",
+        'psycopg2-binary>=2.7.5'
     ]
 )
