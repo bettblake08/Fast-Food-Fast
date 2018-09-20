@@ -5,4 +5,4 @@ fastfoodfast.egg-info/
 .vscode/
 __pycache__/
 .pytest_cache/
-$.pyc
+*.pyc
