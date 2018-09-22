@@ -1,8 +1,0 @@
-env/
-build/
-dist/
-fastfoodfast.egg-info/
-.vscode/
-__pycache__/
-.pytest_cache/
-$.pyc
