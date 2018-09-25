@@ -12,9 +12,16 @@ class UserModel(DBModel):
         username CHAR(60) NOT NULL,
         email CHAR(60) NOT NULL,
         password CHAR(120) NOT NULL,
+        role INT NOT NULL,
         created_at TIMESTAMPTZ,
         updated_at TIMESTAMPTZ 
     );
+    """
+
+    """ 
+    Role Id
+    1 - Customer
+    2 - Admin
     """
 
     id = None
@@ -28,14 +35,15 @@ class UserModel(DBModel):
         self.username = param['username']
         self.email = param['email']
         self.password = param['password']
+        self.role = param['role'] if 'role' in param else 1
 
 
     def insert(self):
         q = """ 
-        INSERT INTO {}(username,email,password,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
+        INSERT INTO {}(username,email,password,role,created_at,updated_at) values(%s,%s,%s,%s,NOW(),NOW()) RETURNING id
         """.format(self.table)
 
-        self.db.cursor.execute(q, (self.username, self.email, self.password))
+        self.db.cursor.execute(q, (self.username, self.email, self.password,self.role))
         self.db.conn.commit()
 
         userId = self.db.cursor.fetchone()[0]
@@ -57,20 +65,24 @@ class UserModel(DBModel):
             'username': self.username,
             'email': self.email,
             'password': self.password,
+            'role':self.role,
             'created_at': str(self.created_at),
             'updated_at': str(self.updated_at)
         }
 
 
     @classmethod
-    def get(cls, _id):
+    def get(cls, _id,role):
         db = DB()
         db.connect(cls.connection)
 
-        q = """ 
-        SELECT * FROM {} WHERE id = %s
-        """.format(cls.table)
+        if role not in [1,2]:
+            return None
 
+        q = """ 
+            SELECT * FROM {} WHERE id = %s AND role = {}
+            """.format(cls.table,role)
+        
         db.cursor.execute(q,(_id))
         db.conn.commit()
 

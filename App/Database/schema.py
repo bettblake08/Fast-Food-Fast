@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS users(
     username CHAR(30) NOT NULL,
     email CHAR(30) NOT NULL,
     password CHAR(120) NOT NULL,
+    role INT NOT NULL,
     created_at TIMESTAMPTZ,
     updated_at TIMESTAMPTZ 
 );
