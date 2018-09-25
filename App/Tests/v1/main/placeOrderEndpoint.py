@@ -1,9 +1,11 @@
-from App.Api.v1.Resources import Orders
 from App.Tests.v1.test_config import testClient
 from flask import json
 import pytest
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ft-fetch-menu-endpoint-160753471
 
 @pytest.mark.run(order=2)
 class TestPlaceOrderEndpoint(object):
