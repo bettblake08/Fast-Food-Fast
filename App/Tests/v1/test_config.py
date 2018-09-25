@@ -1,6 +1,7 @@
 import pytest
 from App import create_app
 from App.Database import DB
+import os
 
 app = create_app('TEST')
 
@@ -17,9 +18,12 @@ def testClient():
 
 
 @pytest.fixture(scope='session')
-def init_database():
+def initDatabase():
+    os.environ.putenv('DB_ENV', "TEST")
+
     db = DB()
+    db.init_test_db(app)
 
     yield db 
 
-    db.destroy(app)
+    db.teardown(app)

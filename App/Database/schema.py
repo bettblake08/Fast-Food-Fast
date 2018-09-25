@@ -9,14 +9,6 @@ CREATE TABLE IF NOT EXISTS users(
 );
 """,
 """ 
-CREATE TABLE IF NOT EXISTS items(
-    id SERIAL PRIMARY KEY NOT NULL,
-    name CHAR(30) NOT NULL,
-    c_id INT,
-    price FLOAT NOT NULL
-);
-""",
-""" 
 CREATE TABLE IF NOT EXISTS orders(
     id SERIAL PRIMARY KEY NOT NULL,
     userId INT NOT NULL,
@@ -33,5 +25,15 @@ CREATE TABLE IF NOT EXISTS ordered_items(
     item INT NOT NULL,
     quantity INT NOT NULL
 );
+""",
+""" 
+CREATE TABLE IF NOT EXISTS order_items(
+        id SERIAL PRIMARY KEY NOT NULL,
+        name CHAR(120) NOT NULL,
+        price INT NOT NULL,
+        c_id INT NOT NULL,
+        created_at TIMESTAMPTZ,
+        updated_at TIMESTAMPTZ 
+    );
 """
 ]

@@ -1,50 +1,68 @@
 from flask_restful import Resource, reqparse
-from App.Database.Models import OrderModel
+from App.Database.Models import OrderItemModel
 
 
 class Menu(Resource):
-    def get(self, param):
-        # Fetch order data endpoint
-        param = int(param)
+    def get(self):
+        # Fetch menu items endpoint
+        items = OrderItemModel.get_all_items()
 
-        if not isinstance(param, int) or param < 0:
-            return {}, 400
-
-        order = {}
-
-        order = OrderModel.get(param)
-
-        if not bool(order):
+        if not bool(items):
             return {
                 'error': 1,
                 "error_msg": "Order does not exist. Please enter a valid order id."}, 200
 
         return {
             'error': 0,
-            "content": order.json()}, 200
+            "content": [ x.json() for x in items]
+            }, 200
 
-    def put(self, param):
-        #   Update order status endpoint
+    def post(self):
+        #   Post a new menu item endpoint
 
         parser = reqparse.RequestParser()
 
         parser.add_argument(
-            'status',
+            'name',
             required=True,
-            help="Status field required. Please provide a new status for the order."
+            help="Name field required. Please provide a name for the item."
+        )
+
+        parser.add_argument(
+            'price',
+            type=float,
+            required=True,
+            help="Price field required. Please provide a price for the item as an integer."
+        )
+
+        parser.add_argument(
+            'c_id',
+            type=int,
+            required=True,
+            help="c_id (Category Id) field required. Please provide a valid category id of integer type."
         )
 
         data = parser.parse_args()
 
-        if int(data.status) not in [0, 1, 2, 3]:
-            return {'error': 1, 'error_msg': "Invalid status number. Please provide a valid status number"}, 200
+        if int(data.c_id) not in [0, 1, 2, 3]:
+            return {
+                'error': 1, 
+                'error_msg': "Invalid status number. Please provide a valid status number"
+                }, 200
 
-        order = OrderModel.get(int(param))
+        item = OrderItemModel(
+            name=data.name,
+            price=data.price * 100,
+            c_id = data.c_id)
+        
+        try:    
+            item.save()
 
-        if not order:
-            return {'error': 2, 'error_msg': "Order not found. Please provide a valid order id"}, 200
-
-        order.status = data.status
-        order.update()
-
-        return {'error': 0}, 200
+            return {
+                'error': 0
+            }, 200
+        except:
+            return {
+                'error_msg': "Failed to process new order item. Please try again!"
+            }, 400
+    

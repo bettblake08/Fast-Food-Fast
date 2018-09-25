@@ -75,7 +75,7 @@ class DB():
                     app.config['DB_NAME']))
         
         except:
-            print('Failed to connect to database.')
+            print('Failed to create to database.')
 
 
     def create_tables(self):
@@ -102,7 +102,7 @@ class DB():
             self.conn = psycopg2.connect(connection)
             self.cursor = self.conn.cursor()
 
-            print('Connection succeeded.')
+            print('Connection to {} succeeded.'.format(app.config['DB_NAME']))
 
             return self.conn.cursor()
         except:
@@ -121,7 +121,7 @@ class DB():
             print('Failed to connect to database.')
 
 
-    def destroy(self, app):
+    def teardown(self, app):
         self.connect_db(app)
 
         q = [
@@ -138,3 +138,21 @@ class DB():
             print('Teardown succeeded!')
         except:
             print('Failed to teardown database. Please checkout code and try again!')
+
+
+    def destroy(self, app):
+        self.connect_db(app)
+
+        q = [
+            "DROP DATABASE"
+        ]
+
+        for query in q:
+            self.cursor.execute(query)
+
+        self.conn.commit()
+
+        try:
+            print('Destroy db succeeded!')
+        except:
+            print('Failed to destroy database. Please checkout code and try again!')

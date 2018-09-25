@@ -8,7 +8,7 @@ class OrderItemModel(DBModel):
 
     """ 
     CREATE TABLE IF NOT EXISTS order_items(
-        id INT PRIMARY KEY NOT NULL,
+        id SERIAL PRIMARY KEY NOT NULL,
         name CHAR(120) NOT NULL,
         price INT NOT NULL,
         c_id INT NOT NULL,
@@ -29,21 +29,26 @@ class OrderItemModel(DBModel):
         self.price = param['price']
         self.c_id = param['c_id']
 
+
     def insert(self):
         q = """ 
-        INSERT INTO %s(name,price,c_id,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
-        """
+        INSERT INTO {}(name,price,c_id,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
+        """.format(self.table)
 
-        try : 
-            self.db.cursor.execute(q, (self.table,self.name, self.price, self.c_id))
-            self.db.conn.commit()
+        print(q)
 
-            itemId = self.db.cursor.fetchone()[0]
-            self.id = itemId
+        self.db.cursor.execute(q, (self.name, self.price, self.c_id))
+        self.db.conn.commit()
 
-            return True
-        except:
-            return False
+        itemId = self.db.cursor.fetchone()[0]
+
+        self.id = itemId
+        """ 
+            try : 
+                return True
+            except:
+                return False """
+
 
     def update(self):
         q = """ 
