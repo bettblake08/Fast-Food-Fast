@@ -17,8 +17,9 @@ def testClient():
 
 
 @pytest.fixture(scope='session')
-def init_database():
+def initDatabase():
     db = DB()
+    db.init_test_db(app)
 
     yield db 
 

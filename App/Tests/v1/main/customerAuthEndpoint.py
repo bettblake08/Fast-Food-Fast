@@ -11,7 +11,7 @@ class TestCustomerAuthEndpoint(object):
                                content_type='application/json'
                                )
 
-    def test_using_no_username_field(self, testClient):
+    def test_using_no_username_field(self, testClient, initDatabase):
 
         response = self.authUser(
             testClient=testClient,
@@ -24,8 +24,7 @@ class TestCustomerAuthEndpoint(object):
 
         assert response.status_code == 400
 
-
-    def test_using_no_password_field(self, testClient):
+    def test_using_no_password_field(self, testClient, initDatabase):
 
         response = self.authUser(
             testClient=testClient,
@@ -38,8 +37,7 @@ class TestCustomerAuthEndpoint(object):
 
         assert response.status_code == 400
 
-
-    def test_using_incorrect_password_value(self, testClient):
+    def test_using_incorrect_password_value(self, testClient, initDatabase):
 
         response = self.authUser(
             testClient=testClient,
@@ -53,7 +51,7 @@ class TestCustomerAuthEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 1
 
-    def test_using_username_that_doesnt_exist(self, testClient):
+    def test_using_username_that_doesnt_exist(self, testClient, initDatabase):
 
         response = self.authUser(
             testClient=testClient,
@@ -67,8 +65,7 @@ class TestCustomerAuthEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 2
 
-
-    def test_using_email_that_doesnt_exist(self, testClient):
+    def test_using_email_that_doesnt_exist(self, testClient, initDatabase):
 
         response = self.authUser(
             testClient=testClient,
@@ -82,8 +79,7 @@ class TestCustomerAuthEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 2
 
-
-    def test_using_username(self, testClient):
+    def test_using_username(self, testClient, initDatabase):
 
         response = self.authUser(
             testClient=testClient,
@@ -97,8 +93,7 @@ class TestCustomerAuthEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 0
 
-
-    def test_using_email_as_username(self, testClient):
+    def test_using_email_as_username(self, testClient, initDatabase):
 
         response = self.authUser(
             testClient=testClient,

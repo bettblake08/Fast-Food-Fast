@@ -32,16 +32,20 @@ class MainController():
         data = parser.parse_args()
 
         if not Serialization.test_email(data.email):
-            return {
-                "error": 1,
-                "error_msg": "Incorrect email. Please input a valid email string."
-            }, 200
+            return jsonify(
+                {
+                    "error": 1,
+                    "error_msg": "Incorrect email. Please input a valid email string."
+                }
+            ), 200
 
         if not Serialization.test_password(data.password,1):
-            return {
-                "error":2,
-                "error_msg":"Incorrect password. Please input a valid password string."
-            },200
+            return jsonify(
+                {
+                    "error": 2,
+                    "error_msg": "Incorrect password. Please input a valid password string."
+                }
+            ), 200
 
         user = UserModel(
             username=data.username,
@@ -49,7 +53,13 @@ class MainController():
             password=generate_password_hash(data.password))
 
         user.save()
-        
+
+        return jsonify(
+            {
+                "error": 0
+            }
+        ), 200
+
         """ try:
             user.save()
             

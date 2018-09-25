@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS users(
     id SERIAL PRIMARY KEY NOT NULL,
     username CHAR(30) NOT NULL,
     email CHAR(30) NOT NULL,
-    password CHAR(120) NOT NULL
+    password CHAR(120) NOT NULL,
+    created_at TIMESTAMPTZ,
+    updated_at TIMESTAMPTZ 
 );
 """,
 """ 
@@ -12,7 +14,9 @@ CREATE TABLE IF NOT EXISTS items(
     id SERIAL PRIMARY KEY NOT NULL,
     name CHAR(30) NOT NULL,
     c_id INT,
-    price FLOAT NOT NULL
+    price FLOAT NOT NULL,
+    created_at TIMESTAMPTZ,
+    updated_at TIMESTAMPTZ 
 );
 """,
 """ 
