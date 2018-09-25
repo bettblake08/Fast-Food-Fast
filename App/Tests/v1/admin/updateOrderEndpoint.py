@@ -3,7 +3,6 @@ from App.Tests.v1.test_config import testClient
 from flask import json
 import pytest
 
-testNo = 7
 
 
 @pytest.mark.run(order=4)

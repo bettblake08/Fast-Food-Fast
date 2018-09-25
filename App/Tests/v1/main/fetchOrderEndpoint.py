@@ -4,8 +4,6 @@ from flask import json
 import pytest
 
 
-testNo = 5
-
 
 @pytest.mark.run(order=3)
 class TestFetchOrderEndpoint(object):

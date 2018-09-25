@@ -3,7 +3,7 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=6)
+@pytest.mark.run(order=5)
 class TestCustomerAuthEndpoint(object):
     def authUser(self, data, testClient):
         return testClient.post('/api/v1/auth/signup',

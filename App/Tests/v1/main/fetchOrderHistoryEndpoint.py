@@ -4,7 +4,7 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=3)
+@pytest.mark.run(order=4)
 class TestFetchOrderHistoryEndpoint(object):
     def test_endpoint(self, testClient):
         response = testClient.get('/api/v1/users/orders/')
