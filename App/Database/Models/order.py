@@ -66,16 +66,16 @@ class OrderModel(DBModel):
                     i.update()
 
 
-        def json(self):
-            return {
-                'id': self.id,
-                'userId': self.userId,
-                'items': [i.json() for i in self.items],
-                'total': self.total,
-                'status': self.status,
-                'created_at': self.created_at,
-                'updated_at': self.updated_at
-            }
+    def json(self):
+        return {
+            'id': self.id,
+            'userId': self.userId,
+            'items': [i.json() for i in self.items],
+            'total': self.total,
+            'status': self.status,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
 
 
     @classmethod
