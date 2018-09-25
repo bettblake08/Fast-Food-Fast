@@ -3,9 +3,9 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=7)
-class TestFetchOrderHistoryEndpoint(object):
-    def test_endpoint(self, testClient):
-        response = testClient.get('/api/v1/users/orders/')
+@pytest.mark.run(order=8)
+class TestFetchMenuEndpoint(object):
+    def test_using_valid_order_id(self, testClient):
+        response = testClient.get('/api/v1/menu')
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 0
