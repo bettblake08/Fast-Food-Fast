@@ -701,3 +701,17 @@ body::-webkit-scrollbar-thumb {
 .text_input__label {
     display: none;
 }
+
+.footer {
+    float:left;
+    width:100%;
+    padding:0 5rem;
+}
+
+.footer__link{
+    height: 5rem;
+    line-height: 5rem;
+    float:left;
+    color: #333;
+    margin-right:2rem;
+}
