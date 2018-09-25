@@ -2,6 +2,8 @@ import psycopg2
 from App.Database.schema import tables
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
+import os
+
 users = [
     {
         'id': 10000001,
@@ -43,8 +45,8 @@ items = [
 
 
 class DB():
-    def __init__(self,env):
-        self.env = env
+    def __init__(self):
+        self.env = os.environ.get('DB_ENV')
 
     def init_db(self, app):
         self.connect_db(app)

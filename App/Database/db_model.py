@@ -10,3 +10,6 @@ class DBModel():
     connection += " user=" + app_config['TEST'].DB_USER
     connection += " password=" + app_config['TEST'].DB_PASSWORD
     connection += " host=" + app_config['TEST'].DB_HOST
+
+    def __init__(self):
+        self.db = DB()

@@ -59,7 +59,7 @@ class TestUpdateOrderEndpoint(object):
     def test_using_valid_data(self, testClient):
 
         response = self.updateOrder(
-            id=10001, 
+            id=1, 
             testClient=testClient,
             data=json.dumps(
                 {

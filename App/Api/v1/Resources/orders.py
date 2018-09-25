@@ -1,17 +1,25 @@
-from flask_restful import Resource,reqparse
-from App.Database import orders,items
+from flask_restful import Resource, reqparse
+from App.Database.Models import OrderModel
+from App.Database import items
 from flask import json
+
 
 class Orders(Resource):
     def get(self):
         #Fetch all orders endpoint
+
+        orders = OrderModel.get_all_orders()
+        """ 
         for o in orders:
             for i in o['items']:
                 for item in items:
                     if item['id'] == i['id']:
-                        i['details'] = item
+                        i['details'] = item """
 
-        return {'error':0, "content":orders},200
+        return {
+            'error': 0,
+            "content": [x.json() for x in orders]
+        }, 200
 
     def post(self):
         #Place an order endpoint
@@ -26,7 +34,7 @@ class Orders(Resource):
         total = 0
         orderItems = []
 
-        try :
+        try:
             for i in json.loads(data['items']):
                 found = False
 
@@ -36,25 +44,22 @@ class Orders(Resource):
 
                         total += x['price'] * i['quantity']
                         orderItems.append({
-                            'id':i['id'],
-                            'quantity':i['quantity']
+                            'id': i['id'],
+                            'quantity': i['quantity']
                         })
 
                 if not found:
                     return {'error': 1, 'error_msg': "Item " + str(i['id']) + " doesn't exist!"}, 200
+
         except:
-            return {'error': 2, 'error_msg':"Items list is invalid. Please check to see all items id and quantity properties."}, 200
+            return {'error': 2, 'error_msg': "Items list is invalid. Please check to see all items id and quantity properties."}, 200
 
-        newOrder = {
-            "id":10001,
-            "userId":10000001,
-            "items":orderItems,
-            "total":total,
-            "status":0
-        }
+        order = OrderModel(
+            userId=1000001,
+            items=orderItems,
+            total=total,
+            status=0)
 
-        orders.append(newOrder)
+        order.save()
 
-        return {'error':0}, 200
-
-
+        return {'error': 0}, 200

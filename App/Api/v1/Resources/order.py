@@ -1,28 +1,31 @@
-from flask_restful import Resource,reqparse
-from App.Database import orders, items
+from flask_restful import Resource, reqparse
+from App.Database.Models import OrderModel
+
 
 class Order(Resource):
-    def get(self,param):
+    def get(self, param):
         # Fetch order data endpoint
+        param = int(param)
+
+        if not isinstance(param, int) or param < 0:
+            return {}, 400
+
         order = {}
 
-        for o in orders:
-            if o['id'] == int(param):
-                order = o
+        order = OrderModel.get(param)
 
-                for i in order['items']:
-                    for item in items:
-                        if item['id'] == i['id']:
-                            i['details'] = item
+        if not bool(order):
+            return {
+                'error': 1,
+                "error_msg": "Order does not exist. Please enter a valid order id."}, 200
 
-        if order == {}:
-            return {'error': 1, "error_msg":"Order does not exist. Please enter a valid order id."}, 200
+        return {
+            'error': 0,
+            "content": order.json()}, 200
 
-        return {'error': 0, "content": order}, 200
-
-
-    def put(self,param):
+    def put(self, param):
         #   Update order status endpoint
+
         parser = reqparse.RequestParser()
 
         parser.add_argument(
@@ -33,17 +36,15 @@ class Order(Resource):
 
         data = parser.parse_args()
 
-        if int(data.status) not in [0, 1, 2 ,3]:
+        if int(data.status) not in [0, 1, 2, 3]:
             return {'error': 1, 'error_msg': "Invalid status number. Please provide a valid status number"}, 200
 
-        found = False
+        order = OrderModel.get(int(param))
 
-        for o in orders:
-            if o['id'] == int(param):
-                found = True
-                o['status'] = int(data.status)
-        
-        if not found:
-            return {'error': 2, 'error_msg':"Order not found. Please provide a valid order id"}, 200
+        if not order:
+            return {'error': 2, 'error_msg': "Order not found. Please provide a valid order id"}, 200
 
-        return {'error':0,'content':orders},200
+        order.status = data.status
+        order.update()
+
+        return {'error': 0}, 200

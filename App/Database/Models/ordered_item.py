@@ -1,4 +1,4 @@
-from App.Database.db import DB
+from App.Database import DB
 from App.Database.db_model import DBModel
 
 

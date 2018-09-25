@@ -1,4 +1,4 @@
-from App.Database.db import DB
+from App.Database import DB
 from App.Database.Models.ordered_item import OrderedItemModel
 from App.Database.db_model import DBModel
 
@@ -73,8 +73,8 @@ class OrderModel(DBModel):
             'items': [i.json() for i in self.items],
             'total': self.total,
             'status': self.status,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'created_at': str(self.created_at),
+            'updated_at': str(self.updated_at)
         }
 
 
