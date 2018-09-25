@@ -3,10 +3,6 @@ from flask import json
 import pytest
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ft-fetch-menu-endpoint-160753471
 @pytest.mark.run(order=3)
 class TestFetchOrderEndpoint(object):
     

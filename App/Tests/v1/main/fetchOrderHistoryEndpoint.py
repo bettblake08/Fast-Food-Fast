@@ -3,11 +3,7 @@ from flask import json
 import pytest
 
 
-<<<<<<< HEAD
 @pytest.mark.run(order=4)
-=======
-@pytest.mark.run(order=7)
->>>>>>> ft-fetch-menu-endpoint-160753471
 class TestFetchOrderHistoryEndpoint(object):
     def test_endpoint(self, testClient):
         response = testClient.get('/api/v1/users/orders/')
