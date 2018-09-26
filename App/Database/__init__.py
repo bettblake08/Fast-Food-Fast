@@ -42,10 +42,12 @@ items = [
 
 """ 
 Order Status Codes
+
 0 - Unconfirmed
 1 - Confirmed
 2 - Denied
 3 - Completed
+
 """
 
 orders = []

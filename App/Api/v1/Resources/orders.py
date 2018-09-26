@@ -2,19 +2,60 @@ from flask_restful import Resource,reqparse
 from App.Database import orders,items
 from flask import json
 
+
+""" Orders Resource 
+
+Handles the creation and retrieval of orders
+
+"""
+
+
+
 class Orders(Resource):
     def get(self):
-        #Fetch all orders endpoint
-        for o in orders:
-            for i in o['items']:
-                for item in items:
-                    if item['id'] == i['id']:
-                        i['details'] = item
+        """ Fetch all orders endpoint
 
-        return {'error':0, "content":orders},200
+        Returns:
+            - If orders are present
+                - A response with a status code 200
+                - A content list with all orders
+
+            - If orders are not present
+                - A response with a status code 200
+                - An empty content list
+        
+        """
+
+        #Fetch all orders endpoint
+        for ordered in orders:
+            for orderedItem in ordered['items']:
+                for item in items:
+                    if item['id'] == orderedItem['id']:
+                        orderedItem['details'] = item
+
+        return {
+            'error':0, 
+            "content":orders
+            },200
+
 
     def post(self):
-        #Place an order endpoint
+        """ Place an order endpoint
+
+        Arguments:
+            - items (list) : A list of objects each containing a item id (int) and quantity(int)
+
+        Returns:
+            - If orders are present
+                - A response with a status code 200
+                - A content list with all orders
+
+            - If orders are not present
+                - A response with a status code 200
+                - An empty content list
+        
+        """
+
         parser = reqparse.RequestParser()
 
         parser.add_argument("items",
@@ -27,23 +68,29 @@ class Orders(Resource):
         orderItems = []
 
         try :
-            for i in json.loads(data['items']):
+            for orderedItem in json.loads(data['items']):
                 found = False
 
-                for x in items:
-                    if i['id'] == x['id']:
+                for item in items:
+                    if orderedItem['id'] == item['id']:
                         found = True
 
-                        total += x['price'] * i['quantity']
+                        total += item['price'] * orderedItem['quantity']
                         orderItems.append({
-                            'id':i['id'],
-                            'quantity':i['quantity']
+                            'id': orderedItem['id'],
+                            'quantity': orderedItem['quantity']
                         })
 
                 if not found:
-                    return {'error': 1, 'error_msg': "Item " + str(i['id']) + " doesn't exist!"}, 200
+                    return {
+                        'error': 1, 
+                        'error_msg': "Item " + str(orderedItem['id']) + " doesn't exist!"
+                        }, 200
         except:
-            return {'error': 2, 'error_msg':"Items list is invalid. Please check to see all items id and quantity properties."}, 200
+            return {
+                'error': 2, 
+                'error_msg':"Items list is invalid. Please check to see all items id and quantity properties."
+                }, 200
 
         newOrder = {
             "id":10001,
@@ -55,6 +102,8 @@ class Orders(Resource):
 
         orders.append(newOrder)
 
-        return {'error':0}, 200
+        return {
+            'error':0
+            }, 200
 
 
