@@ -42,7 +42,24 @@ class LoginController():
             help="The password field is required"
         )
 
+        parser.add_argument(
+            'role',
+            type=int,
+            required=True,
+            help="The role field is required"
+        )
+
         data = parser.parse_args()
+
+        if data['role'] not in [1, 2]:
+
+            return make_response(
+                jsonify({
+                        "error_msg": "Incorrect role id. Please input correct role id"
+                    }
+                ), 400
+            )
+
 
         if not Serialization.test_email(data.email):
             return make_response(
@@ -64,7 +81,7 @@ class LoginController():
                 ), 200
             )
 
-        if UserModel.find_user_by_username(data.username,1):
+        if UserModel.find_user_by_username(data.username):
             return make_response(
                 jsonify(
                     {
@@ -74,7 +91,7 @@ class LoginController():
                 ), 200
             )
 
-        elif UserModel.find_user_by_email(data.email,1):
+        elif UserModel.find_user_by_email(data.email):
             return make_response(
                 jsonify(
                     {
@@ -84,13 +101,17 @@ class LoginController():
                 ), 200
             )
 
+
         user = UserModel(
             username=data.username,
             email=data.email,
-            password=generate_password_hash(data.password))
+            password=generate_password_hash(data['password']),
+            role=data.role)
+
+        user.save()
 
         try:
-            user.save()
+            
             
             return make_response(
                 jsonify({
@@ -141,8 +162,11 @@ class LoginController():
                 }
             ), 200)
 
+        auth = current_user.authenticate(data['password'])
 
-        if current_user.authenticate(data['password']):
+        print("Password test : " + str(auth))
+
+        if auth:
             access_token = create_access_token(
                 identity={
                     'id': current_user.id,

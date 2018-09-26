@@ -6,7 +6,7 @@ import pytest
 @pytest.mark.run(order=2)
 class TestPlaceOrderEndpoint(object):
     def placeOrder(self,data,testClient):
-        return testClient.post('/api/v1/orders',
+        return testClient.post('/api/v1/users/orders',
                                data=data,
                                content_type='application/json'
                                )

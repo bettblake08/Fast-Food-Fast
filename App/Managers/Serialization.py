@@ -1,5 +1,6 @@
 import re
 
+
 class Serialization(object):
     @classmethod
     def test_password(cls, password, t):

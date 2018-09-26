@@ -99,7 +99,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "bettbrian08",
+                    "username": "bettbrian@rocketmail.com",
                     "password": "testPASS.A1"
                 }
             ))

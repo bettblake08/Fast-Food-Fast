@@ -167,10 +167,12 @@ class UserModel(DBModel):
 
 
     def authenticate(self,password):
+        print(self.id)
+        print(self.username)
         print(self.password)
         print(password)
         
-        return check_password_hash(self.password,password)
+        return check_password_hash(self.password, password)
 
 
     def save(self):
