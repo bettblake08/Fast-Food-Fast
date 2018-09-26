@@ -2,7 +2,7 @@ from flask import jsonify, make_response
 from flask_restful import reqparse
 from flask_jwt_extended import create_access_token,create_refresh_token, \
         set_access_cookies,set_refresh_cookies,unset_jwt_cookies,get_raw_jwt
-from App.Managers.Serialization import Serialization
+from App.Managers.Serialization import Serialization,flask_bcrypt
 from werkzeug.security import generate_password_hash
 
 from App.Database.Models import UserModel,RevokedTokenModel
@@ -101,11 +101,13 @@ class LoginController():
                 ), 200
             )
 
+        passw = flask_bcrypt.generate_password_hash(data['password'])
+        print(passw)
 
         user = UserModel(
             username=data.username,
             email=data.email,
-            password=generate_password_hash(data['password']),
+            password=passw,
             role=data.role)
 
         user.save()

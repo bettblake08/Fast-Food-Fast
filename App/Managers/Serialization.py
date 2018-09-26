@@ -1,5 +1,7 @@
 import re
+from flask_bcrypt import Bcrypt
 
+flask_bcrypt = Bcrypt()
 
 class Serialization(object):
     @classmethod

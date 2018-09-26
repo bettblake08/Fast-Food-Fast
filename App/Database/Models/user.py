@@ -2,6 +2,7 @@ from App.Database import DB
 from App.Database.db_model import DBModel
 
 from werkzeug.security import check_password_hash
+from App.Managers.Serialization import flask_bcrypt
 
 
 class UserModel(DBModel):
@@ -45,7 +46,11 @@ class UserModel(DBModel):
         INSERT INTO {}(username,email,password,role,created_at,updated_at) values(%s,%s,%s,%s,NOW(),NOW()) RETURNING id
         """.format(self.table)
 
-        self.db.cursor.execute(q, (self.username, self.email, self.password,self.role))
+        self.db.cursor.execute(q, (
+            self.username, 
+            self.email, 
+            self.password.decode('utf-8'),
+            self.role))
         self.db.conn.commit()
 
         userId = self.db.cursor.fetchone()[0]
@@ -172,7 +177,7 @@ class UserModel(DBModel):
         print(self.password)
         print(password)
         
-        return check_password_hash(self.password, password)
+        return flask_bcrypt.check_password_hash(self.password, password)
 
 
     def save(self):
