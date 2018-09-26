@@ -102,7 +102,7 @@ class DB():
             self.conn = psycopg2.connect(connection)
             self.cursor = self.conn.cursor()
 
-            print('Connection succeeded.')
+            print('Connection to database {} succeeded.'.format(app.config['DB_NAME']))
 
             return self.conn.cursor()
         except:
@@ -115,6 +115,7 @@ class DB():
             self.cursor = self.conn.cursor()
 
             print('Connection succeeded.')
+            print(connection)
 
             return self.conn.cursor()
         except:
@@ -133,7 +134,7 @@ class DB():
             self.cursor.execute(query)
 
         self.conn.commit()
-
+    
         try:
             print('Teardown succeeded!')
         except:

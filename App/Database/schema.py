@@ -4,8 +4,10 @@ CREATE TABLE IF NOT EXISTS users(
     id SERIAL PRIMARY KEY NOT NULL,
     username CHAR(30) NOT NULL,
     email CHAR(30) NOT NULL,
-    phone_no INT,
-    password CHAR(120) NOT NULL
+    password CHAR(120) NOT NULL,
+    role INT NOT NULL,
+    created_at TIMESTAMPTZ,
+    updated_at TIMESTAMPTZ 
 );
 """,
 """ 
@@ -13,7 +15,9 @@ CREATE TABLE IF NOT EXISTS items(
     id SERIAL PRIMARY KEY NOT NULL,
     name CHAR(30) NOT NULL,
     c_id INT,
-    price FLOAT NOT NULL
+    price FLOAT NOT NULL,
+    created_at TIMESTAMPTZ,
+    updated_at TIMESTAMPTZ 
 );
 """,
 """ 
@@ -32,6 +36,11 @@ CREATE TABLE IF NOT EXISTS ordered_items(
     orderId INT REFERENCES orders(id) NOT NULL,
     item INT NOT NULL,
     quantity INT NOT NULL
+);
+""",
+""" 
+CREATE TABLE IF NOT EXISTS expired_tokens(
+token CHAR(120) NOT NULL
 );
 """
 ]

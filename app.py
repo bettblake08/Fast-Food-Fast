@@ -5,7 +5,7 @@ app = create_app('TEST')
 
 @app.cli.command("db:init")
 def init_db():
-    db = DB('TEST')
+    db = DB()
     db.init_db(app)
 
 

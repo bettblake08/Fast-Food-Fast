@@ -5,7 +5,7 @@ import pytest
 
 @pytest.mark.run(order=8)
 class TestFetchMenuEndpoint(object):
-    def test_using_valid_order_id(self, testClient):
+    def test_using_valid_order_id(self, testClient, initDatabase):
         response = testClient.get('/api/v1/menu')
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 0
