@@ -3,6 +3,8 @@ from App.Database.Models import OrderModel
 from App.Database import items
 from flask import json
 
+from App.Api.v1.decorators import user_required
+
 
 """ Orders Resource 
 
@@ -13,6 +15,7 @@ Handles the creation and retrieval of orders
 
 
 class Orders(Resource):
+    @user_required(2)
     def get(self):
         """ Fetch all orders endpoint
 
@@ -33,7 +36,7 @@ class Orders(Resource):
             "content": [x.json() for x in orders]
         }, 200
 
-
+    @user_required(1)
     def post(self):
         """ Place an order endpoint
 

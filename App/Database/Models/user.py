@@ -74,16 +74,13 @@ class UserModel(DBModel):
 
 
     @classmethod
-    def get(cls, _id,role):
+    def get(cls, _id):
         db = DB()
         db.connect(cls.connection)
 
-        if role not in [1,2]:
-            return None
-
         q = """ 
-            SELECT * FROM {} WHERE id = %s AND role = {}
-            """.format(cls.table,role)
+            SELECT * FROM {} WHERE id = %s
+            """.format(cls.table)
         
         db.cursor.execute(q,(_id))
         db.conn.commit()
@@ -97,24 +94,19 @@ class UserModel(DBModel):
 
 
     @classmethod
-    def find_user_by_username(cls, username,role):
+    def find_user_by_username(cls, username):
         db = DB()
         db.connect(cls.connection)
 
 
-        if role not in [1,2]:
-            return None
-
         q = """ 
-            SELECT * FROM {} WHERE username = '%s' AND role = {}
-            """.format(cls.table,role) % username
+            SELECT * FROM {} WHERE username = '%s'
+            """.format(cls.table) % username
 
         db.cursor.execute(q)
         db.conn.commit()
 
         result = db.cursor.fetchone()
-
-        print(bool(result))
 
         if bool(result):
             return cls.get_object(result)
@@ -124,16 +116,13 @@ class UserModel(DBModel):
 
 
     @classmethod
-    def find_user_by_email(cls, email, role):
+    def find_user_by_email(cls, email):
         db = DB()
         db.connect(cls.connection)
 
-        if role not in [1, 2]:
-            return None
-
         q = """ 
-            SELECT * FROM {} WHERE email = '%s' AND role = {}
-            """.format(cls.table, role) % email
+            SELECT * FROM {} WHERE email = '%s'
+            """.format(cls.table) % email
 
         db.cursor.execute(q)
         db.conn.commit()

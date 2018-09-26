@@ -8,17 +8,17 @@ from werkzeug.security import generate_password_hash
 from App.Database.Models import UserModel,RevokedTokenModel
 
 
-class MainController():
+class LoginController():
     @staticmethod
     def authenticate(username, password):
-        user = UserModel.find_user_by_username(username,1)
+        user = UserModel.find_user_by_username(username)
         if user and user.authenticate(password):
             return user
 
     @staticmethod
     def identity(payload):
         user_id = payload['identity']
-        return UserModel.get(user_id,1)
+        return UserModel.get(user_id)
 
     @classmethod
     def signUp(cls):
@@ -122,9 +122,9 @@ class MainController():
         current_user = None
 
         if Serialization.test_email(data.username):
-            current_user = UserModel.find_user_by_email(data.username,1)
+            current_user = UserModel.find_user_by_email(data.username)
         else:
-            current_user = UserModel.find_user_by_username(data.username, 1)
+            current_user = UserModel.find_user_by_username(data.username)
 
         if not current_user:
             return make_response(jsonify(
@@ -134,22 +134,25 @@ class MainController():
                 }
             ), 200)
 
-        if not Serialization.test_password(data['password'], 1):
+        if not Serialization.test_password(data['password'],1):
             return make_response(jsonify(
                 {
                 'error': 2
                 }
             ), 200)
 
-        print("Password Test : " +
-              str(current_user.authenticate(data.password)))
-
 
         if current_user.authenticate(data['password']):
             access_token = create_access_token(
-                identity=current_user.id)
+                identity={
+                    'id': current_user.id,
+                    'role':current_user.role
+                })
             refresh_token = create_refresh_token(
-                identity=current_user.id)
+                identity={
+                    'id': current_user.id,
+                    'role': current_user.role
+                })
 
             resp = jsonify({
                 'error': 0,
