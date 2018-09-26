@@ -11,7 +11,7 @@ class TestPostNewFoodItemEndpoint(object):
                                content_type='application/json'
                                )
 
-    def test_using_no_name_field(self, testClient):
+    def test_using_no_name_field(self, testClient, initDatabase):
 
         response = self.placeNewItem(
             testClient=testClient,
@@ -25,7 +25,7 @@ class TestPostNewFoodItemEndpoint(object):
 
         assert response.status_code == 400
 
-    def test_using_no_price_field(self, testClient):
+    def test_using_no_price_field(self, testClient, initDatabase):
 
         response = self.placeNewItem(
             testClient=testClient,
@@ -39,7 +39,7 @@ class TestPostNewFoodItemEndpoint(object):
 
         assert response.status_code == 400
 
-    def test_using_no_category_id_field(self, testClient):
+    def test_using_no_category_id_field(self, testClient, initDatabase):
 
         response = self.placeNewItem(
             testClient=testClient,
@@ -53,7 +53,7 @@ class TestPostNewFoodItemEndpoint(object):
 
         assert response.status_code == 400
 
-    def test_using_invalid_price(self, testClient):
+    def test_using_invalid_price(self, testClient, initDatabase):
 
         response = self.placeNewItem(
             testClient=testClient,
@@ -67,7 +67,7 @@ class TestPostNewFoodItemEndpoint(object):
 
         assert response.status_code == 400
 
-    def test_using_invalid_category_id(self, testClient):
+    def test_using_invalid_category_id(self, testClient, initDatabase):
 
         response = self.placeNewItem(
             testClient=testClient,
@@ -81,8 +81,7 @@ class TestPostNewFoodItemEndpoint(object):
 
         assert response.status_code == 400
 
-
-    def test_using_category_that_does_not_exist(self, testClient):
+    def test_using_category_that_does_not_exist(self, testClient, initDatabase):
 
         response = self.placeNewItem(
             testClient=testClient,
@@ -98,7 +97,7 @@ class TestPostNewFoodItemEndpoint(object):
         assert json.loads(response.data)['error'] == 1
 
 
-    def test_using_valid_data(self, testClient):
+    def test_using_valid_data(self, testClient,initDatabase):
 
         response = self.placeNewItem(
             testClient=testClient,
