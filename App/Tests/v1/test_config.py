@@ -23,4 +23,4 @@ def initDatabase():
 
     yield db 
 
-    db.destroy(app)
+    #db.destroy(app)

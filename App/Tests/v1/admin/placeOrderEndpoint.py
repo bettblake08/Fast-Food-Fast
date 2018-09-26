@@ -37,7 +37,6 @@ class TestAdminPlaceOrderEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)["error"] == 1
 
-    
     def test_using_no_quantity_value_in_item(self, testClient):
 
         response = self.placeOrder(
@@ -62,7 +61,6 @@ class TestAdminPlaceOrderEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)["error"] == 2
 
-    
     def test_using_no_items_key(self, testClient):
 
         response = self.placeOrder(
@@ -86,7 +84,6 @@ class TestAdminPlaceOrderEndpoint(object):
 
         assert response.status_code == 400
 
-    
     def test_using_valid_data(self, testClient):
         
         response = self.placeOrder(

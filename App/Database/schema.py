@@ -37,5 +37,10 @@ CREATE TABLE IF NOT EXISTS ordered_items(
     item INT NOT NULL,
     quantity INT NOT NULL
 );
+""",
+""" 
+CREATE TABLE IF NOT EXISTS expired_tokens(
+token CHAR(120) NOT NULL
+);
 """
 ]

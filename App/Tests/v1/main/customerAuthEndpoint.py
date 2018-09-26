@@ -1,4 +1,4 @@
-from App.Tests.v1.test_config import testClient
+from App.Tests.v1.test_config import testClient, initDatabase
 from flask import json
 import pytest
 
@@ -6,7 +6,7 @@ import pytest
 @pytest.mark.run(order=5)
 class TestCustomerAuthEndpoint(object):
     def authUser(self, data, testClient):
-        return testClient.post('/api/v1/auth/signup',
+        return testClient.post('/api/v1/auth/login',
                                data=data,
                                content_type='application/json'
                                )
@@ -49,7 +49,7 @@ class TestCustomerAuthEndpoint(object):
             ))
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 1
+        assert json.loads(response.data)['error'] == 2
 
     def test_using_username_that_doesnt_exist(self, testClient, initDatabase):
 
@@ -63,7 +63,7 @@ class TestCustomerAuthEndpoint(object):
             ))
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 2
+        assert json.loads(response.data)['error'] == 1
 
     def test_using_email_that_doesnt_exist(self, testClient, initDatabase):
 
@@ -77,7 +77,7 @@ class TestCustomerAuthEndpoint(object):
             ))
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 2
+        assert json.loads(response.data)['error'] == 1
 
     def test_using_username(self, testClient, initDatabase):
 

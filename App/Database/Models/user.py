@@ -1,6 +1,8 @@
 from App.Database import DB
 from App.Database.db_model import DBModel
 
+from werkzeug.security import check_password_hash
+
 
 class UserModel(DBModel):
 
@@ -95,6 +97,57 @@ class UserModel(DBModel):
 
 
     @classmethod
+    def find_user_by_username(cls, username,role):
+        db = DB()
+        db.connect(cls.connection)
+
+
+        if role not in [1,2]:
+            return None
+
+        q = """ 
+            SELECT * FROM {} WHERE username = '%s' AND role = {}
+            """.format(cls.table,role) % username
+
+        db.cursor.execute(q)
+        db.conn.commit()
+
+        result = db.cursor.fetchone()
+
+        print(bool(result))
+
+        if bool(result):
+            return cls.get_object(result)
+        else:
+            return None
+
+
+
+    @classmethod
+    def find_user_by_email(cls, email, role):
+        db = DB()
+        db.connect(cls.connection)
+
+        if role not in [1, 2]:
+            return None
+
+        q = """ 
+            SELECT * FROM {} WHERE email = '%s' AND role = {}
+            """.format(cls.table, role) % email
+
+        db.cursor.execute(q)
+        db.conn.commit()
+
+        result = db.cursor.fetchone()
+
+        if bool(result):
+            return cls.get_object(result)
+        else:
+            return None
+
+
+
+    @classmethod
     def exists(cls, _id):
         db = DB()
         db.connect(cls.connection)
@@ -111,15 +164,24 @@ class UserModel(DBModel):
 
     @classmethod
     def get_object(cls,row):
-        order = cls(
-            userId=row[1],
-            total=row[2],
-            status=row[3])
+        user = cls(
+            username=row[1],
+            email=row[2],
+            password=row[3],
+            role=row[4])
 
-        order.id = row[0]
-        order.created_at = str(row[4])
-        order.updated_at = str(row[5])
+        user.id = row[0]
+        user.created_at = str(row[5])
+        user.updated_at = str(row[6])
 
+        return user
+
+
+    def authenticate(self,password):
+        print(self.password)
+        print(password)
+        
+        return check_password_hash(self.password,password)
 
 
     def save(self):
