@@ -103,6 +103,7 @@ class TestCustomerAuthEndpoint(object):
                     "password": "testPASS.A1"
                 }
             ))
+            
 
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 0
