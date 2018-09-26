@@ -58,7 +58,7 @@ pip install virtualenv
 
 ```
 virtualenv env
-''
+```
 
 Note: I recommend specifying the python version of the new virtual environment. Click here to [learn more](https://realpython.com/python-virtual-environments-a-primer/).
 
