@@ -17,11 +17,13 @@ class Order(Resource):
         if not bool(order):
             return {
                 'error': 1,
-                "error_msg": "Order does not exist. Please enter a valid order id."}, 200
+                "error_msg": "Order does not exist. Please enter a valid order id."
+                }, 200
 
         return {
             'error': 0,
-            "content": order.json()}, 200
+            "content": order.json()
+            }, 200
 
     def put(self, param):
         #   Update order status endpoint
@@ -37,14 +39,22 @@ class Order(Resource):
         data = parser.parse_args()
 
         if int(data.status) not in [0, 1, 2, 3]:
-            return {'error': 1, 'error_msg': "Invalid status number. Please provide a valid status number"}, 200
+            return {
+                'error': 1, 
+                'error_msg': "Invalid status number. Please provide a valid status number"
+                }, 200
 
         order = OrderModel.get(int(param))
 
         if not order:
-            return {'error': 2, 'error_msg': "Order not found. Please provide a valid order id"}, 200
+            return {
+                'error': 2, 
+                'error_msg': "Order not found. Please provide a valid order id"
+                }, 200
 
         order.status = data.status
         order.update()
 
-        return {'error': 0}, 200
+        return {
+            'error': 0
+            }, 200

@@ -9,13 +9,7 @@ class Orders(Resource):
         #Fetch all orders endpoint
 
         orders = OrderModel.get_all_orders()
-        """ 
-        for o in orders:
-            for i in o['items']:
-                for item in items:
-                    if item['id'] == i['id']:
-                        i['details'] = item """
-
+        
         return {
             'error': 0,
             "content": [x.json() for x in orders]
@@ -49,10 +43,16 @@ class Orders(Resource):
                         })
 
                 if not found:
-                    return {'error': 1, 'error_msg': "Item " + str(i['id']) + " doesn't exist!"}, 200
+                    return {
+                        'error': 1, 
+                        'error_msg': "Item " + str(i['id']) + " doesn't exist!"
+                        }, 200
 
         except:
-            return {'error': 2, 'error_msg': "Items list is invalid. Please check to see all items id and quantity properties."}, 200
+            return {
+                'error': 2, 
+                'error_msg': "Items list is invalid. Please check to see all items id and quantity properties."
+                }, 200
 
         order = OrderModel(
             userId=1000001,
@@ -62,4 +62,6 @@ class Orders(Resource):
 
         order.save()
 
-        return {'error': 0}, 200
+        return {
+            'error': 0
+            }, 200
