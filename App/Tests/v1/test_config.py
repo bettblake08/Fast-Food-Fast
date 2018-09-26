@@ -1,6 +1,7 @@
 import pytest
 from App import create_app
 from App.Database import DB
+import os
 
 app = create_app('TEST')
 
@@ -23,4 +24,4 @@ def initDatabase():
 
     yield db 
 
-    #db.destroy(app)
+    #db.teardown(app)

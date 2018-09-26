@@ -4,46 +4,6 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 import os
 
-users = [
-    {
-        'id': 10000001,
-        'username': "bettbrian08",
-        'password': 'Bett.A08'
-    },
-    {
-        'id': 10000002,
-        'username': "janet12",
-        'password': 'Bett.A08'
-    }, {
-        'id': 10000003,
-        'username': "miles27",
-        'password': 'Bett.A08'
-    }, {
-        'id': 10000004,
-        'username': "bigjames12",
-        'password': 'Bett.A08'
-    }
-]
-
-items = [
-    {
-        "id": 101,
-        "name": "Chicken Burger",
-        "price": 400
-    },
-    {
-        "id": 102,
-        "name": "Beef Burger",
-        "price": 400
-    },
-    {
-        "id": 103,
-        "name": "Coke 350ml",
-        "price": 100
-    }
-]
-
-
 class DB():
     def __init__(self):
         self.env = os.environ.get('DB_ENV')
@@ -75,7 +35,7 @@ class DB():
                     app.config['DB_NAME']))
         
         except:
-            print('Failed to connect to database.')
+            print('Failed to create to database.')
 
 
     def create_tables(self):
@@ -122,7 +82,7 @@ class DB():
             print('Failed to connect to database.')
 
 
-    def destroy(self, app):
+    def teardown(self, app):
         self.connect_db(app)
 
         q = [
@@ -139,3 +99,21 @@ class DB():
             print('Teardown succeeded!')
         except:
             print('Failed to teardown database. Please checkout code and try again!')
+
+
+    def destroy(self, app):
+        self.connect_db(app)
+
+        q = [
+            "DROP DATABASE"
+        ]
+
+        for query in q:
+            self.cursor.execute(query)
+
+        self.conn.commit()
+
+        try:
+            print('Destroy db succeeded!')
+        except:
+            print('Failed to destroy database. Please checkout code and try again!')

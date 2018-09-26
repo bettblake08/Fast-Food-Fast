@@ -1,4 +1,4 @@
-from App.Tests.v1.test_config import testClient
+from App.Tests.v1.test_config import testClient, initDatabase
 from flask import json
 import pytest
 
@@ -6,7 +6,7 @@ import pytest
 @pytest.mark.run(order=1)
 class TestPostNewFoodItemEndpoint(object):
     def placeNewItem(self, data, testClient):
-        return testClient.post('/api/v1/menu/',
+        return testClient.post('/api/v1/menu',
                                data=data,
                                content_type='application/json'
                                )

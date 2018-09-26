@@ -5,7 +5,7 @@ from flask import Blueprint,redirect,url_for,jsonify,make_response,json
 from flask_restful import Api,reqparse
 from flask_jwt_extended import JWTManager,get_jwt_claims,verify_fresh_jwt_in_request
 
-from App.Database.Models import UserModel,RevokedTokenModel,OrderModel,OrderedItemModel
+from App.Database.Models import UserModel,RevokedTokenModel,OrderModel,OrderedItemModel,OrderItemModel
 
 from App.Api.v1.Controllers import LoginController
 
@@ -17,8 +17,8 @@ lc = LoginController()
 
 api = Api(api_v1)
 
-api.add_resource(Orders, "/orders")
-api.add_resource(Order, "/order/<string:param>")
+api.add_resource(Menu, "/menu")
+
 
 
 jwt = JWTManager()
@@ -215,7 +215,7 @@ def post_new_order():
                 - A response with a status code 200
                 - An empty content list
 
-        """
+    """
 
     parser = reqparse.RequestParser()
 
@@ -229,24 +229,16 @@ def post_new_order():
     orderItems = []
 
     try:
-        items = OrderedItemModel.find_all_order_items()
+        for orderedItem in json.loads(data['items']):
 
-        for orderedItem in :
-            found = False   
-
-            
-
-            for item in items:
-                if orderedItem['id'] == item['id']:
-                    
-
-            if not found:
+            if not OrderItemModel.get(orderedItem['id']):
                 return make_response(jsonify(
                     {
                         'error': 1,
                         'error_msg': "Item " + str(orderedItem['id']) + " doesn't exist!"
                     }
                 ), 200)
+
     except:
         return make_response(
             jsonify(
@@ -266,9 +258,107 @@ def post_new_order():
     order.save()
 
     return make_response(
-        jsonify(
-            {
+        jsonify({
                 'error': 0
             }
         ), 200
     )
+
+
+@api_v1.route('/menu')
+def get_all_menu_items():
+    """ Fetch menu items endpoint
+
+        Returns:
+            - If orders are present
+                - A response with a status code 200
+                - A content list with all orders
+
+            - If orders are not present
+                - A response with a status code 200
+                - An empty content list
+
+    """
+    items = OrderItemModel.get_all_items()
+
+    if not bool(items):
+        return make_response(
+            jsonify(
+                {
+                    'error': 1,
+                    "error_msg": "Order does not exist. Please enter a valid order id."
+                }
+            ), 200
+        )
+
+    return make_response(jsonify(
+        {
+            'error': 0,
+            "content": [x.json() for x in items]
+        }
+    ), 200)
+
+
+@api_v1.route("/menu", methods=['POST'])
+def post_new_order_item():
+    """ Post a new menu item endpoint
+
+        Arguments:
+            - name (str) : The name of the order item
+            - price (int) : The price of the order 
+            - c_id (int) : The category id of the order
+
+        """
+
+    parser = reqparse.RequestParser()
+
+    parser.add_argument(
+        'name',
+        required=True,
+        help="Name field required. Please provide a name for the item."
+        )
+
+    parser.add_argument(
+        'price',
+        type=float,
+        required=True,
+        help="Price field required. Please provide a price for the item as an integer."
+        )
+
+    parser.add_argument(
+        'c_id',
+        type=int,
+        required=True,
+        help="c_id (Category Id) field required. Please provide a valid category id of integer type."
+        )
+
+    data = parser.parse_args()
+
+    if int(data.c_id) not in [0, 1, 2, 3]:
+        return make_response(jsonify(
+            {
+                'error': 1,
+                'error_msg': "Invalid status number. Please provide a valid status number"
+            }
+        ), 200)
+
+    item = OrderItemModel(
+        name=data.name,
+        price=data.price * 100,
+        c_id=data.c_id)
+
+    try:
+        item.save()
+
+        return make_response(
+            jsonify({
+                'error': 0
+            }
+        ), 200)
+
+    except:
+        return make_response(
+            jsonify({
+                'error_msg': "Failed to process new order item. Please try again!"
+            }
+        ), 400)
