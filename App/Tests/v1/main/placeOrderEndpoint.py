@@ -3,7 +3,7 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=2)
+@pytest.mark.run(order=4)
 class TestPlaceOrderEndpoint(object):
     def placeOrder(self,data,testClient):
         return testClient.post('/api/v1/users/orders',
@@ -54,6 +54,9 @@ class TestPlaceOrderEndpoint(object):
                     )
                 }
             ))
+
+        print(response.data)
+        print(response.headers)
 
         assert response.status_code == 200
         assert json.loads(response.data)["error"] == 2

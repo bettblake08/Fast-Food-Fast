@@ -75,7 +75,6 @@ class DB():
             self.cursor = self.conn.cursor()
 
             print('Connection succeeded.')
-            print(connection)
 
             return self.conn.cursor()
         except:

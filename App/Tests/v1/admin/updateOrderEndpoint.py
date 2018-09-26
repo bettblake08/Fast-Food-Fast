@@ -4,7 +4,7 @@ import pytest
 
 
 
-@pytest.mark.run(order=4)
+@pytest.mark.run(order=11)
 class TestUpdateOrderEndpoint(object):
     def updateOrder(self,id,data,testClient):
         return testClient.put('/api/v1/order/' + str(id),

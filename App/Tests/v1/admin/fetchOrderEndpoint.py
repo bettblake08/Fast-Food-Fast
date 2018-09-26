@@ -3,9 +3,8 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=3)
+@pytest.mark.run(order=8)
 class TestFetchOrderEndpoint(object):
-    
     def test_using_invalid_order_id(self, testClient, initDatabase):
         response = testClient.get('/api/v1/order/20001')
         assert response.status_code == 200

@@ -3,8 +3,8 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=2)
-class TestCustomerAuthEndpoint(object):
+@pytest.mark.run(order=7)
+class TestAdminAuthEndpoint(object):
     def authUser(self, data, testClient):
         return testClient.post('/api/v1/auth/login',
                                data=data,
@@ -17,7 +17,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "userna": "bettbrian08",
+                    "userna": "jamesblack",
                     "password": "testPASS.A1"
                 }
             ))
@@ -30,7 +30,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "bettbrian08",
+                    "username": "jamesblack",
                     "passwd": "testPASS.A1"
                 }
             ))
@@ -43,7 +43,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "bettbrian08",
+                    "username": "jamesblack",
                     "password": "m21c07ss"
                 }
             ))
@@ -57,7 +57,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "bettbrian07",
+                    "username": "jamesblack0807",
                     "password": "testPASS.A1"
                 }
             ))
@@ -71,7 +71,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "bettblake08@hotmail.com",
+                    "username": "bettblake07@hotmail.com",
                     "password": "testPASS.A1"
                 }
             ))
@@ -85,7 +85,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "bettbrian08",
+                    "username": "jamesblack",
                     "password": "testPASS.A1"
                 }
             ))
@@ -99,7 +99,7 @@ class TestCustomerAuthEndpoint(object):
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "bettbrian@rocketmail.com",
+                    "username": "jamesblack@rocketmail.com",
                     "password": "testPASS.A1"
                 }
             ))

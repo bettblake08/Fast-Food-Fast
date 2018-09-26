@@ -37,7 +37,7 @@ class RevokedTokenModel(DBModel):
         db.connect(cls.connection)
 
         q = """ 
-        SELECT * FROM {} WHERE token = {}
+        SELECT * FROM {} WHERE token = '{}'
         """.format(cls.table,_id)
 
         db.cursor.execute(q)

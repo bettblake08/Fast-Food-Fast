@@ -3,7 +3,7 @@ import pytest
 
 
 
-@pytest.mark.run(order=5)
+@pytest.mark.run(order=9)
 class TestFetchOrdersEndpoint(object):
     def test(self, testClient, initDatabase):
         response = testClient.get('/api/v1/orders')

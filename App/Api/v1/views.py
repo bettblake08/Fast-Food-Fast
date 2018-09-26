@@ -22,12 +22,14 @@ def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
     return RevokedTokenModel.is_token_blacklisted(jti)
 
+""" 
 @jwt.unauthorized_loader
 @jwt.invalid_token_loader
 @jwt.expired_token_loader
 def redirect_to_login(e):
-    return redirect(url_for("api.user_login_in"))
-
+    pass 
+    
+"""
 
 def user_required(roleId):
     def user_identify(fn):

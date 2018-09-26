@@ -3,7 +3,7 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=8)
+@pytest.mark.run(order=3)
 class TestFetchMenuEndpoint(object):
     def test_using_valid_order_id(self, testClient, initDatabase):
         response = testClient.get('/api/v1/menu')

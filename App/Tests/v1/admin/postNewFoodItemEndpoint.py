@@ -3,7 +3,7 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=1)
+@pytest.mark.run(order=10)
 class TestPostNewFoodItemEndpoint(object):
     def placeNewItem(self, data, testClient):
         return testClient.post('/api/v1/menu',
