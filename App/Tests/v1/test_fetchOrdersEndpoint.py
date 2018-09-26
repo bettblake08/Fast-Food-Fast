@@ -4,8 +4,9 @@ import pytest
 
 testNo = 11
 
+
+@pytest.mark.run(order=4)
 class TestFetchOrdersEndpoint(object):
-    @pytest.mark.run(order=testNo)
     def test(self, testClient):
         response = testClient.get('/api/v1/orders')
         assert response.status_code == 200

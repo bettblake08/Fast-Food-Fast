@@ -28,12 +28,19 @@ class Order(Resource):
         
         """
 
-        orderId = param
+        try : 
+            orderId = int(param)
+        except:
+            return {
+                "error_msg": "Invalid order id"
+            }, 400
+          
+        print(orderId)
 
-        ordered = {}
+        order = {}
 
         for ordered in orders:
-            if ordered['id'] == int(orderId):
+            if ordered['id'] == orderId:
                 order = ordered
 
                 for orderedItem in order['items']:
@@ -41,7 +48,7 @@ class Order(Resource):
                         if item['id'] == orderedItem['id']:
                             orderedItem['details'] = item
 
-        if order == {}:
+        if 'id' not in order:
             return {
                 'error': 1, 
                 "error_msg":"Order does not exist. Please enter a valid order id."
@@ -49,7 +56,7 @@ class Order(Resource):
 
         return {
             'error': 0, 
-            "content": ordered
+            "content": order
             }, 200
 
 
