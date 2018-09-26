@@ -9,11 +9,11 @@ Handles the updating and retrieval of orders
 """
 
 class Order(Resource):
-    def get(self,orderId):
+    def get(self,param):
         """ Fetch order data endpoint
 
         Arguments:
-            - orderId (int): this is the order id of the order to fetch
+            - param (int): this is the order id of the order to fetch
 
         Returns:
             - If orders are present
@@ -28,6 +28,7 @@ class Order(Resource):
         
         """
 
+        orderId = param
 
         ordered = {}
 
@@ -52,7 +53,7 @@ class Order(Resource):
             }, 200
 
 
-    def put(self,status):
+    def put(self,param):
         """ Update order status endpoint
 
         Arguments:
@@ -88,6 +89,8 @@ class Order(Resource):
             required=True,
             help="Status field required. Please provide a new status for the order."
         )
+
+        status = param
 
         data = parser.parse_args()
 
