@@ -4,7 +4,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2225724f61db28f6114b/test_coverage)](https://codeclimate.com/github/bettblake08/Fast-Food-Fast/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2225724f61db28f6114b/maintainability)](https://codeclimate.com/github/bettblake08/Fast-Food-Fast/maintainability)
 
-This is an web project that implements the online restaurant business requirements set by the FastFoodFast restaurant. FastFoodFast is a restaurant thats serves fast food meals such as french fries, burgers, fried food, soda and much more. But to reach a larger market of customers that are not willing to visit their restaurant, they have decided to produce an online web platform for aspiring customers to make an order from their restaurant. 
+This is a web project that implements the online restaurant business requirements set by the FastFoodFast restaurant. FastFoodFast is a restaurant thats serves fast food meals such as french fries, burgers, fried food, soda and much more. But to reach a larger market of customers that are not willing to visit their restaurant, they have decided to produce an online web platform for aspiring customers to make an order from their restaurant. 
 
 ## Getting Started
 
