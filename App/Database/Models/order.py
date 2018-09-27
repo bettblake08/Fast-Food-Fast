@@ -81,10 +81,17 @@ class OrderModel(DBModel):
 
 
     def json(self):
+        items = None
+
+        if self.items:
+           items = [i.json() for i in self.items]
+        else :
+            items = []
+
         return {
             'id': self.id,
             'userId': self.userId,
-            'items': [i.json() for i in self.items],
+            'items': items ,
             'total': self.total,
             'status': self.status,
             'created_at': str(self.created_at),
@@ -109,7 +116,8 @@ class OrderModel(DBModel):
         if bool(result):
             order = cls.get_object(result)
             order.items = OrderedItemModel.find_all_order_items(result[0])
-
+            
+            
             return order
         else:
             return None

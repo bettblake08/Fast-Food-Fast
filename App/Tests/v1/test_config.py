@@ -1,6 +1,7 @@
 import pytest
 from App import create_app
 from App.Database import DB
+from App.Database.factory import generate_test_data
 import os
 
 app = create_app('TEST')
@@ -28,12 +29,8 @@ def testClient():
 def initDatabase():
     db = DB()
     db.init_test_db(app)
+    generate_test_data()
 
     yield db 
 
     #db.teardown(app)
-
-data = {
-    "access_token":None,
-    "refresh_token":None
-}

@@ -90,13 +90,10 @@ class LoginController():
                 ), 200
             )
 
-        passw = flask_bcrypt.generate_password_hash(data['password'])
-        print(passw)
-
         user = UserModel(
             username=data.username,
             email=data.email,
-            password=passw,
+            password=flask_bcrypt.generate_password_hash(data['password']),
             role=data.role)
 
         user.save()
@@ -159,7 +156,8 @@ class LoginController():
                 identity={
                     'id': current_user.id,
                     'role':current_user.role
-                })
+                },fresh=True)
+                
             refresh_token = create_refresh_token(
                 identity={
                     'id': current_user.id,
@@ -193,7 +191,6 @@ class LoginController():
                 "error": 0, 
                 'error_msg': 'Access token has been revoked'}
                 )
-            unset_jwt_cookies(resp)
 
             return resp,200
         except:

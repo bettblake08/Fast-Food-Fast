@@ -111,10 +111,10 @@ class UserModel(DBModel):
         db.cursor.execute(q)
         db.conn.commit()
 
-        result = db.cursor.fetchone()
+        result = db.cursor.fetchall()
 
-        if bool(result):
-            return cls.get_object(result)
+        if len(result) > 0:
+            return cls.get_object(result[0])
         else:
             return None
 

@@ -48,8 +48,6 @@ class OrderItemModel(DBModel):
         INSERT INTO {}(name,price,c_id,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
         """.format(self.table)
 
-        print(q)
-
         self.db.cursor.execute(q, (self.name, self.price, self.c_id))
         self.db.conn.commit()
 

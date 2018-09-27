@@ -7,7 +7,7 @@ class Config(object):
     JWT_SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
 
     JWT_BLACKLIST_ENABLED = True
-    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+    JWT_BLACKLIST_TOKEN_CHECKS = ['access']
 
 
     JWT_COOKIE_SECURE = True

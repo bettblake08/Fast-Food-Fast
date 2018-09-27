@@ -1,7 +1,8 @@
 
 from functools import wraps
 
-from flask import Blueprint, redirect, url_for, jsonify, make_response, json, request
+from flask import Blueprint, redirect, url_for, \
+            jsonify, make_response, json, request
 from flask_restful import Api,reqparse
 from flask_jwt_extended import JWTManager,get_jwt_claims \
         ,verify_fresh_jwt_in_request,get_jwt_identity,\
@@ -10,13 +11,13 @@ from flask_jwt_extended import JWTManager,get_jwt_claims \
 from App.Database.Models import UserModel,RevokedTokenModel,OrderModel,OrderedItemModel,OrderItemModel
 
 from App.Api.v1.Controllers import LoginController
+from App.Api.v1.decorators import user_required
 
 
 api_v1 = Blueprint('api', __name__)
 lc = LoginController()
 
 api = Api(api_v1)
-
 jwt = JWTManager()
 
 @jwt.token_in_blacklist_loader
@@ -32,31 +33,6 @@ def redirect_to_login(e):
     pass 
     
 """
-
-def user_required(roleId):
-    def user_identify(fn):
-        @wraps(fn)
-        def wrapper(*args, **param):
-            verify_fresh_jwt_in_request()
-
-            claims = get_jwt_claims()
-
-            if claims['role'] != roleId:
-                role = "Unidentified"
-                
-                if param['role'] == 1:
-                    role = "customer"
-                elif param['role'] == 2:
-                    role = "admin"
-
-                return jsonify({
-                    "error_msg":'Only {} users have permission to access!'.format(role)
-                }), 403
-            else:
-                return fn(*args, **param)
-        
-        return wrapper
-    return user_identify
 
 
 @jwt.user_claims_loader
@@ -83,19 +59,20 @@ def user_login_in():
     return lc.loginAuth()
 
 
-@api_v1.route('/api/key2/logout')
-@jwt_refresh_token_required
+@api_v1.route('/auth/logout')
 def logOutRefresh():
     return lc.logOut()
 
 
-@api_v1.route('/api/key2/refresh')
+@api_v1.route('/token/refresh')
 @jwt_refresh_token_required
-def refesh_token():
+def refresh_token():
     user = get_jwt_identity()
-    resp = jsonify({'error': 0})
+    resp = jsonify({
+        'error': 0,
+        'access_token': create_access_token(identity=user, fresh=True)
+        })
 
-    set_access_cookies(resp, create_access_token(identity=user))
     return resp
 
 
@@ -139,8 +116,7 @@ def get_order(param):
             }), 200
         )
 
-    return make_response(jsonify(
-        {
+    return make_response(jsonify({
             'error': 0,
             "content": order.json()
         }),200)
@@ -191,25 +167,30 @@ def update_order(param):
     orderId = param
 
     if data.status not in [0, 1, 2, 3]:
-        return {
-            'error': 1,
-            'error_msg': "Invalid status number. Please provide a valid status number"
-        }, 200
+        return make_response(jsonify(
+            {
+                'error': 1,
+                'error_msg': "Invalid status number. Please provide a valid status number"
+            }
+        ), 200)
 
     order = OrderModel.get(orderId)
 
     if not order:
-        return {
-            'error': 2,
-            'error_msg': "Order not found. Please provide a valid order id"
-        }, 200
+        return make_response(jsonify(
+            {
+                'error': 2,
+                'error_msg': "Order not found. Please provide a valid order id"
+            }
+        ), 200)
 
     order.status = data.status
     order.update()
 
-    return {
-        'error': 0
-    }, 200
+    return make_response(
+        jsonify({
+            'error': 0
+        }), 200)
 
 
 @api_v1.route('/orders')
@@ -230,10 +211,12 @@ def get_all_orders():
 
     orders = OrderModel.get_all_orders()
 
-    return {
-        'error': 0,
-        "content": [x.json() for x in orders]
-    }, 200
+    return make_response(jsonify(
+        {
+            'error': 0,
+            "content": [x.json() for x in orders]
+        }
+    ), 200)
 
 
 @api_v1.route("/users/orders", methods=['POST'])
@@ -275,14 +258,26 @@ def post_new_order():
 
     try:
         for orderedItem in json.loads(data['items']):
+            orderItem = OrderItemModel.get(orderedItem['id'])
 
-            if not OrderItemModel.get(orderedItem['id']):
+            if not orderItem:
                 return make_response(jsonify(
                     {
                         'error': 1,
                         'error_msg': "Item " + str(orderedItem['id']) + " doesn't exist!"
                     }
                 ), 200)
+            else :
+
+                if 'quantity' not in orderedItem:
+                    return make_response(jsonify(
+                       {
+                           'error': 2,
+                           'error_msg': "Item " + str(orderedItem['id']) + " doesn't have a quantity field!"
+                       }
+                    ), 200)
+
+                total += orderedItem['quantity'] * orderItem.price
 
     except:
         return make_response(
@@ -326,8 +321,6 @@ def get_all_menu_items():
     """
     items = OrderItemModel.get_all_items()
 
-    print(request.cookies)
-
     if not bool(items):
         return make_response(
             jsonify(
@@ -355,6 +348,11 @@ def post_new_order_item():
             - price (int) : The price of the order 
             - c_id (int) : The category id of the order
 
+        Category Id
+            - Breakfast
+            - Main
+            - Snacks
+            - Drinks
     """
 
     parser = reqparse.RequestParser()
