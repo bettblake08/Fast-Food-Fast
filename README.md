@@ -6,6 +6,10 @@
 
 This is a web project that implements the online restaurant business requirements set by the FastFoodFast restaurant. FastFoodFast is a restaurant thats serves fast food meals such as french fries, burgers, fried food, soda and much more. But to reach a larger market of customers that are not willing to visit their restaurant, they have decided to produce an online web platform for aspiring customers to make an order from their restaurant. 
 
+## API Documentation
+fastfoodfast8.docs.apiary.io
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
