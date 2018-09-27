@@ -33,4 +33,4 @@ def initDatabase():
 
     yield db 
 
-    #db.teardown(app)
+    db.teardown(app)
