@@ -3,6 +3,10 @@ language: python
 python:
   - "3.5"
 
+env:
+  - APP_ENV="TEST"
+
+
 install:
   - python setup.py build
   - python setup.py install
