@@ -409,3 +409,28 @@ def post_new_order_item():
                 'error_msg': "Failed to process new order item. Please try again!"
             }
         ), 400)
+
+
+@api_v1.route("/users/orders", methods=['POST'])
+@user_required(1)
+def get_user_order_history():
+    """ Get user order history Endpoint
+
+        Returns:
+            - If user is logged in
+                - A response with a status code 200
+                - An error value in response body is 0
+                - A content value as list of orders
+    """
+
+    user = get_jwt_identity()
+    
+    orders = OrderModel.get_all_orders_by_user(user['id'])
+
+    return make_response(
+        jsonify({
+                'error': 0,
+                'content':[order.json() for order in orders]
+                }
+            ), 200
+        )

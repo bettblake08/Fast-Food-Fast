@@ -159,6 +159,35 @@ class OrderModel(DBModel):
 
         return response
 
+    @classmethod
+    def get_all_orders_by_user(cls,userId):
+
+        try:
+            db = DB()
+            db.connect(cls.connection)
+
+            q = """ 
+            SELECT * FROM orders WHERE userId = {}
+            """.format(userId)
+
+            db.cursor.execute(q)
+
+            db.conn.commit()
+            results = db.cursor.fetchall()
+
+        except:
+            return None
+
+        response = []
+
+        for result in results:
+            order = cls.get_object(result)
+            order.items = OrderedItemModel.find_all_order_items(result[0])
+
+            response.append(order)
+
+        return response
+
 
     def save(self):
         if not bool(self.id):
