@@ -1,3 +1,5 @@
+import os
+
 class Config(object):
     SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
     DATABASE_URL = 'postgres://postgres:m21c07s96.A1@localhost:5432/fastfoodfast'
@@ -20,6 +22,11 @@ class ProductionConfig(Config):
     FLASK_ENV = "production"
     DEBUG = False
     JWT_COOKIE_CSRF_PROTECT = True
+
+    DB_HOST = os.getenv('DB_HOST')
+    DB_USER = os.getenv('DB_USER')
+    DB_PASSWORD = os.getenv('DB_PASSWORD')
+    DB_NAME = os.getenv('DB_NAME')
 
 
 class DevelopmentConfig(Config):
