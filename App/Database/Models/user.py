@@ -171,12 +171,7 @@ class UserModel(DBModel):
         return user
 
 
-    def authenticate(self,password):
-        print(self.id)
-        print(self.username)
-        print(self.password)
-        print(password)
-        
+    def authenticate(self,password):        
         return flask_bcrypt.check_password_hash(self.password, password)
 
 

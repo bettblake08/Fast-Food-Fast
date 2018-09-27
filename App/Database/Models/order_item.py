@@ -29,6 +29,19 @@ class OrderItemModel(DBModel):
         self.price = param['price']
         self.c_id = param['c_id']
 
+    @classmethod
+    def get_object(cls, row):
+        item = cls(
+            name=row[1],
+            price=row[2],
+            c_id=row[3])
+
+        item.id = row[0]
+        item.created_at = row[4]
+        item.updated_at = row[5]
+
+        return item
+
 
     def insert(self):
         q = """ 
@@ -137,19 +150,7 @@ class OrderItemModel(DBModel):
 
         return response
 
-    @classmethod
-    def get_object(cls,row):
-        item = cls(
-            name=row[1],
-            price=row[2],
-            c_id=row[3])
-
-        item.id = row[0]
-        item.created_at = row[4]
-        item.updated_at = row[5]
-
-        return item
-
+    
 
     def save(self):
         if not bool(self.id):

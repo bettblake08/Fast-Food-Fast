@@ -7,7 +7,7 @@ class Config(object):
     JWT_COOKIE_SECURE = True
     JWT_ACCESS_COOKIE_PATH = '/'
     JWT_REFRESH_COOKIE_PATH = '/api/key2/'
-    JWT_COOKIE_CSRF_PROTECT = False
+    
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
     JWT_SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
@@ -18,12 +18,14 @@ class ProductionConfig(Config):
     ENV = "production"
     FLASK_ENV = "production"
     DEBUG = False
+    JWT_COOKIE_CSRF_PROTECT = True
 
 
 class DevelopmentConfig(Config):
     ENV = "development"
     FLASK_ENV = "development"
     DEBUG = True
+    JWT_COOKIE_CSRF_PROTECT = False
 
     DB_HOST = "localhost"
     DB_USER = "postgres"
@@ -36,6 +38,7 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     BCRYPT_LOG_ROUNDS = 4
+    JWT_COOKIE_CSRF_PROTECT = False
     
     DB_HOST = "localhost"
     DB_USER = "postgres"

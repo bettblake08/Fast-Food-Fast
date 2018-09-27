@@ -25,6 +25,18 @@ class OrderedItemModel(DBModel):
         self.quantity = param['quantity']
 
 
+    @classmethod
+    def get_object(cls, row):
+        item = cls(
+            order=row[1],
+            item=row[2],
+            quantity=row[3])
+
+        item.id = row[0]
+
+        return item
+
+
     def insert(self):
 
         q = """ 
@@ -84,14 +96,7 @@ class OrderedItemModel(DBModel):
         result = db.cursor.fetchone()
 
         if len(result) > 0:
-            order = cls(
-                order=result[1],
-                item=result[2],
-                quantity=result[3])
-
-            order.id = result[0]
-
-            return order
+            return cls.get_object(result)
         else:
             return None
 
@@ -113,15 +118,8 @@ class OrderedItemModel(DBModel):
         if len(results) > 0:
             response = []
 
-        for r in results:
-            order = cls(
-                order=r[1],
-                item=r[2],
-                quantity=r[3])
-
-            order.id = r[0]
-
-            response.append(order)
+            for result in results:
+                response.append(cls.get_object(result))
 
             return response
         else:

@@ -9,17 +9,6 @@ from App.Database.Models import UserModel,RevokedTokenModel
 
 
 class LoginController():
-    @staticmethod
-    def authenticate(username, password):
-        user = UserModel.find_user_by_username(username)
-        if user and user.authenticate(password):
-            return user
-
-    @staticmethod
-    def identity(payload):
-        user_id = payload['identity']
-        return UserModel.get(user_id)
-
     @classmethod
     def signUp(cls):
         parser = reqparse.RequestParser()
@@ -164,11 +153,8 @@ class LoginController():
                 }
             ), 200)
 
-        auth = current_user.authenticate(data['password'])
 
-        print("Password test : " + str(auth))
-
-        if auth:
+        if current_user.authenticate(data['password']):
             access_token = create_access_token(
                 identity={
                     'id': current_user.id,
@@ -197,7 +183,7 @@ class LoginController():
 
 
     @staticmethod
-    def adminLogOut():
+    def logOut():
         jti = get_raw_jwt()['jti']
 
         try:

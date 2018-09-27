@@ -30,6 +30,20 @@ class OrderModel(DBModel):
         self.status = param['status']
 
 
+    @classmethod
+    def get_object(cls,row):
+        user = cls(
+            userId=row[1],
+            total=row[2],
+            status=row[3])
+
+        user.id = row[0]
+        user.created_at = str(row[4])
+        user.updated_at = str(row[5])
+
+        return user
+
+
     def insert(self):
         q = """ 
         INSERT INTO orders(userId,total,status,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
@@ -93,14 +107,7 @@ class OrderModel(DBModel):
         result = db.cursor.fetchone()
 
         if bool(result):
-            order = cls(
-                userId=result[1],
-                total=result[2],
-                status=result[3])
-
-            order.id = result[0]
-            order.created_at = str(result[4])
-            order.updated_at = str(result[5])
+            order = cls.get_object(result)
             order.items = OrderedItemModel.find_all_order_items(result[0])
 
             return order
@@ -144,15 +151,9 @@ class OrderModel(DBModel):
 
         response = []
 
-        for r in results:
-            order = cls(
-                userId=r[1],
-                total=r[2],
-                status=r[3])
-
-            order.id = r[0]
-            order.created_at = r[4]
-            order.updated_at = r[5]
+        for result in results:
+            order = cls.get_object(result)
+            order.items = OrderedItemModel.find_all_order_items(result[0])
 
             response.append(order)
 
