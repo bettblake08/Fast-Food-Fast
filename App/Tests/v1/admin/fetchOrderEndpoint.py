@@ -1,4 +1,4 @@
-from App.Tests.v1.test_config import testClient 
+from App.Tests.v1.test_config import testClient ,initDatabase
 from flask import json
 import pytest
 

@@ -1,4 +1,4 @@
-from App.Tests.v1.test_config import testClient, initDatabase
+from App.Tests.v1.test_config import testClient, initDatabase, testData,access_token,refresh_token
 from flask import json
 import pytest
 
@@ -79,7 +79,7 @@ class TestAdminAuthEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 1
 
-    def test_using_username(self, testClient, initDatabase):
+    def test_using_username(self, testClient, initDatabase,testData):
 
         response = self.authUser(
             testClient=testClient,
@@ -90,20 +90,29 @@ class TestAdminAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        data = json.loads(response.data)
 
-    def test_using_email_as_username(self, testClient, initDatabase):
+        pytest.access_token = data['access_token']
+        pytest.refresh_token = data['refresh_token']
+
+        assert response.status_code == 200
+        assert data['error'] == 0
+
+    def test_using_email_as_username(self, testClient, initDatabase,testData):
 
         response = self.authUser(
             testClient=testClient,
             data=json.dumps(
                 {
-                    "username": "jamesblack@rocketmail.com",
+                    "username": "jamesblack08@rocketmail.com",
                     "password": "testPASS.A1"
                 }
             ))
-            
+
+        data = json.loads(response.data)
+
+        pytest.access_token = data['access_token']
+        pytest.refresh_token = data['refresh_token']            
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        assert data['error'] == 0

@@ -5,6 +5,13 @@ import os
 
 app = create_app('TEST')
 
+def pytest_namespace():
+    return {
+        "access_token":"",
+        "refresh_token":""
+    }
+
+
 @pytest.fixture(scope="session")
 def testClient():
     client = app.test_client()
@@ -25,3 +32,8 @@ def initDatabase():
     yield db 
 
     #db.teardown(app)
+
+data = {
+    "access_token":None,
+    "refresh_token":None
+}

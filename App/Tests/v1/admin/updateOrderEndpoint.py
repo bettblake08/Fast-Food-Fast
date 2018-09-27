@@ -1,15 +1,17 @@
-from App.Tests.v1.test_config import testClient
+from App.Tests.v1.test_config import testClient,initDatabase,access_token,refresh_token
 from flask import json
 import pytest
 
 
-
 @pytest.mark.run(order=11)
 class TestUpdateOrderEndpoint(object):
-    def updateOrder(self,id,data,testClient):
+    def updateOrder(self,id,data,testClient,data):
         return testClient.put('/api/v1/order/' + str(id),
                     data=data,
-                    content_type="application/json"
+                    content_type="application/json",
+                    headers={
+                        "Authorization": "Bearer " + access_token
+                    }
                     )
 
     def test_using_invalid_order_id(self, testClient, initDatabase):
