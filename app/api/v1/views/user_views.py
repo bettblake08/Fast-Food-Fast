@@ -8,6 +8,8 @@ from flask_jwt_extended import get_jwt_identity
 from app.database.models import OrderItemModel,OrderModel
 
 class UserViews():
+    """ This class stores all the routes accessible only to a customer user """
+
     def post_a_new_order(self):
         """ Place an order endpoint
 

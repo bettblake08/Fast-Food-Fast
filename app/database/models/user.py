@@ -1,8 +1,8 @@
-from App.Database import DB
-from App.Database.db_model import DBModel
+from app.database import DB
+from app.database.db_model import DBModel
 
 from werkzeug.security import check_password_hash
-from App.Managers.Serialization import flask_bcrypt
+from app.managers.serialization import flask_bcrypt
 
 
 class UserModel(DBModel):
@@ -33,6 +33,27 @@ class UserModel(DBModel):
 
 
     def __init__(self, **param):
+        """ This is the initialization function for the OrderItemModel
+
+        Args:
+            username    :   Username as string
+            email       :   Email address as string
+            password    :   Hashed password as byte
+            role        :   Role id of the user. As follows:
+                        +   1   Customer
+                        +   2   Admin
+        
+        Attributes:
+            db          :   An instance of the DB class
+            username    :   Username as string
+            email       :   Email address as string
+            password    :   Hashed password as byte
+            role        :   Role id of the user. As follows:
+                        +   1   Customer
+                        +   2   Admin
+       
+        """
+
         self.db = DB()
         self.db.connect(self.connection)
         self.username = param['username']
@@ -40,124 +61,18 @@ class UserModel(DBModel):
         self.password = param['password']
         self.role = param['role'] if 'role' in param else 1
 
-
-    def insert(self):
-        q = """ 
-        INSERT INTO {}(username,email,password,role,created_at,updated_at) values(%s,%s,%s,%s,NOW(),NOW()) RETURNING id
-        """.format(self.table)
-
-        self.db.cursor.execute(q, (
-            self.username, 
-            self.email, 
-            self.password.decode('utf-8'),
-            self.role))
-        self.db.conn.commit()
-
-        userId = self.db.cursor.fetchone()[0]
-        self.id = userId
-
-
-    def update(self):
-        q = """ 
-        UPDATE {} SET username = %s,email = %s,password = %s, updated_at = NOW() WHERE id = {} 
-        """.format(self.table,self.id)
-
-        self.db.cursor.execute(q,(self.username,self.email,self.password))
-        self.db.conn.commit()
-
-
-    def json(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email,
-            'password': self.password,
-            'role':self.role,
-            'created_at': str(self.created_at),
-            'updated_at': str(self.updated_at)
-        }
-
-
     @classmethod
-    def get(cls, _id):
-        db = DB()
-        db.connect(cls.connection)
+    def get_object(cls, row):
+        """ This is the function that converts the table row into UserModel instance
 
-        q = """ 
-            SELECT * FROM {} WHERE id = %s
-            """.format(cls.table)
+        Args:
+            row:    A table row of type tuple
+
+        Returns:
+            UserModel
         
-        db.cursor.execute(q,(_id))
-        db.conn.commit()
+        """
 
-        result = db.cursor.fetchone()
-
-        if bool(result):
-            return cls.get_object(result)
-        else:
-            return None
-
-
-    @classmethod
-    def find_user_by_username(cls, username):
-        db = DB()
-        db.connect(cls.connection)
-
-
-        q = """ 
-            SELECT * FROM {} WHERE username = '%s'
-            """.format(cls.table) % username
-
-        db.cursor.execute(q)
-        db.conn.commit()
-
-        result = db.cursor.fetchall()
-
-        if len(result) > 0:
-            return cls.get_object(result[0])
-        else:
-            return None
-
-
-
-    @classmethod
-    def find_user_by_email(cls, email):
-        db = DB()
-        db.connect(cls.connection)
-
-        q = """ 
-            SELECT * FROM {} WHERE email = '%s'
-            """.format(cls.table) % email
-
-        db.cursor.execute(q)
-        db.conn.commit()
-
-        result = db.cursor.fetchone()
-
-        if bool(result):
-            return cls.get_object(result)
-        else:
-            return None
-
-
-
-    @classmethod
-    def exists(cls, _id):
-        db = DB()
-        db.connect(cls.connection)
-
-        q = """ 
-        SELECT * FROM {} WHERE id = {}
-        """.format(cls.table,_id)
-
-        db.cursor.execute(q)
-        db.conn.commit()
-
-        db.cursor
-
-
-    @classmethod
-    def get_object(cls,row):
         user = cls(
             username=row[1],
             email=row[2],
@@ -171,11 +86,181 @@ class UserModel(DBModel):
         return user
 
 
-    def authenticate(self,password):        
+    def insert(self):
+        """ This is the row insert function to insert the class data into database. 
+        
+            Attributes:
+                id  : The id of the newly inserted row
+
+            Returns:
+                bool: Returns True is insert succeeded or False if it failed.
+        """
+        
+
+        query = """ 
+        INSERT INTO {}(username,email,password,role,created_at,updated_at) values(%s,%s,%s,%s,NOW(),NOW()) RETURNING id
+        """.format(self.table)
+
+
+        try:
+                
+            self.db.cursor.execute(query, (
+                self.username, 
+                self.email, 
+                self.password.decode('utf-8'),
+                self.role))
+            self.db.conn.commit()
+
+            self.id = self.db.cursor.fetchone()[0]
+
+            return True
+        except: 
+            return False
+
+
+    def update(self):
+        """ This is the row update function used to update the data stored in the row 
+        
+        """
+
+        query = """ 
+        UPDATE {} SET username = %s,email = %s,password = %s, updated_at = NOW() WHERE id = {} 
+        """.format(self.table,self.id)
+
+        self.db.cursor.execute(query,(self.username,self.email,self.password))
+        self.db.conn.commit()
+
+
+    def json(self):
+        """ This function returns a JSON serializable dict containing item data
+
+        
+        """
+
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'password': self.password,
+            'role':self.role,
+            'created_at': str(self.created_at),
+            'updated_at': str(self.updated_at)
+        }
+
+
+    @classmethod
+    def get(cls, _id):
+        """ This function is used to get a user using the id (primary key)
+
+            Args:
+                _id:    Id (primary key) of the user
+
+            Returns:
+                UserModel if found or None if not found
+
+        """
+
+        db = DB()
+        db.connect(cls.connection)
+
+        query = """ 
+            SELECT * FROM {} WHERE id = %s
+            """.format(cls.table)
+        
+        db.cursor.execute(query,(_id))
+        db.conn.commit()
+
+        result = db.cursor.fetchone()
+
+        if bool(result):
+            return cls.get_object(result)
+        else:
+            return None
+
+
+    @classmethod
+    def find_user_by_username(cls, username):
+        """ This function is used to get a user using the username
+
+            Args:
+                username:    The username of the user as string
+
+            Returns:
+                UserModel if found or None if not found
+
+        """
+
+        db = DB()
+        db.connect(cls.connection)
+
+
+        query = """ 
+            SELECT * FROM {} WHERE username = '%s'
+            """.format(cls.table) % username
+
+        db.cursor.execute(query)
+        db.conn.commit()
+
+        result = db.cursor.fetchall()
+
+        if len(result) > 0:
+            return cls.get_object(result[0])
+        else:
+            return None
+
+
+
+    @classmethod
+    def find_user_by_email(cls, email):
+        """ This function is used to get a user using the email
+
+            Args:
+                email:    The email of the user as string
+
+            Returns:
+                UserModel if found or None if not found
+
+        """
+        
+        db = DB()
+        db.connect(cls.connection)
+
+        query = """ 
+            SELECT * FROM {} WHERE email = '%s'
+            """.format(cls.table) % email
+
+        db.cursor.execute(query)
+        db.conn.commit()
+
+        result = db.cursor.fetchone()
+
+        if bool(result):
+            return cls.get_object(result)
+        else:
+            return None
+
+
+
+    def authenticate(self,password):  
+        """ This function is used to authenticate the password against the stored hash password
+
+        This is done to authenticate the user attempting to log into the system
+
+            Args:
+                password:    The password attempt of the user as a string
+
+            Returns:
+                bool: True if passwords match or False if not
+
+        """
+
         return flask_bcrypt.check_password_hash(self.password, password)
 
 
     def save(self):
+        """ This function is used to determine whether to insert or update data to the database
+        """
+
         if not bool(self.id):
             self.insert()
         else:

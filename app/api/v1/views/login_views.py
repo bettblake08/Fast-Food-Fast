@@ -9,6 +9,9 @@ from app.database.models import UserModel,RevokedTokenModel
 
 
 class LoginViews():
+    """ This class stores all the routes required for authentication """
+
+
     @classmethod
     def signUp(cls):
         parser = reqparse.RequestParser()

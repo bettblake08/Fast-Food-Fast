@@ -1,9 +1,9 @@
-from App.Database.Models import OrderModel, OrderItemModel, UserModel, RevokedTokenModel
-from App.Managers.Serialization import flask_bcrypt
+from app.database.models import OrderModel, OrderItemModel, UserModel, RevokedTokenModel
+from app.managers.serialization import flask_bcrypt
 
 def generate_test_data():
-    """ 
-    Generates test data to be used when running tests
+    """ Generates test data to be used when running tests
+    
     """
     
     user = UserModel(

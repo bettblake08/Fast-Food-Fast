@@ -1,6 +1,6 @@
-from App.Database import DB
-from App.Database.Models.ordered_item import OrderedItemModel
-from App.Database.db_model import DBModel
+from app.database import DB
+from app.database.models import OrderedItemModel
+from app.database.db_model import DBModel
 
 
 class OrderModel(DBModel):
@@ -22,8 +22,26 @@ class OrderModel(DBModel):
 
 
     def __init__(self, **param):
+        """ This is the initialization function for the OrderModel
+
+        Attributes:
+            db  :   An instance of the DB class
+
+        Args:
+            userId      :   User id of the user that ordered
+            items       :   List of items being ordered
+            total       :   The total price of the order
+            status      :   Status id of the order. As follows:
+                            +   1   New
+                            +   2   Processing
+                            +   3   Cancelled
+                            +   4   Complete
+            
+        """
+
         self.db = DB()
         self.db.connect(self.connection)
+
         self.userId = param['userId']
         self.items = param['items'] if 'items' in param else []
         self.total = param['total']
@@ -32,6 +50,17 @@ class OrderModel(DBModel):
 
     @classmethod
     def get_object(cls,row):
+        """ This is the function that converts the table row into OrderModel instance
+
+        Args:
+            row:    A table row of type tuple
+
+        Returns:
+            OrderModel
+
+        
+        """
+
         user = cls(
             userId=row[1],
             total=row[2],
@@ -45,25 +74,46 @@ class OrderModel(DBModel):
 
 
     def insert(self):
+        """ This is the row insert function to insert the class data into database. 
+        
+            Attributes:
+                id  : The id of the newly inserted row
+
+            Returns:
+                bool: Returns True is insert succeeded or False if it failed.
+        """
+    
+
         q = """ 
         INSERT INTO orders(userId,total,status,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
         """
 
-        self.db.cursor.execute(q, (self.userId, self.total, self.status))
-        self.db.conn.commit()
+        try:
+            self.db.cursor.execute(q, (self.userId, self.total, self.status))
+            self.db.conn.commit()
 
-        orderId = self.db.cursor.fetchone()[0]
-        self.id = orderId
+            orderId = self.db.cursor.fetchone()[0]
+            self.id = orderId
 
-        for i in self.items:
-            orderItem = OrderedItemModel(
-                order=orderId,
-                item=i['id'],
-                quantity=i['quantity'])
-            orderItem.save()
+            for item in self.items:
+                orderItem = OrderedItemModel(
+                    order=orderId,
+                    item=item['id'],
+                    quantity=item['quantity'])
+
+                orderItem.save()
+
+            return True
+        except:
+            return False
 
 
     def update(self):
+        """ This is the row update function used to update the data stored in the row 
+        
+        """
+
+
         q = """ 
         UPDATE orders SET userId = {},total = {},status = {}, updated_at = NOW() WHERE id = {} 
         """.format(self.userId, self.total, self.status, self.id)
@@ -81,10 +131,14 @@ class OrderModel(DBModel):
 
 
     def json(self):
+        """ This function returns a JSON serializable dict containing item data
+        
+        """
+
         items = None
 
         if self.items:
-           items = [i.json() for i in self.items]
+            items = [i.json() for i in self.items]
         else :
             items = []
 
@@ -101,6 +155,16 @@ class OrderModel(DBModel):
 
     @classmethod
     def get(cls, _id):
+        """ This function is used to get an order item using the id (primary key)
+
+            Args:
+                _id:    Id (primary key) of the item
+
+            Returns:
+                OrderModel if found or None if not found
+
+        """
+
         db = DB()
         db.connect(cls.connection)
 
@@ -124,22 +188,14 @@ class OrderModel(DBModel):
 
 
     @classmethod
-    def exists(cls, _id):
-        db = DB()
-        db.connect(cls.connection)
-
-        q = """ 
-        SELECT * FROM orders WHERE id = {}
-        """.format(_id)
-
-        db.cursor.execute(q)
-        db.conn.commit()
-
-        db.cursor
-
-
-    @classmethod
     def get_all_orders(cls):
+        """ This function is used to get all the orders stored in the database
+
+            Returns:
+                List (OrderModel) if found or None if not found
+
+        """
+
 
         try:
             db = DB()
@@ -154,21 +210,31 @@ class OrderModel(DBModel):
             db.conn.commit()
             results = db.cursor.fetchall()
 
+            response = []
+
+            for result in results:
+                order = cls.get_object(result)
+                order.items = OrderedItemModel.find_all_order_items(result[0])
+
+                response.append(order)
+
+            return response
+
         except:
             return None
 
-        response = []
-
-        for result in results:
-            order = cls.get_object(result)
-            order.items = OrderedItemModel.find_all_order_items(result[0])
-
-            response.append(order)
-
-        return response
-
+       
     @classmethod
     def get_all_orders_by_user(cls,userId):
+        """ This function is used to get all the orders done by a user using the username
+
+            Args:
+                userId  :   The id of the user
+
+            Returns:
+                List (OrderModel) if found or None if not found
+
+        """
 
         try:
             db = DB()
@@ -183,21 +249,25 @@ class OrderModel(DBModel):
             db.conn.commit()
             results = db.cursor.fetchall()
 
+            response = []
+
+            for result in results:
+                order = cls.get_object(result)
+                order.items = OrderedItemModel.find_all_order_items(result[0])
+
+                response.append(order)
+
+            return response
+            
         except:
             return None
 
-        response = []
-
-        for result in results:
-            order = cls.get_object(result)
-            order.items = OrderedItemModel.find_all_order_items(result[0])
-
-            response.append(order)
-
-        return response
-
+    
 
     def save(self):
+        """ This function is used to determine whether to insert or update data to the database
+        """
+        
         if not bool(self.id):
             self.insert()
         else:

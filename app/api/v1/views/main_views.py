@@ -3,6 +3,8 @@ from flask import make_response, jsonify
 from app.database.models import OrderItemModel
 
 class MainViews():
+    """ This class stores all the routes accessible to all users"""
+
     def get_menu(self):
         """ Fetch menu items endpoint
 

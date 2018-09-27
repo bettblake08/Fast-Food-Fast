@@ -1,5 +1,5 @@
-from App.Database import DB
-from App.Database.db_model import DBModel
+from app.database import DB
+from app.database.db_model import DBModel
 
 
 class OrderedItemModel(DBModel):
@@ -17,6 +17,22 @@ class OrderedItemModel(DBModel):
 
 
     def __init__(self, **param):
+        """ This is the initialization function for the OrderedItemModel
+
+        Args:
+            order       :   The id of the order
+            item        :   The id of the item
+            quantity    :   The number of orders for the item
+
+
+        Attributes:
+            db          :   An instance of the DB class
+            orderId     :   Order Id
+            item        :   Item id
+            quantity    :   The number of orders for the item
+
+        """
+
         self.db = DB()
         self.db.connect(self.connection)
 
@@ -27,6 +43,17 @@ class OrderedItemModel(DBModel):
 
     @classmethod
     def get_object(cls, row):
+        """ This is the function that converts the table row into OrderItemModel instance
+
+        Args:
+            row:    A table row of type tuple
+
+        Returns:
+            OrderedItemModel
+
+        
+        """
+
         item = cls(
             order=row[1],
             item=row[2],
@@ -38,16 +65,37 @@ class OrderedItemModel(DBModel):
 
 
     def insert(self):
+        
+        """ This is the row insert function to insert the class data into database. 
+        
+            Attributes:
+                id  : The id of the newly inserted row
 
-        q = """ 
-        INSERT INTO ordered_items(orderId,item,quantity) values({},{},{})
-        """.format(self.orderId, self.item, self.quantity)
+            Returns:
+                bool: Returns True is insert succeeded or False if it failed.
+        """
 
-        self.db.cursor.execute(q)
-        self.db.conn.commit()
+       
+        try:
+            q = """ 
+            INSERT INTO ordered_items(orderId,item,quantity) values({},{},{}) RETURNING id
+            """.format(self.orderId, self.item, self.quantity)
+
+            self.db.cursor.execute(q)
+            self.db.conn.commit()
+
+            self.id = self.db.cursor.fetchone()[0]
+
+            return True
+        except:
+            return False
 
 
     def update(self):
+        """ This is the row update function used to update the data stored in the row 
+        
+        """
+
         q = """ 
         UPDATE ordered_items SET orderId = {},item = {},quantity = {} WHERE id = {} 
         """.format(self.orderId, self.item, self.quantity, self.id)
@@ -57,6 +105,10 @@ class OrderedItemModel(DBModel):
 
 
     def json(self):
+        """ This function returns a JSON serializable dict containing item data
+        
+        """
+
         return {
             'id': self.id,
             'order': self.orderId,
@@ -65,24 +117,18 @@ class OrderedItemModel(DBModel):
         }
 
 
-    def exists(self):
-        q = """ 
-        SELECT * FROM ordered_items WHERE id = {}
-        """.format(self.id)
-
-        self.db.cursor.execute(q)
-        self.db.conn.commit()
-
-        results = self.db.cursor.fetchone()
-
-        if len(results) > 0:
-            return True
-        else:
-            return False
-
-
     @classmethod
     def get(cls, _id):
+        """ This function is used to get an ordered item using the id (primary key)
+
+            Args:
+                _id:    Id (primary key) of the item
+
+            Returns:
+                OrderedItemModel if found or None if not found
+
+        """
+
         db = DB()
         db.connect(cls.connection)
 
@@ -95,7 +141,7 @@ class OrderedItemModel(DBModel):
 
         result = db.cursor.fetchone()
 
-        if len(result) > 0:
+        if bool(result):
             return cls.get_object(result)
         else:
             return None
@@ -103,6 +149,16 @@ class OrderedItemModel(DBModel):
 
     @classmethod
     def find_all_order_items(cls, orderId):
+        """ This function is used to get all the ordered items for a specific order
+
+            Args:
+                orderId:    Order id/primary key
+
+            Returns:
+                List (OrderedItemModel) if found or None if not found
+
+        """
+
         db = DB()
         db.connect(cls.connection)
 
@@ -127,6 +183,9 @@ class OrderedItemModel(DBModel):
 
 
     def save(self):
+        """ This function is used to determine whether to insert or update data to the database
+        """
+
         if not bool(self.id):
             self.insert()
         else:
