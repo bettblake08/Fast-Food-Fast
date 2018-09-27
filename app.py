@@ -1,7 +1,8 @@
 from App import create_app
 from App.Database import DB
+import os
 
-app = create_app('TEST')
+app = create_app(os.getenv('APP_ENV'))
 
 @app.cli.command("db:init")
 def init_db():
