@@ -3,8 +3,7 @@ from flask import json
 import pytest
 
 
-@pytest.mark.run(order=7)
-class TestAdminAuthEndpoint(object):
+class TestLoginAuthEndpoint(object):
     def auth_user(self, data, test_client):
         return test_client.post('/api/v1/auth/login',
                                data=data,
@@ -79,8 +78,37 @@ class TestAdminAuthEndpoint(object):
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 2
 
+    def test_using_customer_username(self, test_client, init_database):
 
-    def test_using_username(self, test_client, init_database):
+        response = self.auth_user(
+            test_client=test_client,
+            data=json.dumps(
+                {
+                    "username": "johndoe1",
+                    "password": "johndoe@A1"
+                }
+            ))
+
+        assert response.status_code == 200
+        assert json.loads(response.data)['error'] == 0
+
+    def test_using_customer_email_as_username(self, test_client, init_database):
+
+        response = self.auth_user(
+            test_client=test_client,
+            data=json.dumps(
+                {
+                    "username": "johndoe1@hotmail.com",
+                    "password": "johndoe@A1"
+                }
+            ))
+            
+
+        assert response.status_code == 200
+        assert json.loads(response.data)['error'] == 0
+
+
+    def test_using_admin_customer_username(self, test_client, init_database):
 
         response = self.auth_user(
             test_client=test_client,
@@ -97,7 +125,7 @@ class TestAdminAuthEndpoint(object):
         assert data['error'] == 0
 
 
-    def test_using_email_as_username(self, test_client, init_database):
+    def test_using_admin_email_as_username(self, test_client, init_database):
 
         response = self.auth_user(
             test_client=test_client,

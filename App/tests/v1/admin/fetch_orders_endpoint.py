@@ -3,8 +3,6 @@ import pytest
 from flask import json
 
 
-
-@pytest.mark.run(order=9)
 class TestFetchOrdersEndpoint(object):
     def login(self, test_client):
         response = test_client.post('api/v1/auth/login',

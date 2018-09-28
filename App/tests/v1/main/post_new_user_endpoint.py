@@ -3,8 +3,6 @@ from flask import json
 import pytest
 
 
-
-@pytest.mark.run(order=1)
 class TestPostNewUserEndpoint(object):
     def post_new_user(self, data, test_client):
         return test_client.post('/api/v1/auth/signup',

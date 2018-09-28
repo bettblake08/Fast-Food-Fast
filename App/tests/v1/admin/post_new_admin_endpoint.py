@@ -4,7 +4,6 @@ import pytest
 
 
 
-@pytest.mark.run(order=6)
 class TestPostNewAdminEndpoint(object):
     def addAdmin(self, data, test_client):
         return test_client.post('/api/v1/auth/signup',
