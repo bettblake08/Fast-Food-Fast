@@ -30,7 +30,7 @@ class RevokedTokenModel(DBModel):
 
         self.token = token
 
-        super().__init__()
+        DBModel.__init__(self)
 
     def insert(self):
         """ This is the row insert function to insert the class data into database. 

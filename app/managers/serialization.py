@@ -38,30 +38,28 @@ class Serialization(object):
         if reg_type == 1:
             pattern = re.compile(
                 r"((?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@\$#.]).{8,16})"
-                )
-        
+            )
+
         if pattern == None:
             return False
         else:
             return bool(pattern.match(password, 0))
 
-
     @classmethod
-    def test_email(cls,email):
+    def test_email(cls, email):
         """ 
         This function test the validity of an email string.
 
         Args:
             -   email (string)
-        
+
         Returns:
             bool: Returns True if email passes regex tests, False if password fails
 
         """
 
-
         pattern = re.compile(
             r"(^[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         )
 
-        return bool(pattern.match(email,0))
+        return bool(pattern.match(email, 0))

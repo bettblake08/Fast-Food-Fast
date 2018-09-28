@@ -47,7 +47,7 @@ class OrderedItemModel(DBModel):
         self.item = param['item']
         self.quantity = param['quantity']
 
-        super().__init__()
+        DBModel.__init__(self)
 
     @classmethod
     def get_object(cls, row):

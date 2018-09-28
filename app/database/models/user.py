@@ -56,7 +56,7 @@ class UserModel(DBModel):
         self.password = param['password']
         self.role = param['role'] if 'role' in param else 1
 
-        super().__init__()
+        DBModel.__init__(self)
 
     @classmethod
     def get_object(cls, row):
@@ -166,8 +166,6 @@ class UserModel(DBModel):
 
         if bool(result):
             return cls.get_object(result)
-        else:
-            return None
 
     @classmethod
     def find_user_by_username(cls, username):

@@ -47,7 +47,7 @@ class OrderItemModel(DBModel):
         self.price = param['price']
         self.c_id = param['c_id']
 
-        super().__init__()
+        DBModel.__init__(self)
 
     @classmethod
     def get_object(cls, row):

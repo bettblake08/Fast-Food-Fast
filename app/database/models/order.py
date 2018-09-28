@@ -49,7 +49,7 @@ class OrderModel(DBModel):
         self.total = param['total']
         self.status = param['status']
 
-        super().__init__()
+        DBModel.__init__(self)
 
     @classmethod
     def get_object(cls, row):
