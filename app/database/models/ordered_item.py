@@ -6,14 +6,16 @@ class OrderedItemModel(DBModel):
 
     table_script = """ 
         CREATE TABLE IF NOT EXISTS ordered_items(
-            id INT PRIMARY KEY NOT NULL,
-            orderId INT FOREIGN_KEY NOT NULL,
-            item INT REFERENCES order(id)
+            id SERIAL PRIMARY KEY NOT NULL,
+            orderId INT REFERENCES orders(id) NOT NULL,
+            item INT NOT NULL,
             quantity INT NOT NULL
         );
-    """
+        """
 
     id = None
+
+    table = "ordered_items"
 
 
     def __init__(self, **param):
@@ -78,8 +80,8 @@ class OrderedItemModel(DBModel):
        
         try:
             q = """ 
-            INSERT INTO ordered_items(orderId,item,quantity) values({},{},{}) RETURNING id
-            """.format(self.orderId, self.item, self.quantity)
+            INSERT INTO {}(orderId,item,quantity) values({},{},{}) RETURNING id
+            """.format(self.table,self.orderId, self.item, self.quantity)
 
             self.db.cursor.execute(q)
             self.db.conn.commit()
@@ -97,8 +99,8 @@ class OrderedItemModel(DBModel):
         """
 
         q = """ 
-        UPDATE ordered_items SET orderId = {},item = {},quantity = {} WHERE id = {} 
-        """.format(self.orderId, self.item, self.quantity, self.id)
+        UPDATE {} SET orderId = {},item = {},quantity = {} WHERE id = {} 
+        """.format(self.table,self.orderId, self.item, self.quantity, self.id)
 
         self.db.cursor.execute(q)
         self.db.conn.commit()
@@ -133,8 +135,8 @@ class OrderedItemModel(DBModel):
         db.connect(cls.connection)
 
         q = """ 
-        SELECT * FROM ordered_items WHERE id = {}
-        """.format(_id)
+        SELECT * FROM {} WHERE id = {}
+        """.format(cls.table,_id)
 
         db.cursor.execute(q)
         db.conn.commit()
@@ -163,8 +165,8 @@ class OrderedItemModel(DBModel):
         db.connect(cls.connection)
 
         q = """ 
-        SELECT * FROM ordered_items WHERE orderId = {}
-        """.format(orderId)
+        SELECT * FROM {} WHERE orderId = {}
+        """.format(cls.table,orderId)
 
         db.cursor.execute(q)
         db.conn.commit()

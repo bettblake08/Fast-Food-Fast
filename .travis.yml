@@ -17,7 +17,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - python -m pytest --cov=App/Tests/ --cov-report term-missing
+  - python -m pytest --cov=app app/tests/ --cov-report term-missing
 
 after_script:
   - coverage xml

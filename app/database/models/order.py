@@ -20,6 +20,8 @@ class OrderModel(DBModel):
     created_at = None
     updated_at = None
 
+    table = "orders"
+
 
     def __init__(self, **param):
         """ This is the initialization function for the OrderModel
@@ -85,11 +87,11 @@ class OrderModel(DBModel):
     
 
         q = """ 
-        INSERT INTO orders(userId,total,status,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
-        """
+        INSERT INTO {}(userId,total,status,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
+        """.format(self.table) % (self.userId, self.total, self.status)
 
         try:
-            self.db.cursor.execute(q, (self.userId, self.total, self.status))
+            self.db.cursor.execute(q)
             self.db.conn.commit()
 
             orderId = self.db.cursor.fetchone()[0]
@@ -115,8 +117,8 @@ class OrderModel(DBModel):
 
 
         q = """ 
-        UPDATE orders SET userId = {},total = {},status = {}, updated_at = NOW() WHERE id = {} 
-        """.format(self.userId, self.total, self.status, self.id)
+        UPDATE {} SET userId = {},total = {},status = {}, updated_at = NOW() WHERE id = {} 
+        """.format(self.table, self.userId, self.total, self.status, self.id)
 
         self.db.cursor.execute(q)
         self.db.conn.commit()
@@ -169,8 +171,8 @@ class OrderModel(DBModel):
         db.connect(cls.connection)
 
         q = """ 
-        SELECT * FROM orders WHERE id = %s
-        """ % (_id)
+        SELECT * FROM {} WHERE id = %s
+        """.format(cls.table) % (_id)
 
         db.cursor.execute(q)
         db.conn.commit()
@@ -202,8 +204,8 @@ class OrderModel(DBModel):
             db.connect(cls.connection)
 
             q = """ 
-            SELECT * FROM orders
-            """
+            SELECT * FROM {}
+            """.format(cls.table)
 
             db.cursor.execute(q)
 
@@ -241,8 +243,8 @@ class OrderModel(DBModel):
             db.connect(cls.connection)
 
             q = """ 
-            SELECT * FROM orders WHERE userId = {}
-            """.format(userId)
+            SELECT * FROM {} WHERE userId = {}
+            """.format(cls.table,userId)
 
             db.cursor.execute(q)
 
