@@ -107,6 +107,7 @@ class OrderModel(DBModel):
             return True
         except:
             return False
+            
 
     def update(self):
         """ This is the row update function used to update the data stored in the row 
@@ -127,6 +128,7 @@ class OrderModel(DBModel):
                 if order_item.id == item.id:
                     order_item.quantity = item.quantity
                     order_item.update()
+
 
     def json(self):
         """ This function returns a JSON serializable dict containing item data
@@ -149,6 +151,7 @@ class OrderModel(DBModel):
             'created_at': str(self.created_at),
             'updated_at': str(self.updated_at)
         }
+
 
     @classmethod
     def get(cls, _id):
@@ -179,6 +182,7 @@ class OrderModel(DBModel):
             order.items = OrderedItemModel.find_all_order_items(result[0])
 
             return order
+
 
     @classmethod
     def get_all_orders(cls):
@@ -214,6 +218,7 @@ class OrderModel(DBModel):
 
         except:
             return None
+
 
     @classmethod
     def get_all_orders_by_user(cls, user_id):
@@ -252,6 +257,7 @@ class OrderModel(DBModel):
 
         except:
             return None
+
 
     def save(self):
         """ This function is used to determine whether to insert or update data to the database

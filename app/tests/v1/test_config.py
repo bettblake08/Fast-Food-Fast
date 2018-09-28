@@ -1,17 +1,11 @@
 import pytest
+import os
+
 from app import create_app
 from app.database import DB
 from app.database.factory import generate_test_data
-import os
 
 app = create_app('TEST')
-
-def pytest_namespace():
-    return {
-        "access_token":"",
-        "refresh_token":""
-    }
-
 
 @pytest.fixture(scope="session")
 def test_client():
