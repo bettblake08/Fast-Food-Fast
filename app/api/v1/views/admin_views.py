@@ -3,6 +3,8 @@ from flask_restful import reqparse
 from app.database.models import OrderModel,OrderItemModel
 
 class AdminViews():
+    """ This class stores all the routes accessible only to an administrator """
+
     @classmethod
     def get_order(cls,orderId):
         """ Fetch order data endpoint
