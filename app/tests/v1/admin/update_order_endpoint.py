@@ -32,6 +32,21 @@ class TestUpdateOrderEndpoint(object):
     def test_using_invalid_order_id(self, test_client, init_database):
         
         response = self.updateOrder(
+            id="ro",
+            test_client=test_client,
+            data=json.dumps(
+            {
+                "status": 1
+            }))
+
+
+        assert response.status_code == 200
+        assert json.loads(response.data)['error'] == 2
+
+
+    def test_using_unexisting_order_id(self, test_client, init_database):
+        
+        response = self.updateOrder(
             id=20001,
             test_client=test_client,
             data=json.dumps(
@@ -42,6 +57,7 @@ class TestUpdateOrderEndpoint(object):
 
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 2
+
 
 
     def test_using_no_status_field(self, test_client, init_database):
@@ -65,12 +81,29 @@ class TestUpdateOrderEndpoint(object):
             test_client=test_client,
             data=json.dumps(
                 {
+                    "status": "ro"
+                }
+            ))
+
+        assert response.status_code == 200
+        assert json.loads(response.data)['error'] == 1
+
+
+
+    def test_using_incorrect_status_no(self, test_client, init_database):
+
+        response = self.updateOrder(
+            id=10001,
+            test_client=test_client,
+            data=json.dumps(
+                {
                     "status": 66
                 }
             ))
 
         assert response.status_code == 200
         assert json.loads(response.data)['error'] == 1
+
 
 
     def test_using_valid_data(self, test_client, init_database):

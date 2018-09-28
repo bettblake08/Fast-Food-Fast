@@ -1,7 +1,5 @@
 from app.database import DB
 from app.database.db_model import DBModel
-
-from werkzeug.security import check_password_hash
 from app.managers.serialization import flask_bcrypt
 
 
@@ -31,7 +29,6 @@ class UserModel(DBModel):
     created_at = None
     updated_at = None
 
-
     def __init__(self, **param):
         """ This is the initialization function for the OrderItemModel
 
@@ -42,24 +39,24 @@ class UserModel(DBModel):
             role        :   Role id of the user. As follows:
                         +   1   Customer
                         +   2   Admin
-        
+
         Attributes:
-            db          :   An instance of the DB class
+            database_connection          :   An instance of the DB class
             username    :   Username as string
             email       :   Email address as string
             password    :   Hashed password as byte
             role        :   Role id of the user. As follows:
                         +   1   Customer
                         +   2   Admin
-       
+
         """
 
-        self.db = DB()
-        self.db.connect(self.connection)
         self.username = param['username']
         self.email = param['email']
         self.password = param['password']
         self.role = param['role'] if 'role' in param else 1
+
+        super().__init__()
 
     @classmethod
     def get_object(cls, row):
@@ -70,7 +67,7 @@ class UserModel(DBModel):
 
         Returns:
             UserModel
-        
+
         """
 
         user = cls(
@@ -85,56 +82,52 @@ class UserModel(DBModel):
 
         return user
 
-
     def insert(self):
         """ This is the row insert function to insert the class data into database. 
-        
+
             Attributes:
                 id  : The id of the newly inserted row
 
             Returns:
                 bool: Returns True is insert succeeded or False if it failed.
         """
-        
 
         query = """ 
         INSERT INTO {}(username,email,password,role,created_at,updated_at) values(%s,%s,%s,%s,NOW(),NOW()) RETURNING id
         """.format(self.table)
 
-
         try:
-                
-            self.db.cursor.execute(query, (
-                self.username, 
-                self.email, 
+
+            self.database_connection.cursor.execute(query, (
+                self.username,
+                self.email,
                 self.password.decode('utf-8'),
                 self.role))
-            self.db.conn.commit()
+            self.database_connection.db_connection.commit()
 
-            self.id = self.db.cursor.fetchone()[0]
+            self.id = self.database_connection.cursor.fetchone()[0]
 
             return True
-        except: 
+        except:
             return False
-
 
     def update(self):
         """ This is the row update function used to update the data stored in the row 
-        
+
         """
 
         query = """ 
         UPDATE {} SET username = %s,email = %s,password = %s, updated_at = NOW() WHERE id = {} 
-        """.format(self.table,self.id)
+        """.format(self.table, self.id)
 
-        self.db.cursor.execute(query,(self.username,self.email,self.password))
-        self.db.conn.commit()
-
+        self.database_connection.cursor.execute(
+            query, (self.username, self.email, self.password))
+        self.database_connection.db_connection.commit()
 
     def json(self):
         """ This function returns a JSON serializable dict containing item data
 
-        
+
         """
 
         return {
@@ -142,11 +135,10 @@ class UserModel(DBModel):
             'username': self.username,
             'email': self.email,
             'password': self.password,
-            'role':self.role,
+            'role': self.role,
             'created_at': str(self.created_at),
             'updated_at': str(self.updated_at)
         }
-
 
     @classmethod
     def get(cls, _id):
@@ -160,23 +152,22 @@ class UserModel(DBModel):
 
         """
 
-        db = DB()
-        db.connect(cls.connection)
+        database_connection = DB()
+        database_connection.connect(cls.connection)
 
         query = """ 
             SELECT * FROM {} WHERE id = %s
             """.format(cls.table)
-        
-        db.cursor.execute(query,(_id))
-        db.conn.commit()
 
-        result = db.cursor.fetchone()
+        database_connection.cursor.execute(query, (_id))
+        database_connection.db_connection.commit()
+
+        result = database_connection.cursor.fetchone()
 
         if bool(result):
             return cls.get_object(result)
         else:
             return None
-
 
     @classmethod
     def find_user_by_username(cls, username):
@@ -190,25 +181,20 @@ class UserModel(DBModel):
 
         """
 
-        db = DB()
-        db.connect(cls.connection)
-
+        database_connection = DB()
+        database_connection.connect(cls.connection)
 
         query = """ 
             SELECT * FROM {} WHERE username = '%s'
             """.format(cls.table) % username
 
-        db.cursor.execute(query)
-        db.conn.commit()
+        database_connection.cursor.execute(query)
+        database_connection.db_connection.commit()
 
-        result = db.cursor.fetchall()
+        result = database_connection.cursor.fetchall()
 
-        if len(result) > 0:
+        if result.count() > 0:
             return cls.get_object(result[0])
-        else:
-            return None
-
-
 
     @classmethod
     def find_user_by_email(cls, email):
@@ -221,27 +207,23 @@ class UserModel(DBModel):
                 UserModel if found or None if not found
 
         """
-        
-        db = DB()
-        db.connect(cls.connection)
+
+        database_connection = DB()
+        database_connection.connect(cls.connection)
 
         query = """ 
             SELECT * FROM {} WHERE email = '%s'
             """.format(cls.table) % email
 
-        db.cursor.execute(query)
-        db.conn.commit()
+        database_connection.cursor.execute(query)
+        database_connection.db_connection.commit()
 
-        result = db.cursor.fetchone()
+        result = database_connection.cursor.fetchone()
 
         if bool(result):
             return cls.get_object(result)
-        else:
-            return None
 
-
-
-    def authenticate(self,password):  
+    def authenticate(self, password):
         """ This function is used to authenticate the password against the stored hash password
 
         This is done to authenticate the user attempting to log into the system
@@ -255,7 +237,6 @@ class UserModel(DBModel):
         """
 
         return flask_bcrypt.check_password_hash(self.password, password)
-
 
     def save(self):
         """ This function is used to determine whether to insert or update data to the database

@@ -1,19 +1,18 @@
 from flask import jsonify, make_response
 from flask_restful import reqparse
-from flask_jwt_extended import create_access_token,create_refresh_token, \
-        set_access_cookies,set_refresh_cookies,unset_jwt_cookies,get_raw_jwt
-from app.managers.serialization import Serialization,flask_bcrypt
+from flask_jwt_extended import create_access_token, create_refresh_token, \
+    set_access_cookies, set_refresh_cookies, unset_jwt_cookies, get_raw_jwt
+from app.managers.serialization import Serialization, flask_bcrypt
 from werkzeug.security import generate_password_hash
 
-from app.database.models import UserModel,RevokedTokenModel
+from app.database.models import UserModel, RevokedTokenModel
 
 
 class LoginViews():
     """ This class stores all the routes required for authentication """
 
-
     @classmethod
-    def signUp(cls):
+    def sign_up(cls):
         parser = reqparse.RequestParser()
 
         parser.add_argument(
@@ -48,10 +47,9 @@ class LoginViews():
             return make_response(
                 jsonify({
                         "error_msg": "Incorrect role id. Please input correct role id"
-                    }
-                ), 400
+                        }
+                        ), 400
             )
-
 
         if not Serialization.test_email(data.email):
             return make_response(
@@ -63,7 +61,7 @@ class LoginViews():
                 ), 200
             )
 
-        if not Serialization.test_password(data.password,1):
+        if not Serialization.test_password(data.password, 1):
             return make_response(
                 jsonify(
                     {
@@ -102,24 +100,21 @@ class LoginViews():
         user.save()
 
         try:
-            
-            
+
             return make_response(
                 jsonify({
                         "error": 0
-                    }), 200
+                        }), 200
             )
         except:
             return make_response(
                 jsonify({
                         "error_msg": "Failed to add user. Please try again later"
-                    }), 400
+                        }), 400
             )
 
-
-
     @staticmethod
-    def loginAuth():
+    def login_auth():
         parser = reqparse.RequestParser()
         parser.add_argument('username',
                             required=True,
@@ -141,26 +136,25 @@ class LoginViews():
         if not current_user:
             return make_response(jsonify(
                 {
-                "error": 1,
-                'message': 'User {} doesn\'t exist'.format(data.username)
+                    "error": 1,
+                    'message': 'User {} doesn\'t exist'.format(data.username)
                 }
             ), 200)
 
-        if not Serialization.test_password(data['password'],1):
+        if not Serialization.test_password(data['password'], 1):
             return make_response(jsonify(
                 {
-                'error': 2
+                    'error': 2
                 }
             ), 200)
-
 
         if current_user.authenticate(data['password']):
             access_token = create_access_token(
                 identity={
                     'id': current_user.id,
-                    'role':current_user.role
-                },fresh=True)
-                
+                    'role': current_user.role
+                }, fresh=True)
+
             refresh_token = create_refresh_token(
                 identity={
                     'id': current_user.id,
@@ -170,8 +164,8 @@ class LoginViews():
             resp = jsonify({
                 'error': 0,
                 'message': 'Logged in as {}'.format(current_user.username),
-                'access_token':access_token,
-                'refresh_token':refresh_token
+                'access_token': access_token,
+                'refresh_token': refresh_token
             })
 
             return resp
@@ -181,9 +175,8 @@ class LoginViews():
                 'message': 'Wrong credentials'}),
                 200)
 
-
     @staticmethod
-    def logOut():
+    def log_out():
         jti = get_raw_jwt()['jti']
 
         try:
@@ -191,13 +184,13 @@ class LoginViews():
             revoked_token.insert()
 
             resp = jsonify({
-                "error": 0, 
+                "error": 0,
                 'error_msg': 'Access token has been revoked'}
-                )
+            )
 
-            return resp,200
+            return resp, 200
         except:
             return jsonify({
-                "error": 1, 
+                "error": 1,
                 'error_msg': 'Something went wrong'}
-                ), 500
+            ), 500

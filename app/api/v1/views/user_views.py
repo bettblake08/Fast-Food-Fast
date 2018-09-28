@@ -1,11 +1,12 @@
 
 import json
 
-from flask import make_response,jsonify
+from flask import make_response, jsonify
 from flask_restful import reqparse
 from flask_jwt_extended import get_jwt_identity
 
-from app.database.models import OrderItemModel,OrderModel
+from app.database.models import OrderItemModel, OrderModel
+
 
 class UserViews():
     """ This class stores all the routes accessible only to a customer user """
@@ -72,11 +73,11 @@ class UserViews():
                 jsonify({
                         'error': 2,
                         'error_msg': "Items list is invalid. Please check to see all items id and quantity properties."
-                    }), 200
-                )
+                        }), 200
+            )
 
         order = OrderModel(
-            userId=user['id'],
+            user_id=user['id'],
             items=orderItems,
             total=total,
             status=0)
@@ -86,9 +87,8 @@ class UserViews():
         return make_response(
             jsonify({
                     'error': 0
-                }), 200
+                    }), 200
         )
-
 
     def get_user_order_history(self):
         """ Get user order history Endpoint
@@ -108,5 +108,5 @@ class UserViews():
             jsonify({
                     'error': 0,
                     'content': [order.json() for order in orders]
-                }), 200
-            )
+                    }), 200
+        )

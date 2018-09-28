@@ -1,3 +1,5 @@
+""" This module host the OrderItemModel class """
+
 from app.database import DB
 from app.database.db_model import DBModel
 
@@ -32,22 +34,20 @@ class OrderItemModel(DBModel):
                         +   2   Main
                         +   3   Snacks
                         +   4   Drinks
-        
+
         Attributes:
-            db     :   An instance of the DB class
+            database_connection     :   An instance of the DB class
             name   :   Name of the item
             price  :   Price of the item
             c_id   :   Category id
-       
-        """
 
-        self.db = DB()
-        self.db.connect(self.connection)
+        """
 
         self.name = param['name']
         self.price = param['price']
         self.c_id = param['c_id']
 
+        super().__init__()
 
     @classmethod
     def get_object(cls, row):
@@ -59,7 +59,7 @@ class OrderItemModel(DBModel):
         Returns:
             OrderItemModel
 
-        
+
         """
 
         item = cls(
@@ -73,60 +73,53 @@ class OrderItemModel(DBModel):
 
         return item
 
-
     def insert(self):
         """ This is the row insert function to insert the class data into database. 
-        
+
             Attributes:
                 id  : The id of the newly inserted row
 
             Returns:
                 bool: Returns True is insert succeeded or False if it failed.
         """
-        
 
-       
-        try : 
-            q = """ 
+        try:
+            query = """ 
             INSERT INTO {}(name,price,c_id,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
             """.format(self.table)
 
-            self.db.cursor.execute(q, (self.name, self.price, self.c_id))
-            self.db.conn.commit()
+            self.database_connection.cursor.execute(
+                query, (self.name, self.price, self.c_id))
+            self.database_connection.db_connection.commit()
 
-            self.id = self.db.cursor.fetchone()[0]
-
+            self.id = self.database_connection.cursor.fetchone()[0]
 
             return True
         except:
             return False
 
-
     def update(self):
         """ This is the row update function used to update the data stored in the row 
-        
+
         """
 
-        q = """ 
+        query = """ 
         UPDATE %s SET name = %s,price = %s,c_id = %s, updated_at = NOW() WHERE id = {} 
         """
 
-        self.db.cursor.execute(q, 
-            (
-                self.table, 
-                self.name, 
-                self.price, 
-                self.c_id,
-                self.id
-            )
-        )
+        self.database_connection.cursor.execute(query, (
+            self.table,
+            self.name,
+            self.price,
+            self.c_id,
+            self.id
+        ))
 
-        self.db.conn.commit()
-
+        self.database_connection.db_connection.commit()
 
     def json(self):
         """ This function returns a JSON serializable dict containing item data
-        
+
         """
 
         return {
@@ -150,23 +143,20 @@ class OrderItemModel(DBModel):
 
         """
 
-        db = DB()
-        db.connect(cls.connection)
+        database_connection = DB()
+        database_connection.connect(cls.connection)
 
-        q = """ 
+        query = """ 
         SELECT * FROM %s WHERE id = %s
-        """ % (cls.table , _id)
+        """ % (cls.table, _id)
 
-        db.cursor.execute(q)
-        db.conn.commit()
+        database_connection.cursor.execute(query)
+        database_connection.db_connection.commit()
 
-        result = db.cursor.fetchone()
+        result = database_connection.cursor.fetchone()
 
         if bool(result):
             return cls.get_object(result)
-        else:
-            return None
-
 
     @classmethod
     def get_all_items(cls):
@@ -177,32 +167,27 @@ class OrderItemModel(DBModel):
 
         """
 
-
         try:
-            db = DB()
-            db.connect(cls.connection)
+            database_connection = DB()
+            database_connection.connect(cls.connection)
 
-            q = """ 
-            SELECT * FROM %s
-            """
+            query = """ 
+            SELECT * FROM {}
+            """.format(cls.table)
 
-            db.cursor.execute(q,(cls.table))
+            database_connection.cursor.execute(query)
 
-            db.conn.commit()
-            results = db.cursor.fetchall()
-
+            database_connection.db_connection.commit()
+            results = database_connection.cursor.fetchall()
 
             response = []
 
-            for r in results:
-                response.append(cls.get_object(r))
+            for result in results:
+                response.append(cls.get_object(result))
 
-            return response    
+            return response
         except:
             return None
-
-
-    
 
     def save(self):
         """ This function is used to determine whether to insert or update data to the database

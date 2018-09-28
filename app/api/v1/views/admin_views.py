@@ -1,12 +1,13 @@
-from flask import make_response,jsonify
+from flask import make_response, jsonify
 from flask_restful import reqparse
-from app.database.models import OrderModel,OrderItemModel
+from app.database.models import OrderModel, OrderItemModel
+
 
 class AdminViews():
     """ This class stores all the routes accessible only to an administrator """
 
     @classmethod
-    def get_order(cls,orderId):
+    def get_order(cls, orderId):
         """ Fetch order data endpoint
 
         Arguments:
@@ -49,9 +50,8 @@ class AdminViews():
             "content": order.json()
         }), 200)
 
-
     @classmethod
-    def update_order(cls,orderId):
+    def update_order(cls, orderId):
         """ Update order status endpoint
 
         Arguments:
@@ -100,7 +100,6 @@ class AdminViews():
                 }
             ), 400)
 
-
         if data.status not in [0, 1, 2, 3]:
             return make_response(jsonify(
                 {
@@ -126,7 +125,7 @@ class AdminViews():
             jsonify({
                 'error': 0
             }), 200)
-    
+
     @classmethod
     def get_all_orders(cls):
         """ Fetch all orders endpoint
@@ -139,7 +138,7 @@ class AdminViews():
             - If orders are not present
                 - A response with a status code 200
                 - An empty content list
-        
+
         """
 
         orders = OrderModel.get_all_orders()
@@ -150,8 +149,6 @@ class AdminViews():
                 "content": [order.json() for order in orders]
             }
         ), 200)
-
-
 
     @classmethod
     def post_new_order_item(cls):

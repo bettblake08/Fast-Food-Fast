@@ -1,11 +1,16 @@
-from app.database.models import OrderModel, OrderItemModel, UserModel, RevokedTokenModel
+""" This module hosts the test data generation function used in 
+    the initialization of the test database 
+"""
+
+from app.database.models import OrderModel, OrderItemModel, UserModel
 from app.managers.serialization import flask_bcrypt
+
 
 def generate_test_data():
     """ Generates test data to be used when running tests
-    
+
     """
-    
+
     user = UserModel(
         username="johndoe1",
         email="johndoe1@hotmail.com",
@@ -42,7 +47,7 @@ def generate_test_data():
 
     orders = [
         OrderModel(
-            userId=user.id,
+            user_id=user.id,
             items=[
                 {
                     'id': 2,
@@ -56,7 +61,7 @@ def generate_test_data():
             total=100000,
             status=0),
         OrderModel(
-            userId=user.id,
+            user_id=user.id,
             items=[
                 {
                     'id': 1,

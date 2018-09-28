@@ -2,6 +2,7 @@ from flask import make_response, jsonify
 
 from app.database.models import OrderItemModel
 
+
 class MainViews():
     """ This class stores all the routes accessible to all users"""
 
@@ -26,7 +27,7 @@ class MainViews():
                 jsonify({
                         'error': 1,
                         "error_msg": "Menu has not been populated."
-                    }), 200
+                        }), 200
             )
 
         return make_response(jsonify(

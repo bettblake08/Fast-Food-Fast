@@ -43,17 +43,17 @@ def add_claims_to_access_token(identity):
 
 @api_v1.route('/auth/signup', methods=['POST'])
 def user_sign_up():
-    return login_views.signUp()
+    return login_views.sign_up()
 
 
 @api_v1.route('/auth/login', methods=['POST'])
 def user_login_in():
-    return login_views.loginAuth()
+    return login_views.login_auth()
 
 
 @api_v1.route('/auth/logout')
 def logOutRefresh():
-    return login_views.logOut()
+    return login_views.log_out()
 
 
 @api_v1.route('/token/refresh')
@@ -68,16 +68,16 @@ def refresh_token():
     return resp
 
 
-@api_v1.route("/order/<string:orderId>")
+@api_v1.route("/order/<string:order_id>")
 @user_required(2)
-def get_order(orderId):
-    admin_views.get_order(orderId)
+def get_order(order_id):
+    admin_views.get_order(order_id)
 
 
-@api_v1.route("/order/<string:orderId>", methods=['PUT'])
+@api_v1.route("/order/<string:order_id>", methods=['PUT'])
 @user_required(2)
-def update_order(orderId):
-    admin_views.update_order(orderId)
+def update_order(order_id):
+    admin_views.update_order(order_id)
 
 
 @api_v1.route('/orders')

@@ -1,8 +1,14 @@
+
+""" This module hosts the DB class used for managing the database connections 
+
+"""
+import os
 import psycopg2
-from app.database.schema import tables
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-import os
+from app.database.schema import TABLES
+
+
 
 class DB():
     """ This is the database class used to connect with the database
@@ -19,7 +25,8 @@ class DB():
         self.env = os.environ.get('DB_ENV')
 
     def init_db(self, app):
-        """ This is the database initialization function used to generate the database and corresponding tables        
+        """ This is the database initialization function used to generate the 
+        database and corresponding tables        
         """
 
         self.connect_db(app)
@@ -51,14 +58,13 @@ class DB():
             connection += " password=" + app.config['DB_PASSWORD']
             connection += " host=" + app.config['DB_HOST']
 
-            conn = psycopg2.connect(connection)
-            cursor = conn.cursor()
+            db_connection = psycopg2.connect(connection)
+            cursor = db_connection.cursor()
 
-            conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+            db_connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             cursor.execute("CREATE DATABASE " + app.config['DB_NAME'])
 
-            print('Database {} created succeessfully.'.format(
-                    app.config['DB_NAME']))
+            print('Database {} created succeessfully.'.format(app.config['DB_NAME']))
         
         except:
             print('Failed to create to database.')
@@ -67,15 +73,14 @@ class DB():
     def create_tables(self):
         """ This is the create tables function
 
-        It takes the imported list of table scripts (tables) from the schema.py file, and executes them to generate the tables
+        It takes the imported list of table scripts (tables) from the schema.py file, 
+        and executes them to generate the tables
         """
 
-        db = self.conn
+        for table in TABLES:
+            self.cursor.execute(table)
 
-        for t in tables:
-            self.cursor.execute(t)
-
-        db.commit()
+        self.db_connection.commit()
 
         try:
             print('Database tables created!')
@@ -90,7 +95,7 @@ class DB():
         It gets the database connection details from the app configurations
 
         Attributes:
-            conn:   This is the database connection that has been established
+            db_connection:   This is the database connection that has been established
             cursor: This is the table cursor for the database
         
         """
@@ -100,12 +105,12 @@ class DB():
         connection += " host=" + app.config['DB_HOST']
 
         try:
-            self.conn = psycopg2.connect(connection)
-            self.cursor = self.conn.cursor()
+            self.db_connection = psycopg2.connect(connection)
+            self.cursor = self.db_connection.cursor()
 
             print('Connection to database {} succeeded.'.format(app.config['DB_NAME']))
 
-            return self.conn.cursor()
+            return self.db_connection.cursor()
         except:
             print('Failed to connect to database.')
 
@@ -116,21 +121,22 @@ class DB():
         This function establises a connection to a database and stores it in this class's attribute.
         
         Args:
-            connection: This holds the database connection url used to establish a connection with the database
+            connection: This holds the database connection url used to establish a connection 
+            with the database
 
         Attributes:
-            conn:   This is the database connection that has been established
+            db_connection:   This is the database connection that has been established
             cursor: This is the table cursor for the database
         
         """
 
         try:
-            self.conn = psycopg2.connect(connection)
-            self.cursor = self.conn.cursor()
+            self.db_connection = psycopg2.connect(connection)
+            self.cursor = self.db_connection.cursor()
 
             print('Connection succeeded.')
 
-            return self.conn.cursor()
+            return self.db_connection.cursor()
         except:
             print('Failed to connect to database.')
 
@@ -147,15 +153,15 @@ class DB():
 
         self.connect_db(app)
 
-        q = [
+        queries = [
             "DROP SCHEMA public CASCADE",
             "CREATE SCHEMA public"
         ]
 
-        for query in q:
+        for query in queries:
             self.cursor.execute(query)
 
-        self.conn.commit()
+        self.db_connection.commit()
     
         try:
             print('Teardown succeeded!')
@@ -166,7 +172,8 @@ class DB():
     def destroy(self, app):
         """ This is the database destroy function
 
-        This function drops the database completely, erasing all the tables as well as the database itself
+        This function drops the database completely, erasing all the tables as well as 
+        the database itself
         
         Args:
             app: An instance of the flask application
@@ -176,14 +183,14 @@ class DB():
         
         self.connect_db(app)
 
-        q = [
+        queries = [
             "DROP DATABASE"
         ]
 
-        for query in q:
+        for query in queries:
             self.cursor.execute(query)
 
-        self.conn.commit()
+        self.db_connection.commit()
 
         try:
             print('Destroy db succeeded!')
