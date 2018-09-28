@@ -1,4 +1,5 @@
 # Fast Food Fast
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/08ffdfffe0b84907b2ff4af786d0fe22)](https://app.codacy.com/app/bettblake08/Fast-Food-Fast?utm_source=github.com&utm_medium=referral&utm_content=bettblake08/Fast-Food-Fast&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/bettblake08/Fast-Food-Fast.svg?branch=development)](https://travis-ci.org/bettblake08/Fast-Food-Fast)
 [![Coverage Status](https://coveralls.io/repos/github/bettblake08/Fast-Food-Fast/badge.svg?branch=development)](https://coveralls.io/github/bettblake08/Fast-Food-Fast?branch=development)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2225724f61db28f6114b/test_coverage)](https://codeclimate.com/github/bettblake08/Fast-Food-Fast/test_coverage)
