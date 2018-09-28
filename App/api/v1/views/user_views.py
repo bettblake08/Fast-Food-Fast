@@ -106,7 +106,7 @@ class UserViews():
 
         return make_response(
             jsonify({
-                    'error': 0,
-                    'content': [order.json() for order in orders]
-                    }), 200
-        )
+                'error': 0,
+                'content': [order.json() for order in orders]
+                }), 200
+            )

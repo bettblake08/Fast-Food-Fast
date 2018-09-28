@@ -103,7 +103,7 @@ def post_new_order_item():
     return admin_views.post_new_order_item()
 
 
-@api_v1.route("/users/orders", methods=['POST'])
+@api_v1.route("/users/orders")
 @user_required(1)
 def get_user_order_history():
     return user_views.get_user_order_history()

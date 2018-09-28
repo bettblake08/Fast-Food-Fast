@@ -4,3 +4,4 @@ from App.tests.v1.main.place_order_endpoint import TestPlaceOrderEndpoint
 
 from App.tests.v1.login_auth_endpoint import TestLoginAuthEndpoint
 from App.tests.v1.main.post_new_user_endpoint import TestPostNewUserEndpoint
+from App.tests.v1.main.fetch_order_history_endpoint import TestFetchOrderHistoryEndpoint
