@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/bettblake08/Fast-Food-Fast/badge.svg?branch=development)](https://coveralls.io/github/bettblake08/Fast-Food-Fast?branch=development)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2225724f61db28f6114b/test_coverage)](https://codeclimate.com/github/bettblake08/Fast-Food-Fast/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2225724f61db28f6114b/maintainability)](https://codeclimate.com/github/bettblake08/Fast-Food-Fast/maintainability)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b559c6468d3c49aaaa5848dddfe03e45)](https://www.codacy.com/app/bettblake08/Fast-Food-Fast?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bettblake08/Fast-Food-Fast&amp;utm_campaign=Badge_Grade)
 
 This is an web project that implements the online restaurant business requirements set by the FastFoodFast restaurant. FastFoodFast is a restaurant thats serves fast food meals such as french fries, burgers, fried food, soda and much more. But to reach a larger market of customers that are not willing to visit their restaurant, they have decided to produce an online web platform for aspiring customers to make an order from their restaurant. 
 
