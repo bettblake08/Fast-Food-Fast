@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, url_for, \
     jsonify, make_response, json, request
 from flask_restful import Api, reqparse
 from flask_jwt_extended import JWTManager, get_jwt_claims, verify_fresh_jwt_in_request, get_jwt_identity,\
-    jwt_refresh_token_required, create_access_token, set_access_cookies
+    jwt_refresh_token_required, create_access_token, set_access_cookies, jwt_required
 
 from app.database.models import UserModel, RevokedTokenModel, OrderModel, OrderedItemModel, OrderItemModel
 from app.api.v1.views import LoginViews, AdminViews, MainViews, UserViews
@@ -52,6 +52,7 @@ def user_login_in():
 
 
 @api_v1.route('/auth/logout')
+@jwt_required
 def logOutRefresh():
     return login_views.log_out()
 

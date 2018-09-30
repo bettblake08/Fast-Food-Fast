@@ -30,7 +30,6 @@ class DB():
         self.connect_db(app)
         self.create_tables()
 
-
     def init_test_db(self, app):
         """ This is the test database initialization function used to generate a test database
         and the corresponding tables
@@ -61,7 +60,6 @@ class DB():
             cursor.execute("CREATE DATABASE " + app.config['DB_NAME'])
 
             print('Database {} created succeessfully.'.format(app.config['DB_NAME']))
-        
         except:
             print('Failed to create to database.')
 
@@ -162,7 +160,7 @@ class DB():
         """
         
         self.connect_db(app)
-        self.cursor.execute("DROP DATABASE")
+        self.cursor.execute("DROP DATABASE ")
         self.db_connection.commit()
 
         try:
