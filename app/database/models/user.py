@@ -1,10 +1,17 @@
+""" In this module contains the UserModel"""
+
 from app.database import DB
 from app.database.db_model import DBModel
 from app.managers.serialization import flask_bcrypt
 
 
 class UserModel(DBModel):
-    """ 
+    """ This is the User model that manages all user accounts
+    Attributes:
+        table       :   Name of table
+        role        :   Role id of the user. As follows:
+                    +   1   Customer
+                    +   2   Admin
     CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY NOT NULL,
         username CHAR(60) NOT NULL,
@@ -12,17 +19,11 @@ class UserModel(DBModel):
         password CHAR(120) NOT NULL,
         role INT NOT NULL,
         created_at TIMESTAMPTZ,
-        updated_at TIMESTAMPTZ 
+        updated_at TIMESTAMPTZ
     );
-
-    Role Id
-    1 - Customer
-    2 - Admin
     """
 
     table = "users"
-
-    
 
     id = None
     created_at = None
@@ -30,7 +31,6 @@ class UserModel(DBModel):
 
     def __init__(self, **param):
         """ This is the initialization function for the OrderItemModel
-
         Args:
             username    :   Username as string
             email       :   Email address as string
@@ -38,7 +38,6 @@ class UserModel(DBModel):
             role        :   Role id of the user. As follows:
                         +   1   Customer
                         +   2   Admin
-
         Attributes:
             database_connection          :   An instance of the DB class
             username    :   Username as string
@@ -47,7 +46,6 @@ class UserModel(DBModel):
             role        :   Role id of the user. As follows:
                         +   1   Customer
                         +   2   Admin
-
         """
 
         self.username = param['username']
@@ -60,13 +58,10 @@ class UserModel(DBModel):
     @classmethod
     def get_object(cls, row):
         """ This is the function that converts the table row into UserModel instance
-
         Args:
             row:    A table row of type tuple
-
         Returns:
             UserModel
-
         """
 
         user = cls(
@@ -82,16 +77,14 @@ class UserModel(DBModel):
         return user
 
     def insert(self):
-        """ This is the row insert function to insert the class data into database. 
-
-            Attributes:
-                id  : The id of the newly inserted row
-
-            Returns:
-                bool: Returns True is insert succeeded or False if it failed.
+        """ This is the row insert function to insert the class data into database.
+        Attributes:
+            id  : The id of the newly inserted row
+        Returns:
+            bool: Returns True is insert succeeded or False if it failed.
         """
 
-        query = """ 
+        query = """
         INSERT INTO {}(username,email,password,role,created_at,updated_at) values(%s,%s,%s,%s,NOW(),NOW()) RETURNING id
         """.format(self.table)
 
@@ -111,11 +104,10 @@ class UserModel(DBModel):
             return False
 
     def update(self):
-        """ This is the row update function used to update the data stored in the row 
-
+        """ This is the row update function used to update the data stored in the row
         """
 
-        query = """ 
+        query = """
         UPDATE {} SET username = %s,email = %s,password = %s, updated_at = NOW() WHERE id = {} 
         """.format(self.table, self.id)
 
@@ -125,8 +117,6 @@ class UserModel(DBModel):
 
     def json(self):
         """ This function returns a JSON serializable dict containing item data
-
-
         """
 
         return {
@@ -142,21 +132,16 @@ class UserModel(DBModel):
     @classmethod
     def get(cls, _id):
         """ This function is used to get a user using the id (primary key)
-
-            Args:
-                _id:    Id (primary key) of the user
-
-            Returns:
-                UserModel if found or None if not found
-
+        Args:
+            _id:    Id (primary key) of the user
+        Returns:
+            UserModel if found or None if not found
         """
 
         database_connection = DB()
         database_connection.connect(cls.connection)
 
-        query = """ 
-            SELECT * FROM {} WHERE id = %s
-            """.format(cls.table)
+        query = "SELECT * FROM {} WHERE id = %s ".format(cls.table)
 
         database_connection.cursor.execute(query, (_id))
         database_connection.db_connection.commit()
@@ -170,13 +155,10 @@ class UserModel(DBModel):
     @classmethod
     def find_user_by_username(cls, username):
         """ This function is used to get a user using the username
-
-            Args:
-                username:    The username of the user as string
-
-            Returns:
-                UserModel if found or None if not found
-
+        Args:
+            username:    The username of the user as string
+        Returns:
+            UserModel if found or None if not found
         """
 
         database_connection = DB()
@@ -195,13 +177,10 @@ class UserModel(DBModel):
     @classmethod
     def find_user_by_email(cls, email):
         """ This function is used to get a user using the email
-
-            Args:
-                email:    The email of the user as string
-
-            Returns:
-                UserModel if found or None if not found
-
+        Args:
+            email:    The email of the user as string
+        Returns:
+            UserModel if found or None if not found
         """
 
         database_connection = DB()
@@ -219,15 +198,11 @@ class UserModel(DBModel):
 
     def authenticate(self, password):
         """ This function is used to authenticate the password against the stored hash password
-
         This is done to authenticate the user attempting to log into the system
-
-            Args:
-                password:    The password attempt of the user as a string
-
-            Returns:
-                bool: True if passwords match or False if not
-
+        Args:
+            password:    The password attempt of the user as a string
+        Returns:
+            bool: True if passwords match or False if not
         """
 
         return flask_bcrypt.check_password_hash(self.password, password)

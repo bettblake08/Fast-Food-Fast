@@ -5,19 +5,20 @@ from app.database.db_model import DBModel
 
 
 class OrderItemModel(DBModel):
-
-    table = "order_items"
-
-    """ 
+    """ This is the model that manages all the items on the menu
+    Attributes:
+        table   :   Name of the table
     CREATE TABLE IF NOT EXISTS order_items(
         id SERIAL PRIMARY KEY NOT NULL,
         name CHAR(120) NOT NULL,
         price INT NOT NULL,
         c_id INT NOT NULL,
         created_at TIMESTAMPTZ,
-        updated_at TIMESTAMPTZ 
+        updated_at TIMESTAMPTZ
     );
     """
+
+    table = "order_items"
 
     id = None
     created_at = None

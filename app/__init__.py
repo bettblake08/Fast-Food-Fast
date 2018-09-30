@@ -1,3 +1,7 @@
+""" This module hosts the flask application initialization function 
+    used to generate the app instance.
+"""
+
 from flask import Flask
 
 from instance.config import app_config
@@ -7,12 +11,10 @@ from app.managers.serialization import flask_bcrypt
 
 def create_app(config_name='DEV'):
     """ This function is used to generate an instance of the flask application 
-    
-        Args:
-            config_name :   App environment name. ['DEV','PROD','TEST']
-
-        Returns:
-            Flask():    An instance of the flask application
+    Args:
+        config_name :   App environment name. ['DEV','PROD','TEST']
+    Returns:
+        Flask():    An instance of the flask application
     """
 
     app = Flask(__name__, instance_relative_config=True)

@@ -1,5 +1,4 @@
-""" This module hosts the Order model 
-
+""" This module hosts the Order model
 """
 
 from app.database import DB
@@ -8,15 +7,14 @@ from app.database.db_model import DBModel
 
 
 class OrderModel(DBModel):
-
-    """ 
+    """
     CREATE TABLE IF NOT EXISTS orders(
     id INT PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
     total INT NOT NULL,
     status INT NOT NULL,
     created_at TIMESTAMPTZ,
-    updated_at TIMESTAMPTZ 
+    updated_at TIMESTAMPTZ
     );
     """
 
@@ -28,10 +26,8 @@ class OrderModel(DBModel):
 
     def __init__(self, **param):
         """ This is the initialization function for the OrderModel
-
         Attributes:
             database_connection  :   An instance of the DB class
-
         Args:
             user_id      :   User id of the user that ordered
             items       :   List of items being ordered
@@ -41,7 +37,6 @@ class OrderModel(DBModel):
                             +   2   Processing
                             +   3   Cancelled
                             +   4   Complete
-
         """
 
         self.user_id = param['user_id']
@@ -54,14 +49,10 @@ class OrderModel(DBModel):
     @classmethod
     def get_object(cls, row):
         """ This is the function that converts the table row into OrderModel instance
-
         Args:
             row:    A table row of type tuple
-
         Returns:
             OrderModel
-
-
         """
 
         user = cls(
@@ -76,19 +67,16 @@ class OrderModel(DBModel):
         return user
 
     def insert(self):
-        """ This is the row insert function to insert the class data into database. 
-
+        """ This is the row insert function to insert the class data into database.
             Attributes:
                 id  : The id of the newly inserted row
-
             Returns:
                 bool: Returns True is insert succeeded or False if it failed.
         """
 
-        query = """ 
+        query = """
         INSERT INTO {}(user_id,total,status,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
         """.format(self.table) % (self.user_id, self.total, self.status)
-        
 
         self.database_connection.cursor.execute(query)
         self.database_connection.db_connection.commit()
@@ -103,14 +91,12 @@ class OrderModel(DBModel):
                 quantity=item['quantity'])
 
             order_item.save()
-        
 
     def update(self):
-        """ This is the row update function used to update the data stored in the row 
-
+        """ This is the row update function used to update the data stored in the row
         """
 
-        query = """ 
+        query = """
         UPDATE {} SET user_id = {},total = {},status = {}, updated_at = NOW() WHERE id = {} 
         """.format(self.table, self.user_id, self.total, self.status, self.id)
 
@@ -125,18 +111,14 @@ class OrderModel(DBModel):
                     order_item.quantity = item.quantity
                     order_item.update()
 
-
     def json(self):
         """ This function returns a JSON serializable dict containing item data
-
         """
 
-        items = None
+        items = []
 
         if self.items:
             items = [i.json() for i in self.items]
-        else:
-            items = []
 
         return {
             'id': self.id,
@@ -148,23 +130,20 @@ class OrderModel(DBModel):
             'updated_at': str(self.updated_at)
         }
 
-
     @classmethod
     def get(cls, _id):
         """ This function is used to get an order item using the id (primary key)
-
-            Args:
-                _id:    Id (primary key) of the item
-
-            Returns:
-                OrderModel if found or None if not found
-
+        Args:
+            _id:    Id (primary key) of the item
+        Returns:
+            OrderModel if found or None if not found
         """
 
         database_connection = DB()
         database_connection.connect(cls.connection)
 
-        query = """ SELECT * FROM {} WHERE id = %s """.format(cls.table) % (_id)
+        query = """ SELECT * FROM {} WHERE id = %s """.format(
+            cls.table) % (_id)
 
         database_connection.cursor.execute(query)
         database_connection.db_connection.commit()
@@ -177,23 +156,18 @@ class OrderModel(DBModel):
 
             return order
 
-
     @classmethod
     def get_all_orders(cls):
         """ This function is used to get all the orders stored in the database
-
-            Returns:
-                List (OrderModel) if found or None if not found
-
+        Returns:
+            List (OrderModel) if found or None if not found
         """
 
         try:
             database_connection = DB()
             database_connection.connect(cls.connection)
 
-            query = """ 
-            SELECT * FROM {}
-            """.format(cls.table)
+            query = "SELECT * FROM {} ".format(cls.table)
 
             database_connection.cursor.execute(query)
 
@@ -212,27 +186,22 @@ class OrderModel(DBModel):
 
         except:
             return None
-
 
     @classmethod
     def get_all_orders_by_user(cls, user_id):
         """ This function is used to get all the orders done by a user using the username
-
-            Args:
-                user_id  :   The id of the user
-
-            Returns:
-                List (OrderModel) if found or None if not found
-
+        Args:
+            user_id  :   The id of the user
+        Returns:
+            List (OrderModel) if found or None if not found
         """
 
         try:
             database_connection = DB()
             database_connection.connect(cls.connection)
 
-            query = """ 
-            SELECT * FROM {} WHERE user_id = {}
-            """.format(cls.table, user_id)
+            query = "SELECT * FROM {} WHERE user_id = {} ".format(
+                cls.table, user_id)
 
             database_connection.cursor.execute(query)
 
@@ -251,7 +220,6 @@ class OrderModel(DBModel):
 
         except:
             return None
-
 
     def save(self):
         """ This function is used to determine whether to insert or update data to the database
