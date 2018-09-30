@@ -15,10 +15,13 @@ setup(
     install_requires=[
         "Flask>=1.0.2",
         "Flask-RESTful>=0.3.6",
-        "Cryptography>=2.2.1"
+        "Flask-JWT-Extended",
+        "Flask-Bcrypt",
+        "Cryptography>=2.2.1",
         "pytest>=3.7.4",
         "coveralls",
         "pytest-cov>=2.6.0",
-        "pytest-ordering>=0.5"
+        "pytest-ordering>=0.5",
+        "psycopg2-binary"
     ]
 )
