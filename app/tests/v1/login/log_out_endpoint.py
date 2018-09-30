@@ -1,5 +1,4 @@
 from app.tests.v1.test_config import test_client, init_database
-import pytest
 from flask import json
 
 class TestLogOutEndpoint(object):

@@ -1,7 +1,5 @@
 from app.tests.v1.test_config import test_client, init_database
 from flask import json
-import pytest
-
 
 class TestPlaceOrderEndpoint(object):
     def login(self, test_client):
