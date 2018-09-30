@@ -1,6 +1,6 @@
-from App import create_app
-from App.database import DB
-from App.database.factory import generate_test_data
+from app import create_app
+from app.database import DB
+from app.database.factory import generate_test_data
 import os
 
 app = create_app(os.getenv('APP_ENV'))
