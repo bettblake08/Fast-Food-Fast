@@ -1,1 +1,1 @@
-web: uwsgi uwsgi --wsgi-file run.py --callable app
+web: gunicorn -w 4 run:app

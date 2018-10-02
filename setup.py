@@ -22,6 +22,6 @@ setup(
         "coveralls",
         "pytest-cov>=2.6.0",
         "pytest-ordering>=0.5",
-        "psycopg2-binary"
+        "gunicorn"
     ]
 )
