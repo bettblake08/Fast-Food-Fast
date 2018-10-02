@@ -34,7 +34,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 Before you can bet started on running and testing the project code, you need to do the following:
 
-
 1. Install GIT version control
 
     If you do not have GIT on your local machine, to run git commands to retrieve this project, you should. Visit the [installation guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for GIT on all platforms.

@@ -8,7 +8,6 @@ from app.managers.serialization import flask_bcrypt
 
 def generate_test_data():
     """ Generates test data to be used when running tests
-
     """
 
     user = UserModel(
