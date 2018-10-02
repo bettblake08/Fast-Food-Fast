@@ -1,1 +1,1 @@
-web: uwsgi uwsgi.ini
+web: uwsgi uwsgi --wsgi-file run.py --callable app
