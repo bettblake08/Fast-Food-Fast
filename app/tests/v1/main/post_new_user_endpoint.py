@@ -82,8 +82,7 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 1
+        assert response.status_code == 400
 
 
     def test_using_incorrect_password_field(self, test_client, init_database):
@@ -99,8 +98,7 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 2
+        assert response.status_code == 400
 
 
     def test_using_invalid_role_field(self, test_client, init_database):
@@ -148,8 +146,8 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        assert response.status_code == 201
+
 
     def test_using_valid_customer_user_data(self, test_client, init_database):
 
@@ -164,8 +162,7 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        assert response.status_code == 201
 
     def test_using_existing_email_address(self, test_client, init_database):
 
@@ -180,8 +177,7 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 4
+        assert response.status_code == 403
 
 
     def test_using_existing_username(self, test_client, init_database):
@@ -197,5 +193,4 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 3
+        assert response.status_code == 403

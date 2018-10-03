@@ -53,10 +53,7 @@ class TestUpdateOrderEndpoint(object):
             }))
 
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 2
-
-
+        assert response.status_code == 404
 
     def test_using_no_status_field(self, test_client, init_database):
 
@@ -98,9 +95,7 @@ class TestUpdateOrderEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 1
-
+        assert response.status_code == 400
 
 
     def test_using_valid_data(self, test_client, init_database):
@@ -115,4 +110,3 @@ class TestUpdateOrderEndpoint(object):
             ))
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0

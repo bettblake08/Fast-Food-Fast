@@ -45,8 +45,7 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 1
+        assert response.status_code == 400
 
     def test_using_username_that_doesnt_exist(self, test_client, init_database):
 
@@ -59,8 +58,7 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 2
+        assert response.status_code == 404
 
     def test_using_email_that_doesnt_exist(self, test_client, init_database):
 
@@ -73,8 +71,8 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 2
+        assert response.status_code == 404
+
 
     def test_using_customer_username(self, test_client, init_database):
 
@@ -88,7 +86,7 @@ class TestLoginAuthEndpoint(object):
             ))
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+
 
     def test_using_customer_email_as_username(self, test_client, init_database):
 
@@ -103,7 +101,6 @@ class TestLoginAuthEndpoint(object):
             
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
 
 
     def test_using_admin_customer_username(self, test_client, init_database):
@@ -117,10 +114,7 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        data = json.loads(response.data)
-
         assert response.status_code == 200
-        assert data['error'] == 0
 
 
     def test_using_admin_email_as_username(self, test_client, init_database):
@@ -134,7 +128,4 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        data = json.loads(response.data)
-
         assert response.status_code == 200
-        assert data['error'] == 0

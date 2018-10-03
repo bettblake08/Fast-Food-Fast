@@ -108,8 +108,7 @@ class TestPostNewFoodItemEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 1
+        assert response.status_code == 400
 
 
     def test_using_valid_data(self, test_client,init_database):
@@ -124,5 +123,4 @@ class TestPostNewFoodItemEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        assert response.status_code == 201

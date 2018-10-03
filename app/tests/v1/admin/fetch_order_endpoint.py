@@ -38,8 +38,7 @@ class TestFetchOrderEndpoint(object):
             orderId=20001,
             test_client = test_client
         )
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 1
+        assert response.status_code == 404
 
 
     def test_using_valid_order_id(self, test_client, init_database):
@@ -48,4 +47,3 @@ class TestFetchOrderEndpoint(object):
             test_client=test_client
         )
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0

@@ -27,7 +27,7 @@ class TestPlaceOrderEndpoint(object):
                             )
 
 
-    def test_using_invalid_item_id(self, test_client, init_database):
+    def test_using_unexisting_item_id(self, test_client, init_database):
         response = self.place_order(
             test_client = test_client,
             data=json.dumps(
@@ -47,8 +47,7 @@ class TestPlaceOrderEndpoint(object):
             }
         ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)["error"] == 1
+        assert response.status_code == 404
 
 
     def test_using_no_quantity_value_in_item(self, test_client, init_database):
@@ -72,8 +71,7 @@ class TestPlaceOrderEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)["error"] == 2
+        assert response.status_code == 400
 
 
     def test_using_no_items_key(self, test_client, init_database):
@@ -119,5 +117,4 @@ class TestPlaceOrderEndpoint(object):
                 )
             }))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        assert response.status_code == 201

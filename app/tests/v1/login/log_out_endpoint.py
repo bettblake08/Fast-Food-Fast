@@ -22,7 +22,4 @@ class TestLogOutEndpoint(object):
                 "Authorization": "Bearer " + self.access_token
             })
 
-        data = json.loads(response.data)
-
         assert response.status_code == 200
-        assert data['error'] == 0

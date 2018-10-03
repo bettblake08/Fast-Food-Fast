@@ -23,4 +23,3 @@ class TestFetchOrderHistoryEndpoint(object):
                                    })
 
         assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0

@@ -24,6 +24,5 @@ class TestTokenRefreshEndpoint(object):
 
         data = json.loads(response.data)
 
-        assert response.status_code == 200
-        assert data['error'] == 0
+        assert response.status_code == 201
         assert 'access_token' in data
