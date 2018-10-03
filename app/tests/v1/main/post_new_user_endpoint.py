@@ -1,8 +1,6 @@
 from app.tests.v1.test_config import APITestcase
 from flask import json
 
-import unittest
-
 class TestPostNewUserEndpoint(APITestcase):
     def addUser(self, data):
         return self.test_client.post(

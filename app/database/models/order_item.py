@@ -75,7 +75,7 @@ class OrderItemModel(DBModel):
         return item
 
     def insert(self):
-        """ This is the row insert function to insert the class data into database. 
+        """ This is the row insert function to insert the class data into database.
 
             Attributes:
                 id  : The id of the newly inserted row
@@ -85,8 +85,7 @@ class OrderItemModel(DBModel):
         """
 
         try:
-            query = """ 
-            INSERT INTO {}(name,price,c_id,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
+            query = """ INSERT INTO {}(name,price,c_id,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
             """.format(self.table)
 
             self.database_connection.cursor.execute(
@@ -100,8 +99,7 @@ class OrderItemModel(DBModel):
             return False
 
     def update(self):
-        """ This is the row update function used to update the data stored in the row 
-
+        """ This is the row update function used to update the data stored in the row
         """
 
         query = """ 
@@ -147,9 +145,7 @@ class OrderItemModel(DBModel):
         database_connection = DB()
         database_connection.connect(cls.connection)
 
-        query = """ 
-        SELECT * FROM %s WHERE id = %s
-        """ % (cls.table, _id)
+        query = "SELECT * FROM %s WHERE id = %s " % (cls.table, _id)
 
         database_connection.cursor.execute(query)
         database_connection.db_connection.commit()
@@ -177,10 +173,8 @@ class OrderItemModel(DBModel):
             """.format(cls.table)
 
             database_connection.cursor.execute(query)
-
             database_connection.db_connection.commit()
             results = database_connection.cursor.fetchall()
-
             response = []
 
             for result in results:

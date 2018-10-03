@@ -1,4 +1,4 @@
-""" This module host all the database models imported from their respective 
+""" This module host all the database models imported from their respective
     files """
 
 from app.database.models.order import OrderModel

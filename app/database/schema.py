@@ -1,7 +1,5 @@
-""" 
-This is the store for all create table scripts.
-
-tables: An array of create table scripts stored as strings
+""" This is the store for all create table scripts.
++   tables: An array of create table scripts stored as strings
 """
 
 

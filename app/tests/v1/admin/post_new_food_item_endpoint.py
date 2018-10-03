@@ -1,7 +1,5 @@
 from app.tests.v1.test_config import APITestcase
 from flask import json
-import unittest
-
 
 class TestPostNewFoodItemEndpoint(APITestcase):
     def login(self):

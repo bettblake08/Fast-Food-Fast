@@ -1,5 +1,4 @@
 from app.tests.v1.test_config import APITestcase
-import unittest
 from flask import json
 
 class TestFetchOrdersEndpoint(APITestcase):
