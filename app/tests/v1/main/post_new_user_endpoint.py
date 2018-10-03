@@ -1,6 +1,9 @@
 from app.tests.v1.test_config import APITestcase
 from flask import json
 
+import random
+import string
+
 class TestPostNewUserEndpoint(APITestcase):
     def addUser(self, data):
         return self.test_client.post(
@@ -61,6 +64,31 @@ class TestPostNewUserEndpoint(APITestcase):
             response.status_code,
             400,
             "Unexpected response status!")
+
+
+    def test_using_long_username(self):
+
+        response = self.addUser(
+            data=json.dumps(
+                {
+                    "username": ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(80)),
+                    "email": "bettbrian@rocketmail.com",
+                    "password": "testPASS.A1",
+                    "role": 1
+                }
+            ))
+
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Username length is loo long. Please input a username 60 chars or less.",
+            "Unexpected response message!")
 
 
     def test_using_no_role_field(self):
