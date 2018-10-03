@@ -20,16 +20,15 @@ class UserViews():
         Returns:
             - If items are all valid
                 - A response with a status code 200
-                - An error value in response body is 0
+                - A success message is returned
 
             - If items do not all exist
-                - A response with a status code 200
-                - An error value in response body is 1
+                - A response with a status code 404
+                - An error message is returned
 
             - If items are not all valid
-                - A response with a status code 200
-                - An error value in response body is 2
-
+                - A response with a status code 400
+                - An error message is returned
         """
 
         parser = reqparse.RequestParser()
@@ -52,28 +51,25 @@ class UserViews():
                 if not order_item:
                     return make_response(jsonify(
                         {
-                            'error': 1,
                             'error_msg': "Item " + str(ordered_items['id']) + " doesn't exist!"
                         }
-                    ), 200)
+                    ), 404)
                 else:
 
                     if 'quantity' not in ordered_items:
                         return make_response(jsonify(
                             {
-                                'error': 2,
                                 'error_msg': "Item " + str(ordered_items['id']) + " doesn't have a quantity field!"
                             }
-                        ), 200)
+                        ), 400)
 
                     total += ordered_items['quantity'] * order_item.price
 
         except:
             return make_response(
                 jsonify({
-                    'error': 2,
                     'error_msg': "Items list is invalid. Please check to see all items id and quantity properties."
-                    }), 200
+                    }), 400
                 )
 
         order = OrderModel(
@@ -86,9 +82,9 @@ class UserViews():
 
         return make_response(
             jsonify({
-                    'error': 0
-                    }), 200
-        )
+                    "message":"You have successfully created a new order"
+                }), 201
+            )
 
     def get_user_order_history(self):
         """ Get user order history Endpoint
@@ -96,8 +92,8 @@ class UserViews():
         Returns:
             - If user is logged in
                 - A response with a status code 200
-                - An error value in response body is 0
                 - A content value as list of orders
+                - A success message
         """
 
         user = get_jwt_identity()
@@ -106,7 +102,7 @@ class UserViews():
 
         return make_response(
             jsonify({
-                'error': 0,
+                'message':"Successfully fetched user order history",
                 'content': [order.json() for order in orders]
                 }), 200
             )

@@ -46,70 +46,63 @@ class LoginViews():
             return make_response(
                 jsonify({
                         "error_msg": "Incorrect role id. Please input correct role id"
-                        }
-                        ), 400
-            )
+                    }), 400
+                )
 
         if not Serialization.test_email(data.email):
             return make_response(
                 jsonify(
                     {
-                        "error": 1,
                         "error_msg": "Incorrect email. Please input a valid email string."
-                    }
-                ), 200
-            )
+                    }), 400
+                )
 
         if not Serialization.test_password(data.password, 1):
             return make_response(
                 jsonify(
                     {
-                        "error": 2,
                         "error_msg": "Incorrect password. Please input a valid password string."
-                    }
-                ), 200
-            )
+                    }), 400
+                )
 
         if UserModel.find_user_by_username(data.username):
             return make_response(
                 jsonify(
                     {
-                        "error": 3,
                         "error_msg": "user already exists. Please use another username."
                     }
-                ), 200
+                ), 403
             )
 
         elif UserModel.find_user_by_email(data.email):
             return make_response(
                 jsonify(
                     {
-                        "error": 4,
                         "error_msg": "user already exists. Please use another email address."
                     }
-                ), 200
+                ), 403
             )
 
-        user = UserModel(
+        
+        try:    
+            user = UserModel(
             username=data.username,
             email=data.email,
             password=flask_bcrypt.generate_password_hash(data['password']),
             role=data.role)
 
-        user.save()
-
-        try:
+            user.save()
 
             return make_response(
                 jsonify({
-                        "error": 0
-                        }), 200
+                        "message":"Sign up successful. User has been created!"
+                    }), 201
             )
         except:
             return make_response(
                 jsonify({
                         "error_msg": "Failed to add user. Please try again later"
-                        }), 400
+                    }), 500
             )
 
     @staticmethod
@@ -128,9 +121,9 @@ class LoginViews():
         if not Serialization.test_password(data.password, 1):
             return make_response(jsonify(
                 {
-                    'error': 1
+                    'error_msg': "Passowrd is invalid. Please input a valid password!"
                 }
-            ), 200)
+            ), 400)
 
         
         current_user = None
@@ -143,12 +136,9 @@ class LoginViews():
         if not current_user:
             return make_response(jsonify(
                 {
-                    "error": 2,
                     'message': 'User {} doesn\'t exist'.format(data.username)
                 }
-            ), 200)
-
-       
+            ), 404)
 
         if current_user.authenticate(data['password']):
             access_token = create_access_token(
@@ -164,18 +154,17 @@ class LoginViews():
                 })
 
             resp = jsonify({
-                'error': 0,
                 'message': 'Logged in as {}'.format(current_user.username),
                 'access_token': access_token,
                 'refresh_token': refresh_token
             })
 
-            return resp
+            return resp,200
         else:
-            return make_response(jsonify({
-                'error': 3,
-                'message': 'Wrong credentials'}),
-                200)
+            return make_response(jsonify(
+                {
+                'error_msg': 'Wrong user credentials. Please input correct username and password'
+                }),401)
 
     @staticmethod
     def log_out():
@@ -186,13 +175,11 @@ class LoginViews():
             revoked_token.insert()
 
             resp = jsonify({
-                "error": 0,
-                'error_msg': 'Access token has been revoked'}
+                'message': 'Access token has been revoked'}
             )
 
             return resp, 200
         except:
             return jsonify({
-                "error": 1,
                 'error_msg': 'Something went wrong'}
             ), 500

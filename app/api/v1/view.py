@@ -62,11 +62,11 @@ def logOutRefresh():
 def refresh_token():
     user = get_jwt_identity()
     resp = jsonify({
-        'error': 0,
+        'message': "Refress successful",
         'access_token': create_access_token(identity=user, fresh=True)
     })
 
-    return resp
+    return resp,201
 
 
 @api_v1.route("/order/<string:order_id>")

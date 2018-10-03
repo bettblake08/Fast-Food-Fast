@@ -12,12 +12,9 @@ class MainViews():
         Returns:
             - If menu is populated
                 - A response with a status code 200
-                - A error value in response body is 0
 
             - If menu is not populated
-                - A response with a status code 200
-                - A error value in response body is 1
-
+                - A response with a status code 404
         """
 
         items = OrderItemModel.get_all_items()
@@ -25,13 +22,12 @@ class MainViews():
         if not bool(items):
             return make_response(
                 jsonify({
-                        'error': 1,
                         "error_msg": "Menu has not been populated."
-                        }), 200
+                        }), 404
             )
 
         return make_response(jsonify(
             {
-                'error': 0,
+                'message': "Successfully fetched menu.",
                 "content": [item.json() for item in items]
             }), 200)
