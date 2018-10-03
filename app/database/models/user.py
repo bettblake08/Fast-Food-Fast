@@ -65,7 +65,7 @@ class UserModel(DBModel):
         """
 
         user = cls(
-            username=row[1],
+            username=row[1].rstrip(),
             email=row[2],
             password=row[3],
             role=row[4])

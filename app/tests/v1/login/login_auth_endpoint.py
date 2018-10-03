@@ -1,17 +1,20 @@
-from app.tests.v1.test_config import test_client, init_database
+import unittest
+
+from app.tests.v1.test_config import APITestcase
 from flask import json
 
-class TestLoginAuthEndpoint(object):
-    def auth_user(self, data, test_client):
-        return test_client.post('/api/v1/auth/login',
-                               data=data,
-                               content_type='application/json'
-                               )
+class TestLoginAuthEndpoint(APITestcase):
 
-    def test_using_no_username_field(self, test_client, init_database):
+    def auth_user(self, data):
+        return self.test_client.post(
+            '/api/v1/auth/login',
+            data=data,
+            content_type='application/json'
+            )
+
+    def test_using_no_username_field(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "userna": "jamesblack",
@@ -19,12 +22,15 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
 
-    def test_using_no_password_field(self, test_client, init_database):
+
+    def test_using_no_password_field(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack",
@@ -32,12 +38,15 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+            
 
-    def test_using_incorrect_password_value(self, test_client, init_database):
+    def test_using_incorrect_password_value(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "johndoe2",
@@ -45,12 +54,23 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        data = json.loads(response.data)
 
-    def test_using_username_that_doesnt_exist(self, test_client, init_database):
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Password is invalid. Please input a valid password!",
+            "Unexpected response message!"
+            )
+
+
+    def test_using_username_that_doesnt_exist(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack0807",
@@ -58,12 +78,22 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 404
+        data = json.loads(response.data)
 
-    def test_using_email_that_doesnt_exist(self, test_client, init_database):
+        self.assertEqual(
+            response.status_code, 
+            404,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "User jamesblack0807 doesn't exist",
+            "Unexpected response message!")
+
+
+    def test_using_email_that_doesnt_exist(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "bettblake07@hotmail.com",
@@ -71,13 +101,22 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 404
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            404,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "User bettblake07@hotmail.com doesn't exist",
+            "Unexpected response message!")
 
 
-    def test_using_customer_username(self, test_client, init_database):
+    def test_using_customer_username(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "johndoe1",
@@ -85,13 +124,22 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            200,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Logged in as johndoe1",
+            "Unexpected response message!")
 
 
-    def test_using_customer_email_as_username(self, test_client, init_database):
+    def test_using_customer_email_as_username(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "johndoe1@hotmail.com",
@@ -100,13 +148,22 @@ class TestLoginAuthEndpoint(object):
             ))
             
 
-        assert response.status_code == 200
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            200,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'], 
+            "Logged in as johndoe1",
+            "Unexpected response message!")
 
 
-    def test_using_admin_customer_username(self, test_client, init_database):
+    def test_using_admin_customer_username(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "johndoe2",
@@ -114,13 +171,22 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            200,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Logged in as johndoe2",
+            "Unexpected response message!")
 
 
-    def test_using_admin_email_as_username(self, test_client, init_database):
+    def test_using_admin_email_as_username(self):
 
         response = self.auth_user(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "johndoe2@hotmail.com",
@@ -128,4 +194,14 @@ class TestLoginAuthEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code, 
+            200,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Logged in as johndoe2",
+            "Unexpected response message!")

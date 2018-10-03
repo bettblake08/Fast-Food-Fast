@@ -30,7 +30,7 @@ class AdminViews():
         except:
             return make_response(
                 jsonify({
-                    "error_msg":"Invalid order id. Please input a valid id."
+                    "message":"Invalid order id. Please input a valid id."
                 }), 400
             )
 
@@ -40,14 +40,15 @@ class AdminViews():
         if not bool(order):
             return make_response(jsonify(
                 {
-                    "error_msg": "Order does not exist. Please enter an existing order id."
+                    "message": "Order does not exist. Please enter an existing order id."
                 }), 404
             )
 
         return make_response(jsonify({
-            'message': "Fetch order successful",
+            'message': "Fetch order successful!",
             "content": order.json()
         }), 200)
+
 
     @classmethod
     def update_order(cls, order_id):
@@ -60,7 +61,7 @@ class AdminViews():
         Returns:
             - If status argument is not present and of valid type
                 - A response with a status code 400
-                - An error_msg in response
+                - An message in response
 
             - If status argument is incorrect
                 - A response with a status code 400
@@ -90,14 +91,14 @@ class AdminViews():
         except:
             return make_response(jsonify(
                 {
-                    'error_msg': "Invalid order id . Please provide a valid status number"
+                    'message': "Invalid order id . Please provide a valid status number."
                 }
             ), 400)
 
         if data.status not in [0, 1, 2, 3]:
             return make_response(jsonify(
                 {
-                    'error_msg': "Invalid status number. Please provide a valid status number"
+                    'message': "Invalid status number. Please provide a valid status number."
                 }
             ), 400)
 
@@ -106,7 +107,7 @@ class AdminViews():
         if not order:
             return make_response(jsonify(
                 {
-                    'error_msg': "Order not found. Please provide a valid order id"
+                    'message': "Order not found. Please provide a valid order id."
                 }
             ), 404)
 
@@ -136,7 +137,7 @@ class AdminViews():
 
         return make_response(jsonify(
             {   
-                "message":"You have successfully retrieved all the present orders.",
+                "message":"You have successfully retrieved all the present orders!",
                 "content": [order.json() for order in orders]
             }
         ), 200)
@@ -181,10 +182,10 @@ class AdminViews():
 
         data = parser.parse_args()
 
-        if int(data.c_id) not in [0, 1, 2, 3]:
+        if data.c_id not in [0, 1, 2, 3]:
             return make_response(jsonify(
                 {
-                    'error_msg': "Invalid status number. Please provide a valid status number"
+                    'message': "Invalid category id. Please provide a valid category number."
                 }
             ), 400)
 
@@ -198,13 +199,13 @@ class AdminViews():
 
             return make_response(
                 jsonify({
-                    'message':"You have successfully created a new order"
+                    'message':"You have successfully created a new order!"
                 }), 201
             )
 
         except:
             return make_response(
                 jsonify({
-                    'error_msg': "Failed to process new order item. Please try again!"
+                    'message': "Failed to process new order item. Please try again!"
                 }), 400
             )

@@ -2,7 +2,7 @@ from functools import wraps
 
 from flask import Blueprint, redirect, url_for, \
     jsonify, make_response, json, request
-from flask_restful import Api, reqparse
+from flask_restful import reqparse
 from flask_jwt_extended import JWTManager, get_jwt_claims, verify_fresh_jwt_in_request, get_jwt_identity,\
     jwt_refresh_token_required, create_access_token, set_access_cookies, jwt_required
 
@@ -18,7 +18,6 @@ admin_views = AdminViews()
 user_views = UserViews()
 main_views = MainViews()
 
-api = Api(api_v1)
 jwt = JWTManager()
 
 
@@ -43,7 +42,7 @@ def add_claims_to_access_token(identity):
 
 @api_v1.route('/auth/signup', methods=['POST'])
 def user_sign_up():
-    return login_views.sign_up()
+    return main_views.sign_up()
 
 
 @api_v1.route('/auth/login', methods=['POST'])
@@ -62,7 +61,7 @@ def logOutRefresh():
 def refresh_token():
     user = get_jwt_identity()
     resp = jsonify({
-        'message': "Refress successful",
+        'message': "Refresh successful!",
         'access_token': create_access_token(identity=user, fresh=True)
     })
 

@@ -45,30 +45,30 @@ class UserViews():
         order_items = []
 
         try:
-            for ordered_items in json.loads(data['items']):
-                order_item = OrderItemModel.get(ordered_items['id'])
+            for ordered_item in json.loads(data['items']):
+                order_item = OrderItemModel.get(ordered_item['id'])
 
                 if not order_item:
                     return make_response(jsonify(
                         {
-                            'error_msg': "Item " + str(ordered_items['id']) + " doesn't exist!"
+                            'message': "Item " + str(ordered_item['id']) + " doesn't exist!"
                         }
                     ), 404)
                 else:
 
-                    if 'quantity' not in ordered_items:
+                    if 'quantity' not in ordered_item:
                         return make_response(jsonify(
                             {
-                                'error_msg': "Item " + str(ordered_items['id']) + " doesn't have a quantity field!"
+                                'message': "Item " + str(ordered_item['id']) + " doesn't have a quantity field!"
                             }
                         ), 400)
 
-                    total += ordered_items['quantity'] * order_item.price
+                    total += ordered_item['quantity'] * order_item.price
 
         except:
             return make_response(
                 jsonify({
-                    'error_msg': "Items list is invalid. Please check to see all items id and quantity properties."
+                    'message': "Items list is invalid. Please check to see all items id and quantity properties."
                     }), 400
                 )
 
@@ -82,7 +82,7 @@ class UserViews():
 
         return make_response(
             jsonify({
-                    "message":"You have successfully created a new order"
+                    "message":"You have successfully created a new order!"
                 }), 201
             )
 
@@ -102,7 +102,7 @@ class UserViews():
 
         return make_response(
             jsonify({
-                'message':"Successfully fetched user order history",
+                'message':"Successfully fetched user order history!",
                 'content': [order.json() for order in orders]
                 }), 200
             )
