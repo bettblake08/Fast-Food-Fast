@@ -50,7 +50,7 @@ class Serialization(object):
         """
 
         pattern = re.compile(
-            r"(^[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+            r"((^[a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$).{0,59})"
         )
 
         return bool(pattern.match(email, 0))

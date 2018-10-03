@@ -2,6 +2,9 @@ from app.tests.v1.test_config import APITestcase
 from flask import json
 import unittest
 
+import string
+import random
+
 
 class TestPostNewFoodItemEndpoint(APITestcase):
     def login(self):
@@ -156,4 +159,27 @@ class TestPostNewFoodItemEndpoint(APITestcase):
         self.assertEqual(
             data['message'], 
             "You have successfully created a new order!",
+            "Unexpected response message!")
+    
+    def test_using_long_username(self):
+
+        response = self.placeNewItem(
+            data=json.dumps(
+                {
+                    "name": ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(121)),
+                    "price": 400,
+                    "c_id": "1"
+                }
+            ))
+
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Item name is too long. Please input a name less than 120 chars.",
             "Unexpected response message!")

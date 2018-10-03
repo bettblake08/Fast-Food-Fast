@@ -43,9 +43,16 @@ class MainViews():
 
             return make_response(
                 jsonify({
-                        "message": "Incorrect role id. Please input correct role id."
-                        }), 400
-            )
+                    "message": "Incorrect role id. Please input correct role id."
+                    }), 400
+                )
+
+        if len(data.username) > 60:
+            return make_response(
+                jsonify({
+                    "message": "Username length is loo long. Please input a username 60 chars or less."
+                    }), 400
+                )
 
         if not Serialization.test_email(data.email):
             return make_response(

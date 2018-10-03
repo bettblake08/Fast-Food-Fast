@@ -182,6 +182,13 @@ class AdminViews():
 
         data = parser.parse_args()
 
+        if len(data.name) > 120 :
+            return make_response(jsonify(
+                {
+                    'message': "Item name is too long. Please input a name less than 120 chars."
+                }
+            ), 400)
+
         if data.c_id not in [0, 1, 2, 3]:
             return make_response(jsonify(
                 {

@@ -33,7 +33,7 @@ class OrderModel(DBModel):
             items       :   List of items being ordered
             total       :   The total price of the order
             status      :   Status id of the order. As follows:
-                            +   1   New
+                            +   1   Pending
                             +   2   Processing
                             +   3   Cancelled
                             +   4   Complete
