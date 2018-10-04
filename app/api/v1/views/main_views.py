@@ -1,6 +1,6 @@
 from flask import make_response, jsonify
 
-from app.database.models import OrderItemModel, UserModel
+from app.database.models import OrderItemModel, UserModel, RoleModel
 from flask_restful import reqparse
 from app.managers.serialization import Serialization,flask_bcrypt
 
@@ -32,69 +32,21 @@ class MainViews():
 
         parser.add_argument(
             'role',
-            type=int,
             required=True,
             help="The role field is required"
         )
 
         data = parser.parse_args()
 
-        if data['role'] not in [1, 2]:
+        response = cls.validate_inputs(data)
 
-            return make_response(
-                jsonify({
-                    "message": "Incorrect role id. Please input correct role id."
-                    }), 400
-                )
+        if response:
+            return response
 
-        if len(data.username) > 60:
-            return make_response(
-                jsonify({
-                    "message": "Username length is loo long. Please input a username 60 chars or less."
-                    }), 400
-                )
+        response = cls.check_if_user_exists(data)
 
-        if len(data.email) > 60:
-            return make_response(
-                jsonify({
-                    "message": "Email length is loo long. Please input a email 60 chars or less."
-                    }), 400
-                )
-
-        if not Serialization.test_email(data.email):
-            return make_response(
-                jsonify(
-                    {
-                        "message": "Incorrect email. Please input a valid email string."
-                    }), 400
-            )
-
-        if not Serialization.test_password(data.password, 1):
-            return make_response(
-                jsonify(
-                    {
-                        "message": "Incorrect password. Please input a valid password string."
-                    }), 400
-            )
-
-        if UserModel.find_user_by_username(data.username):
-            return make_response(
-                jsonify(
-                    {
-                        "message": "User already exists. Please use another username."
-                    }
-                ), 403
-            )
-
-        elif UserModel.find_user_by_email(data.email):
-            return make_response(
-                jsonify(
-                    {
-                        "message": "User already exists. Please use another email address."
-                    }
-                ), 403
-            )
-
+        if response:
+            return response        
         user = UserModel(
             username=data.username,
             email=data.email,
@@ -143,3 +95,62 @@ class MainViews():
                 'message': "Successfully fetched menu!",
                 "content": [item.json() for item in items]
             }), 200)
+
+    @classmethod
+    def validate_inputs(cls,data):
+        if len(data.email) > 60:
+            return make_response(
+                jsonify({
+                    "message": "Email length is loo long. Please input a email 60 chars or less."
+                }), 400
+            )
+
+        if not Serialization.test_email(data.email):
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Incorrect email. Please input a valid email string."
+                    }), 400
+            )
+
+        if not Serialization.test_password(data.password, 1):
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Incorrect password. Please input a valid password string."
+                    }), 400
+            )
+
+        if len(data.username) > 60:
+            return make_response(
+                jsonify({
+                    "message": "Username length is loo long. Please input a username 60 chars or less."
+                }), 400
+            )
+        
+        if not RoleModel.role_exists(data['role']):
+            return make_response(
+                jsonify({
+                    "message": "Incorrect role id. Please input correct role id."
+                }), 400
+            )
+
+    @classmethod
+    def check_if_user_exists(cls,data):
+        if UserModel.find_user_by_username(data.username):
+            return make_response(
+                jsonify(
+                    {
+                        "message": "User already exists. Please use another username."
+                    }
+                ), 403
+            )
+
+        elif UserModel.find_user_by_email(data.email):
+            return make_response(
+                jsonify(
+                    {
+                        "message": "User already exists. Please use another email address."
+                    }
+                ), 403
+            )

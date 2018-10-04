@@ -42,7 +42,6 @@ def add_claims_to_access_token(identity):
         'role': identity['role']
     }
 
-
 @api_v1.route('/auth/signup', methods=['POST'])
 def user_sign_up():
     return main_views.sign_up()
@@ -72,25 +71,25 @@ def refresh_token():
 
 
 @api_v1.route("/order/<string:order_id>")
-@user_required(2)
+@user_required('admin')
 def get_order(order_id):
     return admin_views.get_order(order_id)
 
 
 @api_v1.route("/order/<string:order_id>", methods=['PUT'])
-@user_required(2)
+@user_required('admin')
 def update_order(order_id):
     return admin_views.update_order(order_id)
 
 
 @api_v1.route('/orders')
-@user_required(2)
+@user_required('admin')
 def get_all_orders():
     return admin_views.get_all_orders()
 
 
 @api_v1.route("/users/orders", methods=['POST'])
-@user_required(1)
+@user_required('customer')
 def post_new_order():
     return user_views.post_a_new_order()
 
@@ -101,12 +100,12 @@ def get_all_menu_items():
 
 
 @api_v1.route("/menu", methods=['POST'])
-@user_required(2)
+@user_required('admin')
 def post_new_order_item():
     return admin_views.post_new_order_item()
 
 
 @api_v1.route("/users/orders")
-@user_required(1)
+@user_required('customer')
 def get_user_order_history():
     return user_views.get_user_order_history()

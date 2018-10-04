@@ -29,7 +29,7 @@ class OrderModel(DBModel):
         Attributes:
             database_connection  :   An instance of the DB class
         Args:
-            user_id      :   User id of the user that ordered
+            user_id     :   User id of the user that ordered
             items       :   List of items being ordered
             total       :   The total price of the order
             status      :   Status id of the order. As follows:

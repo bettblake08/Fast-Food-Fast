@@ -15,13 +15,13 @@ TABLES = [
     """,
     """ CREATE TABLE IF NOT EXISTS roles(
         id SERIAL PRIMARY KEY NOT NULL,
-        name CHAR(30) NOT NULL,
+        name CHAR(30) NOT NULL
     );
     """,
     """ CREATE TABLE IF NOT EXISTS user_roles(
         id SERIAL PRIMARY KEY NOT NULL,
-        user REFERENCES users(id) NOT NULL,
-        role INT REFERENCES roles(id) NOT NULL,
+        user_id INT REFERENCES users(id) NOT NULL,
+        role_id INT REFERENCES roles(id) NOT NULL
     );
     """,
     """ 

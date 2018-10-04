@@ -2,19 +2,20 @@
     the initialization of the test database 
 """
 
-from app.database.models import OrderModel, OrderItemModel, UserModel
+from app.database.models import OrderModel, OrderItemModel, UserModel,RoleModel
 from app.managers.serialization import flask_bcrypt
 
 
 def generate_test_data():
     """ Generates test data to be used when running tests
     """
+    generate_initial_data()
 
     user = UserModel(
         username="johndoe1",
         email="johndoe1@hotmail.com",
         password=flask_bcrypt.generate_password_hash("johndoe@A1"),
-        role=1)
+        role="customer")
 
     user.save()
 
@@ -22,7 +23,7 @@ def generate_test_data():
         username="johndoe2",
         email="johndoe2@hotmail.com",
         password=flask_bcrypt.generate_password_hash("johndoe@A2"),
-        role=2)
+        role='admin')
 
     admin.save()
 
@@ -73,3 +74,8 @@ def generate_test_data():
 
     for order in orders:
         order.insert()
+
+
+def generate_initial_data():
+    RoleModel(name="customer").insert()
+    RoleModel(name="admin").insert()
