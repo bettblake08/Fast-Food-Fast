@@ -34,7 +34,8 @@ TABLES = [
     """,
     """ 
     CREATE TABLE IF NOT EXISTS expired_tokens(
-    token CHAR(120) NOT NULL
+    id SERIAL PRIMARY kEY NOT NULL,
+    token TEXT NOT NULL
     );
     """,
     """

@@ -32,13 +32,13 @@ class Serialization(object):
 
         if reg_type == 1:
             pattern = re.compile(
-                r"((?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@\$#.]).{8,16})"
+                r"((?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@\$#.!]).{8,16})"
             )
 
         if not pattern:
             return False
-        else:
-            return bool(pattern.match(password, 0))
+        
+        return bool(pattern.match(password, 0))
 
     @classmethod
     def test_email(cls, email):
