@@ -2,7 +2,7 @@
 
 from app.database import DB
 from app.database.db_model import DBModel
-
+import psycopg2
 
 class RoleModel(DBModel):
     """ This is the roles model used to manage the roles
@@ -28,7 +28,6 @@ class RoleModel(DBModel):
         """
 
         self.name = name
-
         DBModel.__init__(self)
 
     @classmethod
@@ -40,13 +39,17 @@ class RoleModel(DBModel):
             cls.table,
             role_id)
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
-        result = database_connection.cursor.fetchone()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
+            result = database_connection.cursor.fetchone()
 
-        if bool(result):
-            return RoleModel.get_object(result)
-    
+            if bool(result):
+                return RoleModel.get_object(result)
+
+        except psycopg2.DatabaseError:
+            return None
+
     @classmethod
     def get_by_role(cls,role):
         database_connection = DB()
@@ -56,12 +59,16 @@ class RoleModel(DBModel):
             cls.table,
             role)
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
-        result = database_connection.cursor.fetchone()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
+            result = database_connection.cursor.fetchone()
 
-        if bool(result):
-            return RoleModel.get_object(result)
+            if bool(result):
+                return RoleModel.get_object(result)
+
+        except psycopg2.DatabaseError:
+            return None
 
 
     @classmethod
@@ -84,7 +91,7 @@ class RoleModel(DBModel):
             self.database_connection.cursor.execute(query)
             self.database_connection.db_connection.commit()
             return True
-        except Exception:
+        except psycopg2.DatabaseError:
             return False
 
     @classmethod
@@ -103,7 +110,11 @@ class RoleModel(DBModel):
             cls.table,
             name)
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:   
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        return bool(database_connection.cursor.fetchone())
+            return bool(database_connection.cursor.fetchone())
+
+        except psycopg2.DatabaseError:
+            return False

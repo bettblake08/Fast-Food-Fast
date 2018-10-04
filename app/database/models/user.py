@@ -5,6 +5,8 @@ from app.database.db_model import DBModel
 from app.managers.serialization import flask_bcrypt
 from app.database.models.role import RoleModel
 
+import psycopg2
+
 class UserModel(DBModel):
     """ This is the User model that manages all user accounts
     Attributes:
@@ -95,26 +97,22 @@ class UserModel(DBModel):
                 self.password.decode('utf-8'))
 
         try:
-                self.database_connection.cursor.execute(query)
-                self.database_connection.db_connection.commit()
-                self.id = self.database_connection.cursor.fetchone()[0]
+            self.database_connection.cursor.execute(query)
+            self.database_connection.db_connection.commit()
+            self.id = self.database_connection.cursor.fetchone()[0]
 
-        except:
+        except psycopg2.DatabaseError:
             return False
         
 
         role = RoleModel.get_by_role(self.role)
-        
         query = "INSERT INTO {}(user_id,role_id) values(%s,%s) ".format(self.table_roles) % (self.id, role.id)
-
-        self.database_connection.cursor.execute(query)
-        self.database_connection.db_connection.commit()
         
         try:
             self.database_connection.cursor.execute(query)
             self.database_connection.db_connection.commit()
             
-        except:
+        except psycopg2.DatabaseError:
             return False 
 
 
@@ -124,11 +122,14 @@ class UserModel(DBModel):
 
         query = """
         UPDATE {} SET username = '%s',email = '%s',password = '%s', updated_at = NOW() WHERE id = {} 
-        """.format(self.table, self.id)
+        """.format(self.table, self.id) % (self.username, self.email, self.password)
 
-        self.database_connection.cursor.execute(
-            query, (self.username, self.email, self.password))
-        self.database_connection.db_connection.commit()
+        try:    
+            self.database_connection.cursor.execute(query)
+            self.database_connection.db_connection.commit()
+
+        except psycopg2.DatabaseError:
+            return False
 
     def json(self):
         """ This function returns a JSON serializable dict containing item data
@@ -158,13 +159,16 @@ class UserModel(DBModel):
 
         query = "SELECT * FROM {} WHERE id = %s ".format(cls.table)
 
-        database_connection.cursor.execute(query, (_id))
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query, (_id))
+            database_connection.db_connection.commit()
 
-        result = database_connection.cursor.fetchone()
+            result = database_connection.cursor.fetchone()
 
-        if bool(result):
-            return cls.get_object(result)
+            if bool(result):
+                return cls.get_object(result)
+        except:
+            return None
 
 
     @classmethod
@@ -181,13 +185,16 @@ class UserModel(DBModel):
 
         query = "SELECT * FROM {} WHERE username = '%s' ".format(cls.table) % username
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        result = database_connection.cursor.fetchall()
+            result = database_connection.cursor.fetchall()
 
-        if result:
-            return cls.get_object(result[0])
+            if result:
+                return cls.get_object(result[0])
+        except psycopg2.DatabaseError:
+            return None
 
     @classmethod
     def find_user_by_email(cls, email):
@@ -203,13 +210,18 @@ class UserModel(DBModel):
 
         query = "SELECT * FROM {} WHERE email = '%s' ".format(cls.table) % email
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        result = database_connection.cursor.fetchone()
+            result = database_connection.cursor.fetchone()
 
-        if bool(result):
-            return cls.get_object(result)
+            if bool(result):
+                return cls.get_object(result)
+
+        except psycopg2.DatabaseError:
+            return None
+
 
     def get_role(self):
         """ This function is used to get the role of a user
@@ -224,14 +236,18 @@ class UserModel(DBModel):
         query = "SELECT R.* FROM {} as UR, roles as R WHERE UR.user_id = %s AND R.id = UR.role_id".format(
             self.table_roles) % self.id
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        result = database_connection.cursor.fetchone()
-        self.role = result[1].strip()
+            result = database_connection.cursor.fetchone()
+            self.role = result[1].strip()
 
-        if result:
-            return RoleModel.get_object(result)
+            if result:
+                return RoleModel.get_object(result)
+
+        except psycopg2.DatabaseError:
+            return None
 
     def authenticate(self, password):
         """ This function is used to authenticate the password against the stored hash password

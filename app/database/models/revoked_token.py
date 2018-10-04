@@ -2,6 +2,7 @@
 
 from app.database import DB
 from app.database.db_model import DBModel
+import psycopg2
 
 
 class RevokedTokenModel(DBModel):
@@ -43,7 +44,8 @@ class RevokedTokenModel(DBModel):
             self.database_connection.cursor.execute(query)
             self.database_connection.db_connection.commit()
             return True
-        except Exception:
+
+        except psycopg2.DatabaseError:
             return False
 
     @classmethod
@@ -62,9 +64,12 @@ class RevokedTokenModel(DBModel):
             cls.table,
             token)
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        result = database_connection.cursor.fetchone()
+            result = database_connection.cursor.fetchone()
 
-        return bool(result)
+            return bool(result)
+        except psycopg2.DatabaseError:
+            return False
