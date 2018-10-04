@@ -54,6 +54,13 @@ class MainViews():
                     }), 400
                 )
 
+        if len(data.email) > 60:
+            return make_response(
+                jsonify({
+                    "message": "Email length is loo long. Please input a email 60 chars or less."
+                    }), 400
+                )
+
         if not Serialization.test_email(data.email):
             return make_response(
                 jsonify(

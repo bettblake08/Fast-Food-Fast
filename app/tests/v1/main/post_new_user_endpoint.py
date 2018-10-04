@@ -91,6 +91,32 @@ class TestPostNewUserEndpoint(APITestcase):
             "Unexpected response message!")
 
 
+    def test_using_long_email(self):
+        email = "jamesblack09124890641thebasdfavqrgbaergdsacdqtgq4f14fqcasdcq34f24fqcrq5fqfc43qfq34cq4festman@andelacampus.ac.ke"
+
+        response = self.addUser(
+            data=json.dumps(
+                {
+                    "username": "jamesblack",
+                    "email": email,
+                    "password": "testPASS.A1",
+                    "role": 1
+                }
+            ))
+
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Email length is loo long. Please input a email 60 chars or less.",
+            "Unexpected response message!")
+
+
     def test_using_no_role_field(self):
 
         response = self.addUser(
