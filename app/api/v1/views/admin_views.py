@@ -17,12 +17,10 @@ class AdminViews():
         Returns:
             - If orders are present
                 - A response with a status code 200
-                - A content field in response body with order data
-                - An error number 0 in response body
+                - A success message
 
             - If orders are not present
-                - A response with a status code 200
-                - An error number 1 in response body
+                - A response with a status code 404
                 - An error msg in response
 
         """
@@ -31,25 +29,26 @@ class AdminViews():
             order_id = int(order_id)
         except:
             return make_response(
-                jsonify({}), 400
+                jsonify({
+                    "message":"Invalid order id. Please input a valid id."
+                }), 400
             )
 
         order = {}
-
         order = OrderModel.get(order_id)
 
         if not bool(order):
             return make_response(jsonify(
                 {
-                    'error': 1,
-                    "error_msg": "Order does not exist. Please enter a valid order id."
-                }), 200
+                    "message": "Order does not exist. Please enter an existing order id."
+                }), 404
             )
 
         return make_response(jsonify({
-            'error': 0,
+            'message': "Fetch order successful!",
             "content": order.json()
         }), 200)
+
 
     @classmethod
     def update_order(cls, order_id):
@@ -62,23 +61,18 @@ class AdminViews():
         Returns:
             - If status argument is not present and of valid type
                 - A response with a status code 400
-                - An error_msg stating "Status field required. Please provide a new status for the order."
+                - An message in response
 
             - If status argument is incorrect
-                - A response with a status code 200
-                - An error number 1 in response body
+                - A response with a status code 400
                 - An error msg in response
 
             - If order not found
-                - A response with a status code 200
-                - An error number 2 in response body
+                - A response with a status code 404
                 - An error msg in response
 
             - If update succeeded
-                - If status argument is incorrect
                 - A response with a status code 200
-                - An error number 0 in response body
-
         """
 
         parser = reqparse.RequestParser()
@@ -97,34 +91,32 @@ class AdminViews():
         except:
             return make_response(jsonify(
                 {
-                    'error_msg': "Invalid order id . Please provide a valid status number"
+                    'message': "Invalid order id . Please provide a valid status number."
                 }
             ), 400)
 
         if data.status not in [0, 1, 2, 3]:
             return make_response(jsonify(
                 {
-                    'error': 1,
-                    'error_msg': "Invalid status number. Please provide a valid status number"
+                    'message': "Invalid status number. Please provide a valid status number."
                 }
-            ), 200)
+            ), 400)
 
         order = OrderModel.get(order_id)
 
         if not order:
             return make_response(jsonify(
                 {
-                    'error': 2,
-                    'error_msg': "Order not found. Please provide a valid order id"
+                    'message': "Order not found. Please provide a valid order id."
                 }
-            ), 200)
+            ), 404)
 
         order.status = data.status
         order.update()
 
         return make_response(
             jsonify({
-                'error': 0
+                'message': "You have successfully updated the status of the order."
             }), 200)
 
     @classmethod
@@ -139,14 +131,13 @@ class AdminViews():
             - If orders are not present
                 - A response with a status code 200
                 - An empty content list
-
         """
 
         orders = OrderModel.get_all_orders()
 
         return make_response(jsonify(
-            {
-                'error': 0,
+            {   
+                "message":"You have successfully retrieved all the present orders!",
                 "content": [order.json() for order in orders]
             }
         ), 200)
@@ -191,13 +182,19 @@ class AdminViews():
 
         data = parser.parse_args()
 
-        if int(data.c_id) not in [0, 1, 2, 3]:
+        if len(data.name) > 120 :
             return make_response(jsonify(
                 {
-                    'error': 1,
-                    'error_msg': "Invalid status number. Please provide a valid status number"
+                    'message': "Item name is too long. Please input a name less than 120 chars."
                 }
-            ), 200)
+            ), 400)
+
+        if data.c_id not in [0, 1, 2, 3]:
+            return make_response(jsonify(
+                {
+                    'message': "Invalid category id. Please provide a valid category number."
+                }
+            ), 400)
 
         item = OrderItemModel(
             name=data.name,
@@ -209,13 +206,13 @@ class AdminViews():
 
             return make_response(
                 jsonify({
-                    'error': 0
-                }), 200
+                    'message':"You have successfully created a new order!"
+                }), 201
             )
 
         except:
             return make_response(
                 jsonify({
-                    'error_msg': "Failed to process new order item. Please try again!"
+                    'message': "Failed to process new order item. Please try again!"
                 }), 400
             )

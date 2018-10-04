@@ -1,17 +1,20 @@
-from app.tests.v1.test_config import test_client,init_database
+from app.tests.v1.test_config import APITestcase
 from flask import json
 
-class TestPostNewUserEndpoint(object):
-    def addUser(self, data, test_client):
-        return test_client.post('/api/v1/auth/signup',
-                               data=data,
-                               content_type='application/json'
-                               )
+import random
+import string
 
-    def test_using_no_username_field(self, test_client, init_database):
+class TestPostNewUserEndpoint(APITestcase):
+    def addUser(self, data):
+        return self.test_client.post(
+            '/api/v1/auth/signup',
+            data=data,
+            content_type='application/json'
+            )
+
+    def test_using_no_username_field(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "user": "jamesblack",
@@ -21,12 +24,15 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
 
-    def test_using_no_email_field(self, test_client, init_database):
+
+    def test_using_no_email_field(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack",
@@ -36,12 +42,15 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
 
-    def test_using_no_password_field(self, test_client, init_database):
+
+    def test_using_no_password_field(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username":"jamesblack",
@@ -51,12 +60,66 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
 
-    def test_using_no_role_field(self, test_client, init_database):
+
+    def test_using_long_username(self):
 
         response = self.addUser(
-            test_client=test_client,
+            data=json.dumps(
+                {
+                    "username": ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(80)),
+                    "email": "bettbrian@rocketmail.com",
+                    "password": "testPASS.A1",
+                    "role": 1
+                }
+            ))
+
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Username length is loo long. Please input a username 60 chars or less.",
+            "Unexpected response message!")
+
+
+    def test_using_long_email(self):
+        email = "jamesblack09124890641thebasdfavqrgbaergdsacdqtgq4f14fqcasdcq34f24fqcrq5fqfc43qfq34cq4festman@andelacampus.ac.ke"
+
+        response = self.addUser(
+            data=json.dumps(
+                {
+                    "username": "jamesblack",
+                    "email": email,
+                    "password": "testPASS.A1",
+                    "role": 1
+                }
+            ))
+
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Email length is loo long. Please input a email 60 chars or less.",
+            "Unexpected response message!")
+
+
+    def test_using_no_role_field(self):
+
+        response = self.addUser(
             data=json.dumps(
                 {
                     "username": "jamesblack",
@@ -66,13 +129,15 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
 
 
-    def test_using_incorrect_email_address(self, test_client, init_database):
+    def test_using_incorrect_email_address(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username":"jamesblack",
@@ -82,14 +147,25 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 1
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Incorrect email. Please input a valid email string.",
+            "Unexpected response message!")
 
 
-    def test_using_incorrect_password_field(self, test_client, init_database):
+        assert response.status_code == 400
+
+
+    def test_using_incorrect_password_field(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack",
@@ -99,14 +175,22 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 2
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Incorrect password. Please input a valid password string.",
+            "Unexpected response message!")
 
 
-    def test_using_invalid_role_field(self, test_client, init_database):
+    def test_using_invalid_role_field(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack",
@@ -116,13 +200,15 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
 
 
-    def test_using_incorrect_role_field(self, test_client, init_database):
+    def test_using_incorrect_role_id(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack",
@@ -132,13 +218,22 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 400
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            400,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Incorrect role id. Please input correct role id.",
+            "Unexpected response message!")
 
 
-    def test_using_valid_admin_user_data(self, test_client, init_database):
+    def test_using_valid_admin_user_data(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack08",
@@ -148,13 +243,22 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        data = json.loads(response.data)
 
-    def test_using_valid_customer_user_data(self, test_client, init_database):
+        self.assertEqual(
+            response.status_code,
+            201,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Sign up successful. User has been created!",
+            "Unexpected response message!")
+
+
+    def test_using_valid_customer_user_data(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "bettbrian08",
@@ -164,13 +268,22 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+        data = json.loads(response.data)
 
-    def test_using_existing_email_address(self, test_client, init_database):
+        self.assertEqual(
+            response.status_code,
+            201,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Sign up successful. User has been created!",
+            "Unexpected response message!")
+
+
+    def test_using_existing_email_address(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "jamesblack0807",
@@ -180,14 +293,22 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 4
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            403,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "User already exists. Please use another email address.",
+            "Unexpected response message!")
 
 
-    def test_using_existing_username(self, test_client, init_database):
+    def test_using_existing_username(self):
 
         response = self.addUser(
-            test_client=test_client,
             data=json.dumps(
                 {
                     "username": "johndoe2",
@@ -197,5 +318,14 @@ class TestPostNewUserEndpoint(object):
                 }
             ))
 
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 3
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            403,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "User already exists. Please use another username.",
+            "Unexpected response message!")

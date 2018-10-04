@@ -26,7 +26,7 @@ def generate_test_data():
 
     admin.save()
 
-    orderItems = [
+    order_items = [
         OrderItemModel(
             name="English Breakfast",
             price=600 * 100,
@@ -41,7 +41,7 @@ def generate_test_data():
             c_id=4),
     ]
 
-    for item in orderItems:
+    for item in order_items:
         item.insert()
 
     orders = [

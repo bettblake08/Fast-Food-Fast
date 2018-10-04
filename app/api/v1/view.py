@@ -1,15 +1,18 @@
 from functools import wraps
 
-from flask import Blueprint, redirect, url_for, \
-    jsonify, make_response, json, request
-from flask_restful import Api, reqparse
-from flask_jwt_extended import JWTManager, get_jwt_claims, verify_fresh_jwt_in_request, get_jwt_identity,\
-    jwt_refresh_token_required, create_access_token, set_access_cookies, jwt_required
+from flask import (Blueprint, json, jsonify, make_response, redirect, request,
+                   url_for)
+from flask_jwt_extended import (JWTManager, create_access_token,
+                                get_jwt_claims, get_jwt_identity,
+                                jwt_refresh_token_required, jwt_required,
+                                set_access_cookies,
+                                verify_fresh_jwt_in_request)
+from flask_restful import reqparse
 
-from app.database.models import UserModel, RevokedTokenModel, OrderModel, OrderedItemModel, OrderItemModel
-from app.api.v1.views import LoginViews, AdminViews, MainViews, UserViews
 from app.api.v1.decorators import user_required
-
+from app.api.v1.views import AdminViews, LoginViews, MainViews, UserViews
+from app.database.models import (OrderedItemModel, OrderItemModel, OrderModel,
+                                 RevokedTokenModel, UserModel)
 
 api_v1 = Blueprint('api', __name__)
 
@@ -18,7 +21,6 @@ admin_views = AdminViews()
 user_views = UserViews()
 main_views = MainViews()
 
-api = Api(api_v1)
 jwt = JWTManager()
 
 
@@ -43,7 +45,7 @@ def add_claims_to_access_token(identity):
 
 @api_v1.route('/auth/signup', methods=['POST'])
 def user_sign_up():
-    return login_views.sign_up()
+    return main_views.sign_up()
 
 
 @api_v1.route('/auth/login', methods=['POST'])
@@ -62,11 +64,11 @@ def logOutRefresh():
 def refresh_token():
     user = get_jwt_identity()
     resp = jsonify({
-        'error': 0,
+        'message': "Refresh successful!",
         'access_token': create_access_token(identity=user, fresh=True)
     })
 
-    return resp
+    return resp,201
 
 
 @api_v1.route("/order/<string:order_id>")

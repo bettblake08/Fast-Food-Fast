@@ -1,30 +1,36 @@
-from app.tests.v1.test_config import test_client, init_database
-import pytest
+from app.tests.v1.test_config import APITestcase
 from flask import json
 
-
-class TestFetchOrdersEndpoint(object):
-    def login(self, test_client):
-        response = test_client.post('api/v1/auth/login',
-                                   data=json.dumps(
-                                       {
-                                           "username": "johndoe2",
-                                           "password": "johndoe@A2"
-                                       }),
-                                   content_type="application/json")
-
+class TestFetchOrdersEndpoint(APITestcase):
+    def login(self, ):
+        response = self.test_client.post(
+            'api/v1/auth/login',
+            data=json.dumps(
+                {
+                    "username": "johndoe2",
+                    "password": "johndoe@A2"
+                }),
+            content_type="application/json")
 
         self.access_token = json.loads(response.data)['access_token']
 
 
+    def test_fetch_orders(self):
+        self.login()
 
-    def test_fetch_orders(self, test_client, init_database):
-        self.login(test_client)
+        response = self.test_client.get('/api/v1/orders',
+            headers={
+                "Authorization": "Bearer " + self.access_token
+            })
 
-        response = test_client.get('/api/v1/orders',
-                                  headers={
-                                      "Authorization": "Bearer " + self.access_token
-                                  })
+        data = json.loads(response.data)
 
+        self.assertEqual(
+            response.status_code,
+            200,
+            "Unexpected response status!")
 
-        assert response.status_code == 200
+        self.assertEqual(
+            data['message'],
+            "You have successfully retrieved all the present orders!",
+            "Unexpected response message!")

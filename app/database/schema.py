@@ -1,7 +1,5 @@
-""" 
-This is the store for all create table scripts.
-
-tables: An array of create table scripts stored as strings
+""" This is the store for all create table scripts.
++   tables: An array of create table scripts stored as strings
 """
 
 
@@ -36,7 +34,8 @@ TABLES = [
     """,
     """ 
     CREATE TABLE IF NOT EXISTS expired_tokens(
-    token CHAR(120) NOT NULL
+    id SERIAL PRIMARY kEY NOT NULL,
+    token TEXT NOT NULL
     );
     """,
     """

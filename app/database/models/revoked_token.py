@@ -36,14 +36,14 @@ class RevokedTokenModel(DBModel):
             bool: Returns True is insert succeeded or False if it failed.
         """
 
-        query = "INSERT INTO {}(token) values(%s)   ".format(self.table)
+        query = "INSERT INTO {}(token) values('%s') ".format(
+            self.table) % (self.token)
 
-        try:
-            self.database_connection.cursor.execute(query, (self.token))
+        try:   
+            self.database_connection.cursor.execute(query)
             self.database_connection.db_connection.commit()
-
             return True
-        except:
+        except Exception:
             return False
 
     @classmethod
@@ -65,4 +65,6 @@ class RevokedTokenModel(DBModel):
         database_connection.cursor.execute(query)
         database_connection.db_connection.commit()
 
-        return bool(database_connection.cursor.fetchone())
+        result = database_connection.cursor.fetchone()
+
+        return bool(result)

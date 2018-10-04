@@ -1,6 +1,4 @@
-""" 
-This module hosts the DBModel class used as the base class for all database models
-
+""" This module hosts the DBModel class used as the base class for all database models
 """
 
 import os
@@ -9,14 +7,12 @@ from instance.config import app_config
 
 
 class DBModel():
-    """ This is the base model for all database model classes. 
-
+    """ This is the base model for all database model classes.
     Attributes:
         id:         This is the primary id of a row stored in a table
         table:      This is the table name of the table the model represents
         connection: This is the connection url for the database, required to 
                     establish a connection with the database
-
     """
 
     id = None

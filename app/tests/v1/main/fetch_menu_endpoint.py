@@ -1,8 +1,11 @@
-from app.tests.v1.test_config import test_client
+from app.tests.v1.test_config import APITestcase
 from flask import json
 
-class TestFetchMenuEndpoint(object):
-    def test_fetch_menu(self, test_client, init_database):
-        response = test_client.get('/api/v1/menu')
-        assert response.status_code == 200
-        assert json.loads(response.data)['error'] == 0
+class TestFetchMenuEndpoint(APITestcase):
+    def test_fetch_menu(self):
+        response = self.test_client.get('/api/v1/menu')
+        
+        self.assertEqual(
+            response.status_code,
+            200,
+            "Unexpected response status!")
