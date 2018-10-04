@@ -70,7 +70,7 @@ class LoginViews():
                 jsonify(
                     {
                         'message': 'Wrong user credentials. Please input correct username and password'
-                    }),401
+                    }), 401
                 )
 
     @staticmethod
@@ -78,7 +78,7 @@ class LoginViews():
         jti = get_raw_jwt()['jti']
 
         revoked_token = RevokedTokenModel(token=jti)
-
+        
         try:
             revoked_token.insert()
 
