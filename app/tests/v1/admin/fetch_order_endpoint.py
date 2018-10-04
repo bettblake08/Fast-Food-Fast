@@ -2,7 +2,6 @@ from app.tests.v1.test_config import APITestcase
 from flask import json
 
 class TestFetchOrderEndpoint(APITestcase):
-    
     def login(self):
         response = self.test_client.post(
             'api/v1/auth/login',

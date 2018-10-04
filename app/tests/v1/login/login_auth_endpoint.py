@@ -2,7 +2,6 @@ from app.tests.v1.test_config import APITestcase
 from flask import json
 
 class TestLoginAuthEndpoint(APITestcase):
-
     def auth_user(self, data):
         return self.test_client.post(
             '/api/v1/auth/login',
@@ -159,7 +158,7 @@ class TestLoginAuthEndpoint(APITestcase):
             "Unexpected response message!")
 
 
-    def test_using_admin_customer_username(self):
+    def test_using_admin_user_username(self):
 
         response = self.auth_user(
             data=json.dumps(
@@ -203,3 +202,103 @@ class TestLoginAuthEndpoint(APITestcase):
             data['message'],
             "Logged in as johndoe2",
             "Unexpected response message!")
+
+
+    def test_admin_access_using_customer(self):
+        result = self.auth_user(
+            data=json.dumps(
+                {
+                    "username": "johndoe1",
+                    "password": "johndoe@A1"
+                }
+            ))
+
+        token = json.loads(result.data)['access_token']
+
+        response = self.test_client.get(
+            '/api/v1/order/1',
+            headers={
+                "Authorization": "Bearer " + token
+            }
+        )
+
+        data = json.loads(response.data)
+
+        self.assertEqual(
+            response.status_code,
+            403,
+            "Unexpected response status!")
+
+        self.assertEqual(
+            data['message'],
+            "Only admin users have permission to access!",
+            "Unexpected response message!")
+
+    def test_admin_access_using_admin(self):
+        result = self.auth_user(
+            data=json.dumps(
+                {
+                    "username": "johndoe2",
+                    "password": "johndoe@A2"
+                }
+            ))
+
+        token = json.loads(result.data)['access_token']
+
+        response = self.test_client.get(
+            '/api/v1/order/1',
+            headers={
+                "Authorization": "Bearer " + token
+            }
+        )
+
+        self.assertNotEqual(
+            response.status_code,
+            403,
+            "Unexpected response status!")
+
+    def test_customer_access_using_admin(self):
+        result = self.auth_user(
+            data=json.dumps(
+                {
+                    "username": "johndoe2",
+                    "password": "johndoe@A2"
+                }
+            ))
+
+        token = json.loads(result.data)['access_token']
+
+        response = self.test_client.get(
+            '/api/v1/users/orders',
+            headers={
+                "Authorization": "Bearer " + token
+            }
+        )
+
+        self.assertEqual(
+            response.status_code,
+            403,
+            "Unexpected response status!")
+
+    def test_customer_access_using_customer(self):
+        result = self.auth_user(
+            data=json.dumps(
+                {
+                    "username": "johndoe1",
+                    "password": "johndoe@A1"
+                }
+            ))
+
+        token = json.loads(result.data)['access_token']
+
+        response = self.test_client.get(
+            '/api/v1/users/orders',
+            headers={
+                "Authorization": "Bearer " + token
+            }
+        )
+
+        self.assertNotEqual(
+            response.status_code,
+            403,
+            "Unexpected response status!")
