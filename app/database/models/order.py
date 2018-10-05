@@ -150,17 +150,14 @@ class OrderModel(DBModel):
             OrderModel if found or None if not found
         """
 
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = """ SELECT * FROM {} WHERE id = %s """.format(
             cls.table) % (_id)
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            result = database_connection.cursor.fetchone()
+            result = cls.database_connection.cursor.fetchone()
 
             if result:
                 order = cls.get_object(result)
@@ -179,15 +176,12 @@ class OrderModel(DBModel):
         """
 
         try:
-            database_connection = DB()
-            database_connection.connect(cls.connection)
-
             query = "SELECT * FROM {} ".format(cls.table)
 
-            database_connection.cursor.execute(query)
+            cls.database_connection.cursor.execute(query)
 
-            database_connection.db_connection.commit()
-            results = database_connection.cursor.fetchall()
+            cls.database_connection.db_connection.commit()
+            results = cls.database_connection.cursor.fetchall()
 
             response = []
 
@@ -211,17 +205,14 @@ class OrderModel(DBModel):
             List (OrderModel) if found or None if not found
         """
 
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE user_id = {} ".format(
             cls.table, user_id)
             
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            results = database_connection.cursor.fetchall()
+            results = cls.database_connection.cursor.fetchall()
             response = []
 
             for result in results:

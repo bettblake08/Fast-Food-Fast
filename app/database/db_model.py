@@ -5,6 +5,13 @@ import os
 from app.database import DB
 from instance.config import app_config
 
+CONNECTION = "dbname=" + app_config[os.getenv('APP_ENV')].DB_NAME
+CONNECTION += " user=" + app_config[os.getenv('APP_ENV')].DB_USER
+CONNECTION += " password=" + app_config[os.getenv('APP_ENV')].DB_PASSWORD
+CONNECTION += " host=" + app_config[os.getenv('APP_ENV')].DB_HOST
+
+database_connection = DB()
+database_connection.connect(CONNECTION)
 
 class DBModel():
     """ This is the base model for all database model classes.
@@ -18,13 +25,10 @@ class DBModel():
     id = None
     table = ""
 
-    connection = "dbname=" + app_config[os.getenv('APP_ENV')].DB_NAME
-    connection += " user=" + app_config[os.getenv('APP_ENV')].DB_USER
-    connection += " password=" + app_config[os.getenv('APP_ENV')].DB_PASSWORD
-    connection += " host=" + app_config[os.getenv('APP_ENV')].DB_HOST
+    database_connection = database_connection
 
     def __init__(self):
         """ Initialized the database model by storing an instance of the DB class
         """
-        self.database_connection = DB()
-        self.database_connection.connect(self.connection)
+        pass
+        
