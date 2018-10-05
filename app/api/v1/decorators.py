@@ -22,15 +22,9 @@ def user_required(role_id):
             claims = get_jwt_claims()
 
             if claims['role'] != role_id:
-                role = "Unidentified"
-
-                if role_id == 1:
-                    role = "customer"
-                elif role_id == 2:
-                    role = "admin"
 
                 return jsonify({
-                    "error_msg": 'Only {} users have permission to access!'.format(role)
+                    "message": 'Only {} users have permission to access!'.format(role_id)
                 }), 403
             else:
                 return fn(*args, **param)

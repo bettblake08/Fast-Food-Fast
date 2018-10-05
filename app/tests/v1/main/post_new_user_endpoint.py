@@ -20,7 +20,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "user": "jamesblack",
                     "email": "jamesblack08@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role":2
+                    "role":'admin'
                 }
             ))
 
@@ -38,7 +38,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack",
                     "eml": "jamesblack08@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role": 2
+                    "role": 'admin'
                 }
             ))
 
@@ -56,7 +56,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username":"jamesblack",
                     "email":"jamesblack08@rocketmail.com",
                     "passwd":"testPASS.A1",
-                    "role": 2
+                    "role": 'admin'
                 }
             ))
 
@@ -74,7 +74,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(80)),
                     "email": "bettbrian@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role": 1
+                    "role": 'admin'
                 }
             ))
 
@@ -100,7 +100,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack",
                     "email": email,
                     "password": "testPASS.A1",
-                    "role": 1
+                    "role": 'admin'
                 }
             ))
 
@@ -125,7 +125,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack",
                     "email": "jamesblack08@rocketmail.com",
                     "passwd": "testPASS.A1",
-                    "rle": 2
+                    "rle": "admin"
                 }
             ))
 
@@ -143,7 +143,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username":"jamesblack",
                     "email":"jamesblack08ocketmail.com",
                     "password": "testPASS.A1", 
-                    "role": 2
+                    "role": 'admin'
                 }
             ))
 
@@ -171,7 +171,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack",
                     "email": "jamesblack08@rocketmail.com",
                     "password": "m21c07ss",
-                    "role": 2
+                    "role": 'admin'
                 }
             ))
 
@@ -196,7 +196,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack",
                     "email": "jamesblack08@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role": 'ro'
+                    "role": 1
                 }
             ))
 
@@ -214,7 +214,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack",
                     "email": "jamesblack08@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role": 5
+                    "role": 'manager'
                 }
             ))
 
@@ -239,7 +239,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack08",
                     "email": "jamesblack08@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role": 2
+                    "role": 'admin'
                 }
             ))
 
@@ -264,7 +264,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "bettbrian08",
                     "email": "bettbrian@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role": 1
+                    "role": 'customer'
                 }
             ))
 
@@ -289,7 +289,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "jamesblack0807",
                     "email": "johndoe2@hotmail.com",
                     "password": "testPASS.A1",
-                    "role": 2
+                    "role": 'admin'
                 }
             ))
 
@@ -314,7 +314,7 @@ class TestPostNewUserEndpoint(APITestcase):
                     "username": "johndoe2",
                     "email": "jamesblack@rocketmail.com",
                     "password": "testPASS.A1",
-                    "role": 2
+                    "role": 'customer'
                 }
             ))
 

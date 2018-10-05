@@ -56,7 +56,7 @@ For a user to login, the following fields need to be present in the request body
   + Body
     {
         "username": "johndoe1",
-        "password": "johndoe@A1"
+        "password": "testPASS.A1"
     }
 
 + Response   200 ('application/json')

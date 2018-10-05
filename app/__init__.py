@@ -9,7 +9,7 @@ from app.api.v1.view import api_v1, jwt
 from app.managers.serialization import flask_bcrypt
 
 
-def create_app(config_name='DEV'):
+def create_app(config_name='DEFAULT'):
     """ This function is used to generate an instance of the flask application
     Args:
         config_name :   App environment name. ['DEV','PROD','TEST']
@@ -18,10 +18,7 @@ def create_app(config_name='DEV'):
     """
 
     app = Flask(__name__, instance_relative_config=True)
-
     app.config.from_object(app_config[config_name])
-    app.config.from_pyfile('config.py')
-
     app.register_blueprint(api_v1, url_prefix="/api/v1")
 
     jwt.init_app(app)

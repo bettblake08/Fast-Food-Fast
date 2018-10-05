@@ -4,7 +4,7 @@
 from app.database import DB
 from app.database.models.ordered_item import OrderedItemModel
 from app.database.db_model import DBModel
-
+import psycopg2
 
 class OrderModel(DBModel):
     """
@@ -29,7 +29,7 @@ class OrderModel(DBModel):
         Attributes:
             database_connection  :   An instance of the DB class
         Args:
-            user_id      :   User id of the user that ordered
+            user_id     :   User id of the user that ordered
             items       :   List of items being ordered
             total       :   The total price of the order
             status      :   Status id of the order. As follows:
@@ -78,19 +78,24 @@ class OrderModel(DBModel):
         INSERT INTO {}(user_id,total,status,created_at,updated_at) values(%s,%s,%s,NOW(),NOW()) RETURNING id
         """.format(self.table) % (self.user_id, self.total, self.status)
 
-        self.database_connection.cursor.execute(query)
-        self.database_connection.db_connection.commit()
+        try:
+            self.database_connection.cursor.execute(query)
+            self.database_connection.db_connection.commit()
 
-        order_id = self.database_connection.cursor.fetchone()[0]
-        self.id = order_id
+            self.id = self.database_connection.cursor.fetchone()[0]
 
-        for item in self.items:
-            order_item = OrderedItemModel(
-                order=order_id,
-                item=item['id'],
-                quantity=item['quantity'])
+            for item in self.items:
+                order_item = OrderedItemModel(
+                    order=self.id,
+                    item=item['id'],
+                    quantity=item['quantity'])
 
-            order_item.save()
+                order_item.save()
+
+            return True
+
+        except psycopg2.DatabaseError:
+            return False
 
     def update(self):
         """ This is the row update function used to update the data stored in the row
@@ -100,16 +105,22 @@ class OrderModel(DBModel):
         UPDATE {} SET user_id = {},total = {},status = {}, updated_at = NOW() WHERE id = {} 
         """.format(self.table, self.user_id, self.total, self.status, self.id)
 
-        self.database_connection.cursor.execute(query)
-        self.database_connection.db_connection.commit()
+        try:
+            self.database_connection.cursor.execute(query)
+            self.database_connection.db_connection.commit()
 
-        order_items = OrderedItemModel.find_all_order_items(self.id)
+            order_items = OrderedItemModel.find_all_order_items(self.id)
 
-        for order_item in order_items:
-            for item in self.items:
-                if order_item.id == item.id:
-                    order_item.quantity = item.quantity
-                    order_item.update()
+            for order_item in order_items:
+                for item in self.items:
+                    if order_item.id == item.id:
+                        order_item.quantity = item.quantity
+                        order_item.update()
+
+            return True
+            
+        except psycopg2.DatabaseError:
+            return False
 
     def json(self):
         """ This function returns a JSON serializable dict containing item data
@@ -145,16 +156,20 @@ class OrderModel(DBModel):
         query = """ SELECT * FROM {} WHERE id = %s """.format(
             cls.table) % (_id)
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        result = database_connection.cursor.fetchone()
+            result = database_connection.cursor.fetchone()
 
-        if result:
-            order = cls.get_object(result)
-            order.items = OrderedItemModel.find_all_order_items(result[0])
+            if result:
+                order = cls.get_object(result)
+                order.items = OrderedItemModel.find_all_order_items(result[0])
 
-            return order
+                return order
+
+        except psycopg2.DatabaseError:
+            return None
 
     @classmethod
     def get_all_orders(cls):
@@ -184,7 +199,7 @@ class OrderModel(DBModel):
 
             return response
 
-        except:
+        except psycopg2.DatabaseError:
             return None
 
     @classmethod
@@ -196,18 +211,17 @@ class OrderModel(DBModel):
             List (OrderModel) if found or None if not found
         """
 
+        database_connection = DB()
+        database_connection.connect(cls.connection)
+
+        query = "SELECT * FROM {} WHERE user_id = {} ".format(
+            cls.table, user_id)
+            
         try:
-            database_connection = DB()
-            database_connection.connect(cls.connection)
-
-            query = "SELECT * FROM {} WHERE user_id = {} ".format(
-                cls.table, user_id)
-
             database_connection.cursor.execute(query)
-
             database_connection.db_connection.commit()
-            results = database_connection.cursor.fetchall()
 
+            results = database_connection.cursor.fetchall()
             response = []
 
             for result in results:
@@ -218,7 +232,7 @@ class OrderModel(DBModel):
 
             return response
 
-        except:
+        except psycopg2.DatabaseError:
             return None
 
     def save(self):

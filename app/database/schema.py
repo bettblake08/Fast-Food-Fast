@@ -9,9 +9,19 @@ TABLES = [
         username CHAR(30) NOT NULL,
         email CHAR(30) NOT NULL,
         password TEXT NOT NULL,
-        role INT NOT NULL,
         created_at TIMESTAMPTZ,
         updated_at TIMESTAMPTZ 
+    );
+    """,
+    """ CREATE TABLE IF NOT EXISTS roles(
+        id SERIAL PRIMARY KEY NOT NULL,
+        name CHAR(30) NOT NULL
+    );
+    """,
+    """ CREATE TABLE IF NOT EXISTS user_roles(
+        id SERIAL PRIMARY KEY NOT NULL,
+        user_id INT REFERENCES users(id) NOT NULL,
+        role_id INT REFERENCES roles(id) NOT NULL
     );
     """,
     """ 

@@ -2,6 +2,7 @@
 
 from app.database import DB
 from app.database.db_model import DBModel
+import psycopg2
 
 class OrderedItemModel(DBModel):
     """ This is the model that manages all the ordered items
@@ -63,21 +64,20 @@ class OrderedItemModel(DBModel):
         Returns:
             bool: Returns True is insert succeeded or False if it failed.
         """
+        query = "INSERT INTO {}(order_id,item,quantity) values({},{},{}) RETURNING id ".format(
+            self.table,
+            self.order_id,
+            self.item,
+            self.quantity)
 
         try:
-            query = "INSERT INTO {}(order_id,item,quantity) values({},{},{}) RETURNING id ".format(
-                self.table,
-                self.order_id,
-                self.item,
-                self.quantity)
-
             self.database_connection.cursor.execute(query)
             self.database_connection.db_connection.commit()
-
             self.id = self.database_connection.cursor.fetchone()[0]
 
             return True
-        except:
+
+        except psycopg2.DatabaseError:
             return False
 
     def update(self):
@@ -91,8 +91,15 @@ class OrderedItemModel(DBModel):
             self.quantity,
             self.id)
 
-        self.database_connection.cursor.execute(query)
-        self.database_connection.db_connection.commit()
+        try:                
+            self.database_connection.cursor.execute(query)
+            self.database_connection.db_connection.commit()
+
+            return True 
+
+        except psycopg2.DatabaseError:
+            return False
+
 
     def json(self):
         """This function returns a JSON serializable dict containing item data
@@ -121,13 +128,17 @@ class OrderedItemModel(DBModel):
             cls.table,
             _id)
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        result = database_connection.cursor.fetchone()
+            result = database_connection.cursor.fetchone()
 
-        if bool(result):
-            return cls.get_object(result)
+            if bool(result):
+                return cls.get_object(result)
+
+        except psycopg2.DatabaseError:
+            return False
 
     @classmethod
     def find_all_order_items(cls, order_id):
@@ -147,18 +158,17 @@ class OrderedItemModel(DBModel):
             cls.table,
             order_id)
 
-        database_connection.cursor.execute(query)
-        database_connection.db_connection.commit()
+        try:
+            database_connection.cursor.execute(query)
+            database_connection.db_connection.commit()
 
-        results = database_connection.cursor.fetchall()
+            results = database_connection.cursor.fetchall()
 
-        if results:
-            response = []
+            if results:
+                return [cls.get_object(result) for result in results]
 
-            for result in results:
-                response.append(cls.get_object(result))
-
-            return response
+        except psycopg2.DatabaseError:
+            return None
 
 
     def save(self):

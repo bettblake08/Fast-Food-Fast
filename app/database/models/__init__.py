@@ -6,3 +6,4 @@ from app.database.models.ordered_item import OrderedItemModel
 from app.database.models.user import UserModel
 from app.database.models.revoked_token import RevokedTokenModel
 from app.database.models.order_item import OrderItemModel
+from app.database.models.role import RoleModel
