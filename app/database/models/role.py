@@ -81,10 +81,11 @@ class RoleModel(DBModel):
         query = "INSERT INTO {}(name) values('%s') ".format(
             self.table) % (self.name)
 
-        try:   
+        try:  
             self.database_connection.cursor.execute(query)
             self.database_connection.db_connection.commit()
             return True
+            
         except psycopg2.DatabaseError:
             return False
 

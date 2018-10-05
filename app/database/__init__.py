@@ -7,8 +7,6 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from app.database.schema import TABLES
 
-
-
 class DB():
     """ This is the database class used to connect with the database
     """
@@ -167,3 +165,7 @@ class DB():
             print('Destroy db succeeded!')
         except:
             print('Failed to destroy database. Please checkout code and try again!')
+
+    def __del__(self):
+        self.cursor.close()
+        self.db_connection.close()
