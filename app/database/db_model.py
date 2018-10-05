@@ -31,4 +31,3 @@ class DBModel():
         """ Initialized the database model by storing an instance of the DB class
         """
         pass
-        

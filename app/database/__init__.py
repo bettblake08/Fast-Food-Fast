@@ -169,3 +169,5 @@ class DB():
     def __del__(self):
         self.cursor.close()
         self.db_connection.close()
+
+        print("Connection closed!")
