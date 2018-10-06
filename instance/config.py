@@ -4,7 +4,6 @@ class Config(object):
     FLASK_APP = "run.py"
 
     JWT_TOKEN_LOCATION = ['headers'] 
-
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access']
 
@@ -29,6 +28,7 @@ class DevelopmentConfig(Config):
     FLASK_ENV = "development"
     DEBUG = True
     SERVER_NAME = 'localhost.dev:5000'
+    BCRYPT_LOG_ROUNDS = 4
 
     DB_HOST = "localhost"
     DB_USER = "postgres"
