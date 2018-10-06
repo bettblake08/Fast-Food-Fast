@@ -8,7 +8,6 @@ from app.database.factory import generate_test_data
 app = create_app(os.getenv('APP_ENV'))
 
 class APITestcase(unittest.TestCase):
-
     def setUp(self):
         self.test_client = app.test_client()
         self.database = DB()

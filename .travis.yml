@@ -4,7 +4,7 @@ python:
   - "3.5"
 
 env:
-  - APP_ENV="TEST"
+  - APP_ENV=TEST
 
 
 install:
@@ -25,3 +25,4 @@ after_script:
 
 after_success: 
   - coveralls
+  - flask db:destroy
