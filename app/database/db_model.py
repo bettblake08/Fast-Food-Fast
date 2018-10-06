@@ -24,10 +24,10 @@ class DBModel():
 
     id = None
     table = ""
-
     database_connection = database_connection
 
     def __init__(self):
         """ Initialized the database model by storing an instance of the DB class
         """
-        pass
+
+        self.database_connection = database_connection
