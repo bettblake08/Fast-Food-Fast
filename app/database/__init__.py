@@ -143,7 +143,6 @@ class DB():
                 self.cursor.execute(query)
 
             self.db_connection.commit()
-            
             print('Teardown succeeded!')
 
         except psycopg2.DatabaseError:
