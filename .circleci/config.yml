@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.2
+        environment:
+          APP_ENV: TEST
+          DB_USER: postgres
+          DB_NAME: fastfoodfasttest
+          DB_PASSWORD: "m21c07s96.A1"
+          DB_HOST: "localhost"
+          DATABASE_URL: postgresql://postgres@localhost/fastfoodfasttest?sslmode=disable
+      - image: circleci/postgres:9.6.5-alpine-ram
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: fastfoodfasttest
+          POSTGRES_PASSWORD: "m21c07s96.A1"
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          name: Install Python dependecies in a virtual env
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+            python -m pytest -vv --cov=app app/tests/ --cov-report term-missing
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirementstxt" }}
+          paths:
+            - "venv"
