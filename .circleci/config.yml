@@ -9,7 +9,7 @@ jobs:
           DB_NAME: fastfoodfasttest
           DB_PASSWORD: "m21c07s96.A1"
           DB_HOST: "localhost"
-          DATABASE_URL: postgresql://postgres@localhost/fastfoodfasttest?sslmode=disable
+          DATABASE_URL: postgresql://postgres@localhost/fastfoodfasttest:m21c07s96.A1?sslmode=disable
       - image: circleci/postgres:9.6.5-alpine-ram
         environment:
           POSTGRES_USER: postgres
