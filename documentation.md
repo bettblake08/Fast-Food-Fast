@@ -25,17 +25,17 @@ Specifying the role enables the platform to know what type of account is being c
 
   + Body
     {
-        "username": "johndoe1",
-        "email": "johndoe1@rocketmail.com",
-        "password": "testPASS.A1",
-        "role": 1
+        "username": "johndoe3",
+        "email": "johndoe3@rocketmail.com",
+        "password": "testPASS@A1",
+        "role": "admin"
     }
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
 
   + Body
     {
-        'error':0
+        "message":"Sign up successful. User has been created!"
     }
 
 ### Log In [POST /auth/login]
@@ -55,15 +55,15 @@ For a user to login, the following fields need to be present in the request body
 
   + Body
     {
-        "username": "johndoe1",
-        "password": "testPASS.A1"
+        "username": "johndoe3",
+        "password": "testPASS@A1"
     }
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
 
   + Body
     {
-        'error':0
+        "message":"Logged in as johndoe3"
     }
 
 ### Log Out [POST /auth/logout]
@@ -77,10 +77,10 @@ This endpoint can only be accessed if a user has already been logged in.
     Content-Type    :   application/json
     Authorization   :   Bearer <access_token>
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
   + Body
     {
-        'error':0
+        "message":"Access token has been revoked!"
     }
 
 # Group Orders
@@ -117,11 +117,11 @@ This endpoint is restricted to the customer user hence it is required that a cus
         ]
     }
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
 
   + Body
     {
-        'error':0
+        "message":"You have successfully created a new order!""
     }
 
 ### Get order history [GET]
@@ -134,27 +134,27 @@ This endpoint is restricted to the customer user hence it is required that a cus
   + Headers
     Authorization   :   Bearer <access_token>
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
 
   + Body
     {
-        'error':0,
-        'content':[
+        "message":"Successfully fetched user order history!",
+        "content":[
             {
-                'id':1,
-                'userId':1,
-                'items': [
+                "id":1,
+                "userId":1,
+                "items": [
                     {
-                        'id': 1,
-                        'order': 1,
-                        'item': 1,
-                        'quantity': 2
+                        "id": 1,
+                        "order": 1,
+                        "item": 1,
+                        "quantity": 2
                     }
                 ],
-                'total': 10000,
-                'status': 1,
-                'created_at': '2016-11-06 00:00:00-07',
-                'updated_at': '2016-11-06 00:00:00-07'
+                "total": 10000,
+                "status": 1,
+                "created_at": "2016-11-06 00:00:00-07",
+                "updated_at": "2016-11-06 00:00:00-07"
             }
         ]
     }
@@ -171,26 +171,26 @@ This endpoint is restricted to the admin user hence it is required that an admin
   + Headers
     Authorization   :   Bearer <access_token>
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
   + Body
     {
-        'error':0,
-        'content':[
+        "message":"You have successfully retrieved all the present orders!",
+        "content":[
             {
-                'id':1,
-                'userId':1,
-                'items': [
+                "id":1,
+                "userId":1,
+                "items": [
                     {
-                        'id': 1,
-                        'order': 1,
-                        'item': 1,
-                        'quantity': 2
+                        "id": 1,
+                        "order": 1,
+                        "item": 1,
+                        "quantity": 2
                     }
                 ],
-                'total': 10000,
-                'status': 1,
-                'created_at': '2016-11-06 00:00:00-07',
-                'updated_at': '2016-11-06 00:00:00-07'
+                "total": 10000,
+                "status": 1,
+                "created_at": "2016-11-06 00:00:00-07",
+                "updated_at": "2016-11-06 00:00:00-07"
             }
         ]
     }
@@ -211,25 +211,25 @@ This endpoint is restricted to the admin user hence it is required that an admin
     Content-Type    :   application/json
     Authorization   :   Bearer <access_token>
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
   + Body
     {
-        'error':0,
-        'content':{
-            'id':1,
-            'userId':1,
-            'items': [
+        "message":"Fetch order successful!",
+        "content":{
+            "id":1,
+            "userId":1,
+            "items": [
                 {
-                    'id': 1,
-                    'order': 1,
-                    'item': 1,
-                    'quantity': 2
+                    "id": 1,
+                    "order": 1,
+                    "item": 1,
+                    "quantity": 2
                 }
             ],
-            'total': 10000,
-            'status': 1,
-            'created_at': '2016-11-06 00:00:00-07',
-            'updated_at': '2016-11-06 00:00:00-07'
+            "total": 10000,
+            "status": 1,
+            "created_at": "2016-11-06 00:00:00-07",
+            "updated_at": "2016-11-06 00:00:00-07"
         }
     }
 
@@ -252,10 +252,10 @@ This endpoint is restricted to the admin user hence it is required that an admin
     Content-Type    :   application/json
     Authorization   :   Bearer <access_token>
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
   + Body
     {
-        'error':0
+        "message":"You have successfully updated the status of the order."
     }
 
 # Group Menu
@@ -270,10 +270,10 @@ This endpoint is used to get a list of order items from the platform in order to
   + Headers
     Content-Type    :   application/json
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
   + Body
     {
-        'error':0
+        "message": "Successfully fetched menu!"
     }
 
 ### Post a new order item[POST]
@@ -294,13 +294,13 @@ This endpoint is restricted to the admin user hence it is required that an admin
 
   + Body
     {
-        'name': "Beef Burger",
-        'price': 400.00,
-        'c_id': 1,
+        "name": "Beef Burger",
+        "price": 400.00,
+        "c_id": 1,
     }
 
-+ Response   200 ('application/json')
++ Response   200 ("application/json")
   + Body
         {
-            'error': 0
+            "message": "You have successfully created a new order!"
         }

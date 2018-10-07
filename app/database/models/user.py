@@ -153,17 +153,13 @@ class UserModel(DBModel):
         Returns:
             UserModel if found or None if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE id = %s ".format(cls.table)
 
         try:
-            database_connection.cursor.execute(query, (_id))
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query, (_id))
+            cls.database_connection.db_connection.commit()
 
-            result = database_connection.cursor.fetchone()
+            result = cls.database_connection.cursor.fetchone()
 
             if bool(result):
                 return cls.get_object(result)
@@ -179,17 +175,13 @@ class UserModel(DBModel):
         Returns:
             UserModel if found or None if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE username = '%s' ".format(cls.table) % username
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            result = database_connection.cursor.fetchall()
+            result = cls.database_connection.cursor.fetchall()
 
             if result:
                 return cls.get_object(result[0])
@@ -204,17 +196,13 @@ class UserModel(DBModel):
         Returns:
             UserModel if found or None if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE email = '%s' ".format(cls.table) % email
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            result = database_connection.cursor.fetchone()
+            result = cls.database_connection.cursor.fetchone()
 
             if bool(result):
                 return cls.get_object(result)
@@ -229,18 +217,14 @@ class UserModel(DBModel):
         Returns:
             RoleModel if found or None if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(self.connection)
-
         query = "SELECT R.* FROM {} as UR, roles as R WHERE UR.user_id = %s AND R.id = UR.role_id".format(
             self.table_roles) % self.id
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            self.database_connection.cursor.execute(query)
+            self.database_connection.db_connection.commit()
 
-            result = database_connection.cursor.fetchone()
+            result = self.database_connection.cursor.fetchone()
             self.role = result[1].strip()
 
             if result:

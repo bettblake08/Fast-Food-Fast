@@ -32,17 +32,14 @@ class RoleModel(DBModel):
 
     @classmethod
     def get(cls,role_id):
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE id = {} ".format(
             cls.table,
             role_id)
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
-            result = database_connection.cursor.fetchone()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
+            result = cls.database_connection.cursor.fetchone()
 
             if bool(result):
                 return RoleModel.get_object(result)
@@ -52,17 +49,14 @@ class RoleModel(DBModel):
 
     @classmethod
     def get_by_role(cls,role):
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE name = '{}' ".format(
             cls.table,
             role)
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
-            result = database_connection.cursor.fetchone()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
+            result = cls.database_connection.cursor.fetchone()
 
             if bool(result):
                 return RoleModel.get_object(result)
@@ -87,10 +81,11 @@ class RoleModel(DBModel):
         query = "INSERT INTO {}(name) values('%s') ".format(
             self.table) % (self.name)
 
-        try:   
+        try:  
             self.database_connection.cursor.execute(query)
             self.database_connection.db_connection.commit()
             return True
+            
         except psycopg2.DatabaseError:
             return False
 
@@ -102,19 +97,15 @@ class RoleModel(DBModel):
         Returns:
             bool    :   True if found, False if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE name = '{}' ".format(
             cls.table,
             name)
 
         try:   
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            return bool(database_connection.cursor.fetchone())
+            return bool(cls.database_connection.cursor.fetchone())
 
         except psycopg2.DatabaseError:
             return False

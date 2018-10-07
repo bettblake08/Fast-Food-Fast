@@ -23,6 +23,11 @@ def teardown_db():
     db = DB()
     db.teardown(app)
 
+@app.cli.command("db:destroy")
+def destroy_db():
+    db = DB()
+    db.destroy(app)
+
 @app.route('/')
 def index():
     return redirect('https://fastfoodfast8.docs.apiary.io/')

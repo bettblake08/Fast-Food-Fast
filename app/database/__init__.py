@@ -7,8 +7,6 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from app.database.schema import TABLES
 
-
-
 class DB():
     """ This is the database class used to connect with the database
     """
@@ -139,19 +137,19 @@ class DB():
             "DROP SCHEMA public CASCADE",
             "CREATE SCHEMA public"
         ]
-
-        for query in queries:
-            self.cursor.execute(query)
-
-        self.db_connection.commit()
     
         try:
+            for query in queries:
+                self.cursor.execute(query)
+
+            self.db_connection.commit()
             print('Teardown succeeded!')
-        except:
+
+        except psycopg2.DatabaseError:
             print('Failed to teardown database. Please checkout code and try again!')
 
-
-    def destroy(self, app):
+    @classmethod
+    def destroy(cls, app):
         """ This is the database destroy function
         This function drops the database completely, erasing all the tables as well as
         the database itself
@@ -159,11 +157,28 @@ class DB():
             app: An instance of the flask application
         """
         
-        self.connect_db(app)
-        self.cursor.execute("DROP DATABASE ")
-        self.db_connection.commit()
-
         try:
+            connection = " user=" + app.config['DB_USER']
+            connection += " password=" + app.config['DB_PASSWORD']
+            connection += " host=" + app.config['DB_HOST']
+
+            db_connection = psycopg2.connect(connection)
+            cursor = db_connection.cursor()
+
+            db_connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+            cursor.execute("DROP DATABASE " + app.config['DB_NAME'])
+
             print('Destroy db succeeded!')
-        except:
+
+        except psycopg2.DatabaseError:
             print('Failed to destroy database. Please checkout code and try again!')
+
+    def __del__(self):
+        try:
+            self.cursor.close()
+            self.db_connection.close()
+
+            print("Connection closed!")
+            
+        except:
+            print("Failed to close connection!")

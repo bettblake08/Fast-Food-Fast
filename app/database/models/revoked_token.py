@@ -56,19 +56,15 @@ class RevokedTokenModel(DBModel):
         Returns:
             bool    :   True if found, False if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE token = '{}' ".format(
             cls.table,
             token)
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            result = database_connection.cursor.fetchone()
+            result = cls.database_connection.cursor.fetchone()
 
             return bool(result)
         except psycopg2.DatabaseError:

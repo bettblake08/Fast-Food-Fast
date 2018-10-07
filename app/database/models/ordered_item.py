@@ -120,19 +120,15 @@ class OrderedItemModel(DBModel):
         Returns:
             OrderedItemModel if found or None if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE id = {} ".format(
             cls.table,
             _id)
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            result = database_connection.cursor.fetchone()
+            result = cls.database_connection.cursor.fetchone()
 
             if bool(result):
                 return cls.get_object(result)
@@ -150,19 +146,15 @@ class OrderedItemModel(DBModel):
         Returns:
             List (OrderedItemModel) if found or None if not found
         """
-
-        database_connection = DB()
-        database_connection.connect(cls.connection)
-
         query = "SELECT * FROM {} WHERE order_id = {} ".format(
             cls.table,
             order_id)
 
         try:
-            database_connection.cursor.execute(query)
-            database_connection.db_connection.commit()
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
 
-            results = database_connection.cursor.fetchall()
+            results = cls.database_connection.cursor.fetchall()
 
             if results:
                 return [cls.get_object(result) for result in results]
