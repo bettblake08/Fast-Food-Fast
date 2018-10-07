@@ -32,6 +32,6 @@ jobs:
             coverage xml
             ./cc-test-reporter after-build
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirementstxt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - "venv"
