@@ -1,2 +1,6 @@
+#TRAVIS CI integration
 repo_token: 8j72o8UpLeUteBiOxi92z0rBB3qxf3yZY
-service_name: travis-ci
+#service_name: travis-ci
+
+#CIRCLE CI integration
+#COVERALLS_REPO_TOKEN=8j72o8UpLeUteBiOxi92z0rBB3qxf3yZY bundle exec rspec spec

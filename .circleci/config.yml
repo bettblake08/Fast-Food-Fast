@@ -25,7 +25,13 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            ./cc-test-reporter before-build
             python -m pytest -vv --cov=app app/tests/ --cov-report term-missing
+            coverage xml
+            ./cc-test-reporter after-build
+            flask db:destroy
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirementstxt" }}
           paths:
