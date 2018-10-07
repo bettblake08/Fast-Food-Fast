@@ -174,7 +174,11 @@ class DB():
             print('Failed to destroy database. Please checkout code and try again!')
 
     def __del__(self):
-        self.cursor.close()
-        self.db_connection.close()
+        try:
+            self.cursor.close()
+            self.db_connection.close()
 
-        print("Connection closed!")
+            print("Connection closed!")
+            
+        except:
+            print("Failed to close connection!")
