@@ -27,8 +27,17 @@ jobs:
             pip install -r requirements.txt
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
+      - run:
+          name: Test Preparations
+          command:  |
             ./cc-test-reporter before-build
+      - run:
+          name: Running Tests
+          command:  |
             python -m pytest -vv --cov=app app/tests/ --cov-report term-missing
+      - run:
+          name: Export test results to Code Climate, Coveralls and Codacy
+          command:  |
             coverage xml
             ./cc-test-reporter after-build
       - save_cache:
