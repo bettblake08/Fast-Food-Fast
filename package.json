@@ -1,0 +1,28 @@
+{
+  "name": "fast-food-fast",
+  "version": "1.0.0",
+  "description": "An online fast food restaurant",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -p --progress --config ./webpack.config.js",
+    "dev": "webpack --progress -d --config ./webpack.config.js --mode development ",
+    "watch": "webpack --progress -d --config ./webpack.config.js --mode development  --watch",
+    "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bettblake08/Fast-Food-Fast.git"
+  },
+  "keywords": [
+    "python"
+  ],
+  "author": "Brian Kipkirui Bett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bettblake08/Fast-Food-Fast/issues"
+  },
+  "homepage": "https://github.com/bettblake08/Fast-Food-Fast#readme",
+  "devDependencies": {
+    "webpack": "^4.20.2"
+  }
+}

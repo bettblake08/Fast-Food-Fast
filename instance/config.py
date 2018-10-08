@@ -6,6 +6,7 @@ class Config(object):
     JWT_TOKEN_LOCATION = ['headers'] 
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access']
+    WEBPACK_MANIFEST_PATH = "./mainfest.json"
 
     
 class ProductionConfig(Config):

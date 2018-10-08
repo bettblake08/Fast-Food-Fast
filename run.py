@@ -1,8 +1,11 @@
+import os
+
+from flask import redirect
+from flask_webpack import Webpack
+
 from app import create_app
 from app.database import DB
-from app.database.factory import generate_test_data,generate_initial_data
-import os
-from flask import redirect
+from app.database.factory import generate_initial_data, generate_test_data
 
 app = create_app(os.getenv('APP_ENV'))
 
@@ -32,5 +35,7 @@ def destroy_db():
 def index():
     return redirect('https://fastfoodfast8.docs.apiary.io/')
     
+webpack = Webpack(app)
+
 if __name__ == "__main__":
-    app.run()
+    app.run(extra_files=app.config["WEBPACK_MANIFEST_PATH"])

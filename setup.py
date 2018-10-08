@@ -17,6 +17,7 @@ setup(
         "Flask-RESTful>=0.3.6",
         "Flask-JWT-Extended",
         "Flask-Bcrypt",
+        "Flask-Webpack>=0.0.7",
         "Cryptography>=2.2.1",
         "pytest>=3.7.4",
         "coveralls",

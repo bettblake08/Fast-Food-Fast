@@ -2,8 +2,10 @@ env/
 build/
 dist/
 fastfoodfast.egg-info/
+node_modules/
 .vscode/
 __pycache__/
 .pytest_cache/
+
 *.pyc
 .env
