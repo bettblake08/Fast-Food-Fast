@@ -294,11 +294,11 @@ body::-webkit-scrollbar-thumb {
 .errorComment--disabled {
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
+    float:left;
 }
 
 .errorComment--active {
     width: 100%;
-    float: left;
     background-color: #d84d47;
     color: #FFF;
     padding: 1rem;
@@ -308,6 +308,7 @@ body::-webkit-scrollbar-thumb {
 
 .errorComment--disabled {
     width: 0;
+    padding:0;
     overflow: hidden;
     position: absolute;
 }
@@ -563,6 +564,16 @@ body::-webkit-scrollbar-thumb {
     float: left;
     clear: both;
     background-color: transparent;
+}
+
+.text_input input:-webkit-autofill,
+.text_input--normal input:-webkit-autofill,
+.text_input--fail input:-webkit-autofill,
+.text_input--success input:-webkit-autofill,
+.text_input--warning input:-webkit-autofill,
+.text_input--danger input:-webkit-autofill,
+.text_input--loading input:-webkit-autofill {
+    background-color: transparent !important;
 }
 
 .text_input input::placeholder,

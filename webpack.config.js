@@ -19,6 +19,12 @@ var entries = {
 	],
 	customer_login_js: [
 		jsRoot + "pages/customer/sign_in.js"
+	],
+	customer_signup_css: [
+		cssRoot + "pages/customer/sign_up.css"
+	],
+	customer_signup_js: [
+		jsRoot + "pages/customer/sign_up.js"
 	]
 }
 
