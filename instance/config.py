@@ -6,7 +6,7 @@ class Config(object):
     JWT_TOKEN_LOCATION = ['headers'] 
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access']
-    WEBPACK_MANIFEST_PATH = "./mainfest.json"
+    WEBPACK_MANIFEST_PATH = "../manifest.json"
 
     
 class ProductionConfig(Config):
@@ -28,7 +28,7 @@ class DevelopmentConfig(Config):
     ENV = "development"
     FLASK_ENV = "development"
     DEBUG = True
-    SERVER_NAME = 'localhost.dev:5000'
+    SERVER_NAME = 'localhost:5000'
     BCRYPT_LOG_ROUNDS = 4
 
     DB_HOST = "localhost"
@@ -45,7 +45,7 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     BCRYPT_LOG_ROUNDS = 4
-    SERVER_NAME = 'localhost.dev:5000'
+    SERVER_NAME = 'localhost:5000'
     
     DB_HOST = "localhost"
     DB_USER = "postgres"

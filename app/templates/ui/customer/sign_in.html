@@ -9,9 +9,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link href="../Assets/css/Main/signIn.css" rel="stylesheet" type="text/css" />
-    <link href="../Assets/css/main.css" rel="stylesheet" type="text/css" />
+    {{stylesheet_tag('main_css')    |   safe}}
+    {{stylesheet_tag('customer_login_css') |   safe}}
 
+    {{javascript_tag('customer_login_js') | safe}}
+    
 </head>
 
 <body>
@@ -22,11 +24,9 @@
         <form method="post" encType="multipart/form-data">
 
             <div class="login__form">
-
-                <a href="../index.html">
-                    <div class="login__logo">
-                        <img src="../Assets/images/logo2.png" alt="FastFoodFast">
-                    </div>
+                
+                <a href="/">
+                    <div class="login__logo"></div>
                 </a>
 
                 <div class="login__text">
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="login__link">
-                    <a href="signUp.html">
+                    <a href="customer/signup">
                         <div class="login__signup f_normal">Sign Up</div>
                     </a>
 

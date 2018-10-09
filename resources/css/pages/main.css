@@ -302,6 +302,7 @@ body::-webkit-scrollbar-thumb {
     background-color: #d84d47;
     color: #FFF;
     padding: 1rem;
+    margin-top:1rem;
     position: relative;
 }
 

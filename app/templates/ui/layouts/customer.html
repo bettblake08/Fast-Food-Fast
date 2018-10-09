@@ -1,0 +1,49 @@
+<!DOCTYPE>
+<html>
+
+<head>
+
+    <title>{% block title %}{% endblock%}</title>
+    
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {{stylesheet_tag('main_css') |   safe}}
+
+    {% block styles %}{% endblock%}
+
+    {% block scripts %}{% endblock%}
+
+</head>
+
+<body>
+    <!-- Header Component -->
+
+    <div class="header header--normal">
+        <div class="header__left">
+            <a href="../index.html">
+                <div class="header__logo">
+                    <img src="../Assets/images/logo.png" alt="FastFoodFast">
+                </div>
+            </a>
+        </div>
+
+        <div class="header__menu">
+            <a href="order.html">
+                <div class="header__menu__link f_h2">Menu</div>
+            </a>
+
+            <a href="orderHistory.html">
+                <div class="header__menu__link f_h2">History</div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Header Component -->
+
+    {% block body %}{%endblock%}
+</body>
+
+</html>

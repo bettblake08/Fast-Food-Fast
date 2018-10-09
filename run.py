@@ -30,11 +30,7 @@ def teardown_db():
 def destroy_db():
     db = DB()
     db.destroy(app)
-
-@app.route('/')
-def index():
-    return redirect('https://fastfoodfast8.docs.apiary.io/')
-    
+        
 webpack = Webpack(app)
 
 if __name__ == "__main__":

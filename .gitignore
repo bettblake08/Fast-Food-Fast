@@ -6,6 +6,7 @@ node_modules/
 .vscode/
 __pycache__/
 .pytest_cache/
+static/
 
 *.pyc
 .env
