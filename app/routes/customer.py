@@ -15,3 +15,7 @@ def customer_signup():
 @customer_pages.route("/order")
 def customer_order_page():
     return render_template('customer/order.html')
+
+@customer_pages.route("/orderHistory")
+def customer_order_history_page():
+    return render_template('customer/order_history.html')

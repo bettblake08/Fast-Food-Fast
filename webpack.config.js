@@ -34,7 +34,14 @@ var entries = {
 	],
 	customer_order_js: [
 		jsRoot + "pages/customer/order.js"
-	],/* 
+	],
+	customer_order_history_css: [
+		cssRoot + "pages/customer/order_history.css"
+	],
+	customer_order_history_js: [
+		jsRoot + "pages/customer/order_history.js"
+	],
+	/* 
 	admin_header_js: [
 		jsRoot + "components/headers/admin.js"
 	], */

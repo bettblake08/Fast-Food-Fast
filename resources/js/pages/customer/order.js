@@ -257,8 +257,8 @@ class OrderForm{
 			this.state.buttons[0].setStatus(1);
 		}).then((response) => {
 			if (response != undefined) {
-                this.state.buttons[0].setStatus(2);
-                window.location.href = webUrl + "/customer/orderHistory";
+				this.state.buttons[0].setStatus(2);
+				window.location.href = webUrl + "/customer/orderHistory";
 			}
 		});
 	}

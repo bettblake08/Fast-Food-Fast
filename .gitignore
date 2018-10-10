@@ -10,3 +10,4 @@ static/
 
 *.pyc
 .env
+manifest.json
