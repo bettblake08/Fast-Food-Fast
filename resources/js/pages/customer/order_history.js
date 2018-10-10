@@ -3,6 +3,22 @@ import {refreshToken,getAccessToken} from "../../abstract/mixins";
 import Order from "../../components/order";
 
 class OrderHistory{
+	constructor() {
+		this._state = {
+			orders:[]
+        };
+        
+        this._components = {};
+	}
+
+	get state() {
+		return this._state;
+	}
+
+	set state(value) {
+		this._state = value;
+	}
+
 	get components (){
 		return this._components;
 	}
@@ -12,17 +28,28 @@ class OrderHistory{
 	}
 
 	init(){
-		let orderHistoryContent = document.querySelector("orderHistory__content");
-		this.components = {
-			orderHistoryContent
-		};
+		let orderHistoryContent = document.querySelector(".orderHistory__content");
+		this.components["orderHistoryContent"] = orderHistoryContent;
 	}
     
-	populateOrderHistory(orders){
+	populateOrderHistory(content){
 		let orderHistory = this,
 			orderHistoryContent = this.components.orderHistoryContent;
 
-		orders.reverse().forEach(order => {
+		content.orders.reverse().forEach(order => {
+
+			order.items.forEach( item => {
+				let menuItem = content.menu.find(menuItem => {
+					return menuItem.id == item.item;
+				});
+                
+				if(menuItem != undefined){
+					item.name = menuItem.name;
+					item.price = menuItem.price;
+					item.c_id = menuItem.c_id;
+				}
+			});
+
 			let orderModel = new Order({
 				parent: orderHistory,
 				order

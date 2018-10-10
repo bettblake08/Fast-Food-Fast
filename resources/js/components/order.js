@@ -21,8 +21,6 @@ class OrderedItem {
                 component   :   Contains text input elements
             */
 
-		this._state = {};
-
 		let main = document.createElement("div"),
 			orderedItemName = document.createElement("div"),
 			orderedItemQuantity = document.createElement("div"),
@@ -100,7 +98,8 @@ class Order {
         */
 
 		this._state = {
-			order:params.order
+			order:params.order,
+			orderedItems:[]
 		};
 
 		let	main = document.createElement("div"),
@@ -133,7 +132,10 @@ class Order {
 		orderTime.classList.add("f_normal");
 		orderTime.innerHTML = params.order.created_at;
 
-        let status = this.getOrderStatus(params.order.status);
+		let status = this.getOrderStatus(params.order.status);
+
+		console.log(params.order);
+		console.log(status);
 
 		orderStatus.classList.add(status.class);
 		orderStatus.innerHTML = status.text;
@@ -197,25 +199,25 @@ class Order {
 	getOrderStatus(status){
         
 		switch(status){
-		case 1:{
+		case 0:{
 			return {
 				class: "order__status--pending",
 				text:"Pending"
 			};
 		}
-		case 2:{
+		case 1:{
 			return {
 				class: "order__status--processing",
 				text: "Processing"
 			};
 		}
-		case 3:{
+		case 2:{
 			return {
 				class: "order__status--cancelled",
 				text: "Cancelled"
 			};
 		}
-		case 4:{
+		case 3:{
 			return {
 				class: "order__status--complete",
 				text: "Complete"

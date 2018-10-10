@@ -99,14 +99,17 @@ class UserViews():
         user = get_jwt_identity()
 
         orders = OrderModel.get_all_orders_by_user(user['id'])
-
         menu_item_ids = set()
 
         for order in orders:
+            
             for orderedItem in order.items:
                 menu_item_ids.add(orderedItem.item)
         
         menu = OrderItemModel.get_list_of_items([item for item in menu_item_ids])
+
+        if len(menu) == 0:
+            menu = []
 
         return make_response(
             jsonify({
