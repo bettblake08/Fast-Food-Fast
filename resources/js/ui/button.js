@@ -27,7 +27,7 @@ class Button {
 
 		let main = document.createElement("button");
 
-        main.setAttribute("type","button");
+		main.setAttribute("type","button");
 		main.classList.add(params.textClass);
 		main.classList.add(this.getButtonClass(params.class,params.status));
 		main.innerHTML = params.label;

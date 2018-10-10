@@ -134,11 +134,21 @@ class AdminViews():
         """
 
         orders = OrderModel.get_all_orders()
+        menu = OrderItemModel.get_all_items()
+
+        if not orders:
+            orders = []
+
+        if not menu:
+            menu = []
 
         return make_response(jsonify(
             {   
                 "message":"You have successfully retrieved all the present orders!",
-                "content": [order.json() for order in orders]
+                "content": {
+                    "orders": [order.json() for order in orders],
+                    "menu": [menuItem.json() for menuItem in menu]
+                }
             }
         ), 200)
 
