@@ -122,7 +122,6 @@ class Order {
         
 		orderItems.classList.add("order__items");
 		orderItems.appendChild(orderItemsTitle);
-		orderItems.appendChild(orderItemsList);
 
 		orderTotal.classList.add("order__total");
 		orderTotal.classList.add("f_normal");
@@ -132,12 +131,10 @@ class Order {
 		orderTime.classList.add("f_normal");
 		orderTime.innerHTML = params.order.created_at;
 
-		let status = this.getOrderStatus(params.order.status);
-
-		console.log(params.order);
-		console.log(status);
-
-		orderStatus.classList.add(status.class);
+        let status = this.getOrderStatus(params.order.status);
+        
+        orderStatus.classList.add(status.class);
+        orderStatus.classList.add("f_normal");
 		orderStatus.innerHTML = status.text;
 
 		main.classList.add("order");
@@ -145,7 +142,8 @@ class Order {
 		main.appendChild(orderItems);
 		main.appendChild(orderTotal);
 		main.appendChild(orderTime);
-		main.appendChild(orderStatus);
+        main.appendChild(orderStatus);
+        main.appendChild(orderItemsList);
 
 		this._component = {
 			main,

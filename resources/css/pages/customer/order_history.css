@@ -30,7 +30,6 @@
 .order {
     width: 100%;
     float: left;
-    height: 5rem;
     margin-bottom: 2rem;
 }
 
@@ -44,7 +43,7 @@
 }
 
 .order__items {
-    width: 45%;
+    width: 25%;
     float: left;
     position: relative;
 }
@@ -59,16 +58,16 @@
 }
 
 .order__items__list {
-    position: absolute;
-    top: 5rem;
+    width:100%;
+    float:left;
     overflow: hidden;
-    z-index: 50;
     height: 0;
-    width: 100%;
     background-color: #FFF;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
-.order__items:hover .order__items__list {
+.order:hover .order__items__list {
     height: auto;
     border: solid .1rem rgb(223, 0, 0);
 }
@@ -123,8 +122,10 @@
 }
 
 .order__status--complete,
-.order__status--cancelled{
-    width: 10%;
+.order__status--cancelled,
+.order__status--pending,
+.order__status--processing {
+    width: 20%;
     float: left;
     line-height: 5rem;
     text-align: center !important;
@@ -135,13 +136,15 @@
     background-color: #00a84f;
 }
 
-.order__status--cancelled {
+.order__status--cancelled,
+.order__status--pending,
+.order__status--processing {
     color: #333;
     background-color: transparent;
 }
 
 .order__time {
-    width: 15%;
+    width: 25%;
     float: left;
     line-height: 5rem;
     text-align: center !important;
@@ -170,7 +173,7 @@
 }
 
 .hd__items {
-    width: 45%;
+    width: 25%;
 }
 
 .hd__total {
@@ -178,9 +181,9 @@
 }
 
 .hd__status{
-    width: 10%;
+    width: 20%;
 }
 
 .hd__time {
-    width: 15%;
+    width: 25%;
 }
