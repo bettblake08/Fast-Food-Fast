@@ -9,3 +9,7 @@ def admin_login():
 @admin_pages.route("/orderManagement")
 def admin_management_page():
     return render_template('admin/order_management.html')
+
+@admin_pages.route("/menu")
+def admin_menu_page():
+    return render_template('admin/menu.html')
