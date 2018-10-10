@@ -41,16 +41,21 @@ var entries = {
 	customer_order_history_js: [
 		jsRoot + "pages/customer/order_history.js"
 	],
-	/* 
 	admin_header_js: [
 		jsRoot + "components/headers/admin.js"
-	], */
+	],
 	admin_login_css: [
 		cssRoot + "pages/admin/sign_in.css"
 	],
 	admin_login_js: [
 		jsRoot + "pages/admin/sign_in.js"
 	],
+	admin_order_management_css: [
+		cssRoot + "pages/admin/order_management.css"
+	],
+	admin_order_management_js: [
+		jsRoot + "pages/admin/order_management.js"
+	]
 };
 
 const config = {

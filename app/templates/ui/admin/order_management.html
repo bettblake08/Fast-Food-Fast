@@ -1,232 +1,83 @@
-<!DOCTYPE>
-<html>
+{% extends "layouts/admin.html" %}
 
-<head>
+{% block title %}Order Management{% endblock %}
 
-    <title>Order Management</title>
+{% block styles %}
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+{{stylesheet_tag('admin_order_management_css')| safe}}
 
-    <link href="../Assets/css/Admin/orderManagement.css" rel="stylesheet" type="text/css" />
-    <link href="../Assets/css/admin.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 
-</head>
+{% block scripts %}
 
-<body>
+{{javascript_tag('admin_order_management_js') | safe}}
 
-    <!-- Header Component -->
+{% endblock %}
 
-    <div class="header header--normal">
-        <div class="header__left">
-            <a href="../index.html">
-                <div class="header__logo">
-                    <img src="../Assets/images/logo.png" alt="FastFoodFast">
-                </div>
-            </a>
-        </div>
 
-        <div class="header__right">
+{% block body %}
 
-            <div class="header__signin">
-                <a href="signIn.html">
-                    <div class="btn_1 f_button_2">Log Out</div>
-                </a>
+<!-- Section -->
+
+<div class="main">
+
+    <!-- Content -->
+
+    <div class="content">
+
+        <div class="ordersView">
+
+            <div class="ordersView__topBar">
+                <div class="ordersView__title f_h1">Orders</div>
             </div>
 
-        </div>
+            <div class="ordersView__content">
 
-    </div>
+                <!-- Order Item -->
+                <div class="order">
 
-    <!-- Header Component -->
+                    <div class="order__id f_normal">1000001</div>
+                    <div class="order__items f_normal">
+                        <div class="order__items__title f_normal">Items</div>
 
-
-    <div class="main">
-
-
-        <!-- Sidebar Component -->
-
-        <div id="adminSideBarMenu">
-
-            <div class="navMenu">
-                <div class="navMenu__subMenu">
-                    <a href="orderManagement.html">
-                        <div class="navMenu__subMenu__hd f_tab_h1" id="hd1">Orders</div>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Sidebar Component -->
-
-
-        <!-- Content -->
-
-
-        <div class="content">
-
-            <div class="ordersView">
-
-                <div class="ordersView__topBar">
-                    <div class="ordersView__title f_h1">Orders</div>
-                </div>
-
-                <div class="ordersView__content">
-
-                    <!-- Order Item -->
-                    <div class="order">
-
-                        <div class="order__id f_normal">1000001</div>
-                        <div class="order__items f_normal">
-                            <div class="order__items__title f_normal">Items</div>
-
-                            <div class="order__items__list">
-                                <div class="order__item f_normal">
-                                    <div class="order__item__name f_normal">Chicken Burger</div>
-                                    <div class="order__item__quantity f_normal">2</div>
-                                    <div class="order__item__price f_normal">KSH 400</div>
-                                </div>
-
-                                <div class="order__item f_normal">
-                                    <div class="order__item__name f_normal">Beef Burger</div>
-                                    <div class="order__item__quantity f_normal">2</div>
-                                    <div class="order__item__price f_normal">KSH 400</div>
-                                </div>
-
-                                <div class="order__item">
-                                    <div class="order__item__name f_normal">Coke 350ml</div>
-                                    <div class="order__item__quantity f_normal">4</div>
-                                    <div class="order__item__price f_normal">KSH 100</div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="order__total f_normal">KSH 2000</div>
-
-                        <div class="order__buttons">
-
-                            <div class="order__button">
-                                <div class="btn_1--success f_button_2">Accept</div>
+                        <div class="order__items__list">
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Chicken Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
                             </div>
 
-                            <div class="order__button">
-                                <div class="btn_1--danger f_button_2">Deny</div>
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Beef Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
                             </div>
 
-                            <div class="order__button">
-                                <div class="btn_1--warning f_button_2">Finish</div>
+                            <div class="order__item">
+                                <div class="order__item__name f_normal">Coke 350ml</div>
+                                <div class="order__item__quantity f_normal">4</div>
+                                <div class="order__item__price f_normal">KSH 100</div>
                             </div>
+
 
                         </div>
-
-
                     </div>
-                    <!-- Order Item -->
 
+                    <div class="order__total f_normal">KSH 2000</div>
 
+                    <div class="order__buttons">
 
-                    <!-- Order Item -->
-                    <div class="order">
-
-                        <div class="order__id f_normal">1000002</div>
-                        <div class="order__items f_normal">
-                            <div class="order__items__title f_normal">Items</div>
-
-                            <div class="order__items__list">
-                                <div class="order__item f_normal">
-                                    <div class="order__item__name f_normal">Chicken Burger</div>
-                                    <div class="order__item__quantity f_normal">2</div>
-                                    <div class="order__item__price f_normal">KSH 400</div>
-                                </div>
-
-                                <div class="order__item f_normal">
-                                    <div class="order__item__name f_normal">Beef Burger</div>
-                                    <div class="order__item__quantity f_normal">2</div>
-                                    <div class="order__item__price f_normal">KSH 400</div>
-                                </div>
-
-                                <div class="order__item">
-                                    <div class="order__item__name f_normal">Coke 350ml</div>
-                                    <div class="order__item__quantity f_normal">4</div>
-                                    <div class="order__item__price f_normal">KSH 100</div>
-                                </div>
-
-                            </div>
+                        <div class="order__button">
+                            <div class="btn_1--success f_button_2">Accept</div>
                         </div>
 
-                        <div class="order__total f_normal">KSH 2000</div>
-
-
-                        <div class="order__buttons">
-                            <div class="order__button">
-                                <div class="btn_1--success f_button_2">Accept</div>
-                            </div>
-
-                            <div class="order__button">
-                                <div class="btn_1--danger f_button_2">Deny</div>
-                            </div>
-
-                            <div class="order__button">
-                                <div class="btn_1--warning f_button_2">Finish</div>
-                            </div>
+                        <div class="order__button">
+                            <div class="btn_1--danger f_button_2">Deny</div>
                         </div>
 
-
-                    </div>
-                    <!-- Order Item -->
-
-
-                    <!-- Order Item -->
-                    <div class="order">
-
-                        <div class="order__id f_normal">1000003</div>
-                        <div class="order__items f_normal">
-                            <div class="order__items__title f_normal">Items</div>
-
-                            <div class="order__items__list">
-                                <div class="order__item f_normal">
-                                    <div class="order__item__name f_normal">Chicken Burger</div>
-                                    <div class="order__item__quantity f_normal">2</div>
-                                    <div class="order__item__price f_normal">KSH 400</div>
-                                </div>
-
-                                <div class="order__item f_normal">
-                                    <div class="order__item__name f_normal">Beef Burger</div>
-                                    <div class="order__item__quantity f_normal">2</div>
-                                    <div class="order__item__price f_normal">KSH 400</div>
-                                </div>
-
-                                <div class="order__item">
-                                    <div class="order__item__name f_normal">Coke 350ml</div>
-                                    <div class="order__item__quantity f_normal">4</div>
-                                    <div class="order__item__price f_normal">KSH 100</div>
-                                </div>
-
-                            </div>
+                        <div class="order__button">
+                            <div class="btn_1--warning f_button_2">Finish</div>
                         </div>
-
-
-                        <div class="order__total f_normal">KSH 2000</div>
-
-
-                        <div class="order__buttons">
-                            <div class="order__button">
-                                <div class="btn_1--success f_button_2">Accept</div>
-                            </div>
-
-                            <div class="order__button">
-                                <div class="btn_1--danger f_button_2">Deny</div>
-                            </div>
-
-                            <div class="order__button">
-                                <div class="btn_1--warning f_button_2">Finish</div>
-                            </div>
-
-                        </div>
-
 
                     </div>
 
@@ -234,23 +85,125 @@
                 </div>
                 <!-- Order Item -->
 
+
+
+                <!-- Order Item -->
+                <div class="order">
+
+                    <div class="order__id f_normal">1000002</div>
+                    <div class="order__items f_normal">
+                        <div class="order__items__title f_normal">Items</div>
+
+                        <div class="order__items__list">
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Chicken Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
+                            </div>
+
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Beef Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
+                            </div>
+
+                            <div class="order__item">
+                                <div class="order__item__name f_normal">Coke 350ml</div>
+                                <div class="order__item__quantity f_normal">4</div>
+                                <div class="order__item__price f_normal">KSH 100</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="order__total f_normal">KSH 2000</div>
+
+
+                    <div class="order__buttons">
+                        <div class="order__button">
+                            <div class="btn_1--success f_button_2">Accept</div>
+                        </div>
+
+                        <div class="order__button">
+                            <div class="btn_1--danger f_button_2">Deny</div>
+                        </div>
+
+                        <div class="order__button">
+                            <div class="btn_1--warning f_button_2">Finish</div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- Order Item -->
+
+
+                <!-- Order Item -->
+                <div class="order">
+
+                    <div class="order__id f_normal">1000003</div>
+                    <div class="order__items f_normal">
+                        <div class="order__items__title f_normal">Items</div>
+
+                        <div class="order__items__list">
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Chicken Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
+                            </div>
+
+                            <div class="order__item f_normal">
+                                <div class="order__item__name f_normal">Beef Burger</div>
+                                <div class="order__item__quantity f_normal">2</div>
+                                <div class="order__item__price f_normal">KSH 400</div>
+                            </div>
+
+                            <div class="order__item">
+                                <div class="order__item__name f_normal">Coke 350ml</div>
+                                <div class="order__item__quantity f_normal">4</div>
+                                <div class="order__item__price f_normal">KSH 100</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="order__total f_normal">KSH 2000</div>
+
+
+                    <div class="order__buttons">
+                        <div class="order__button">
+                            <div class="btn_1--success f_button_2">Accept</div>
+                        </div>
+
+                        <div class="order__button">
+                            <div class="btn_1--danger f_button_2">Deny</div>
+                        </div>
+
+                        <div class="order__button">
+                            <div class="btn_1--warning f_button_2">Finish</div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
             </div>
-
-
+            <!-- Order Item -->
 
         </div>
-
-
-        <!-- Content -->
-
 
 
 
     </div>
 
 
+    <!-- Content -->
 
+</div>
 
-</body>
+<!-- Section -->
 
-</html>
+{% endblock %}

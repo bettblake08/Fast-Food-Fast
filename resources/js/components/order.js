@@ -1,3 +1,5 @@
+import {DropdownButtons} from "../ui/dropdown_buttons";
+
 class OrderedItem {
 	constructor(params) {
 		/* 
@@ -17,8 +19,8 @@ class OrderedItem {
                             total   :   total price for all orders of this item
                             quantity:   number of orders for this item
                             item    :   item object
-
-                component   :   Contains text input elements
+						
+                components   :   Contains text input elements
             */
 
 		let main = document.createElement("div"),
@@ -43,7 +45,7 @@ class OrderedItem {
 		main.appendChild(orderedItemQuantity);
 		main.appendChild(orderedItemPrice);
 
-		this._component = {
+		this._components = {
 			main,
 			orderedItemName,
 			orderedItemQuantity,
@@ -63,16 +65,16 @@ class OrderedItem {
 		this._state = value;
 	}
 
-	get component() {
-		return this._component;
+	get components() {
+		return this._components;
 	}
 
-	set component(value) {
-		this._component = value;
+	set components(value) {
+		this._components = value;
 	}
 
 	getOrderedItem() {
-		return this.component.main;
+		return this.components.main;
 	}
 
 }
@@ -89,17 +91,20 @@ class Order {
                         items   :   list of order items
                         total   :   order total price
                         status  :   order status
-                        created_at  :   order time
+						created_at  :   order time
+			access	:	type of priviledge on the model
             
         :attribute
             state   :   Contains the state of order item containing:
 
-            component   :   Contains text input elements
+            components   :   Contains text input elements
         */
 
 		this._state = {
 			order:params.order,
-			orderedItems:[]
+			orderedItems:[],
+			dropdownButtons:[],
+			access:params.access == undefined ? "customer":"admin"
 		};
 
 		let	main = document.createElement("div"),
@@ -109,7 +114,8 @@ class Order {
 			orderItemsList = document.createElement("div"),
 			orderTotal = document.createElement("div"),
 			orderTime = document.createElement("div"),
-			orderStatus = document.createElement("div");
+			orderStatus = document.createElement("div"),
+			orderStatusButtons = document.createElement("div");
 
 		orderId.classList.add("order__id");
 		orderId.classList.add("f_normal");
@@ -131,10 +137,10 @@ class Order {
 		orderTime.classList.add("f_normal");
 		orderTime.innerHTML = params.order.created_at;
 
-        let status = this.getOrderStatus(params.order.status);
-        
-        orderStatus.classList.add(status.class);
-        orderStatus.classList.add("f_normal");
+		let status = this.getOrderStatus(params.order.status);
+		
+		orderStatus.classList.add(status.class);
+		orderStatus.classList.add("f_normal");
 		orderStatus.innerHTML = status.text;
 
 		main.classList.add("order");
@@ -142,10 +148,11 @@ class Order {
 		main.appendChild(orderItems);
 		main.appendChild(orderTotal);
 		main.appendChild(orderTime);
-        main.appendChild(orderStatus);
-        main.appendChild(orderItemsList);
+		main.appendChild(orderStatus);
+		main.appendChild(orderItemsList);
+		main.appendChild(orderStatusButtons);
 
-		this._component = {
+		this._components = {
 			main,
 			orderId,
 			orderItems,
@@ -159,8 +166,11 @@ class Order {
 		let parentState = params.parent.state;
 		parentState.orders.push(this);
 		params.parent.state = parentState;
-        
+		
+		this._props = params;
+
 		this.populateOrderedItemsList();
+		this.setOrderStatusButtons();
 	}
 
 	get state() {
@@ -171,17 +181,25 @@ class Order {
 		this._state = value;
 	}
 
-	get component() {
-		return this._component;
+	get components() {
+		return this._components;
 	}
 
-	set component(value) {
-		this._component = value;
+	set components(value) {
+		this._components = value;
+	}
+
+	get props() {
+		return this._props;
+	}
+
+	set props(value) {
+		this._props = value;
 	}
     
 	populateOrderedItemsList(){
 		let orderedItems = this.state.order.items;
-		let orderItemsList = this.component.orderItemsList;
+		let orderItemsList = this.components.orderItemsList;
 		let orderModel = this;
 
 		orderedItems.forEach(item => {
@@ -192,6 +210,59 @@ class Order {
 
 			orderItemsList.appendChild(orderedItem.getOrderedItem());
 		});
+	}
+
+	setOrderStatusButtons(){
+		if (this.state.access == "admin") {
+			this.components.orderStatusButtons.innerHTML = "";
+			let dropdownButtons = [];
+
+			switch(this.state.order.status){
+			case 0:{
+				dropdownButtons = [{
+					name: "Process",
+					action: () => {
+
+					}
+				},
+				{
+					name: "Cancel",
+					action: () => {
+
+					}
+				}];
+				break;
+			}
+			case 1:{
+				dropdownButtons = [
+					{
+						name: "Complete",
+						action: () => {
+
+						}
+					},
+				];
+				break;
+			}
+			case 2:
+			case 3:{
+				return;
+			}
+			}
+
+			let buttons = new DropdownButtons({
+				class: "ddButtons",
+				textClass: "f_button_2",
+				label: "Set as",
+				parent: this,
+				buttons: dropdownButtons
+			});
+
+			this.components.orderStatusButtons.appendChild(
+				buttons.getDropDownButtonsComponent()
+			);
+			
+		}
 	}
 
 	getOrderStatus(status){
@@ -225,7 +296,7 @@ class Order {
 	}
 
 	getOrderComponent() {
-		return this.component.main;
+		return this.components.main;
 	}
 
 }

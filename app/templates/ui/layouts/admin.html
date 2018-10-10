@@ -16,14 +16,46 @@
 
 </head>
 
-<body>
-    <div id="svg_icons"></div>
-    <div id="adminHeaderComponent"></div>
+<body> 
+    <!-- Header Component -->
 
-    <div class="main">
-        <div id="adminSidebarComponent"></div>
+    <div class="header header--normal">
+        <div class="header__left">
+            <a href="/admin/orderManagement">
+                <div class="header__logo">
+                    <img src="../Assets/images/logo.png" alt="FastFoodFast">
+                </div>
+            </a>
+        </div>
 
-    {{javascript_tag('admin_header_js') | safe}}
+        <div class="header__right">
+
+            <div class="header__signin">
+                <!-- <a href="">
+                    <div class="btn_1 f_button_2">Log Out</div>
+                </a> -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Header Component -->
+
+    <!-- Sidebar Component -->
+
+    <div id="adminSideBarMenu">
+
+        <div class="navMenu">
+            <div class="navMenu__subMenu">
+                <a href="admin/orderManagement">
+                    <div class="navMenu__subMenu__hd f_tab_h1" id="hd1">Orders</div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Sidebar Component -->
 
     {% block body %}{% endblock %}
 
