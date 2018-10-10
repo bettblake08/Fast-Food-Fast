@@ -89,12 +89,12 @@ class DropdownButtons{
 		this._state = value;
 	}
 
-	get component() {
-		return this._component;
+	get components() {
+		return this._components;
 	}
 
-	set component(value) {
-		this._component = value;
+	set components(value) {
+		this._components = value;
 	}
     
 	get props() {
@@ -106,14 +106,14 @@ class DropdownButtons{
 	}
 
 	getDropDownButtonsComponent(){
-		return this.component.main;
+		return this.components.main;
 	}
 
 	toggleButtonOptions(){
 		let state = this.state;
         
 		if(state.toggle){
-			this.component.ddButtons.classList.replace(
+			this.components.ddButtons.classList.replace(
 				`${this.props.class}__buttons--active`,
 				`${this.props.class}__buttons--disabled`,
 			);
@@ -121,15 +121,58 @@ class DropdownButtons{
 			state.toggle = false;
 		}   
 		else{
-			this.component.ddButtons.classList.replace(
+			this.components.ddButtons.classList.replace(
 				`${this.props.class}__buttons--disabled`,
 				`${this.props.class}__buttons--active`,
 			);
 
-			state.toggle = false;
+			state.toggle = true;
 		}
 
 		this.state = state;
+	}
+
+	getButtonClass(className, status) {
+		switch (status) {
+		case 0:
+			return `${className}`;
+		case 1:
+			return `${className}--fail`;
+		case 2:
+			return `${className}--success`;
+		case 3:
+			return `${className}--loading`;
+		case 4:
+			return `${className}--warning`;
+		}
+	}
+
+	setStatus(option, STATE_DISPLAY_DELAY = 3000) {
+		let state = this.state,
+			components = this.components,
+			props = this.props,
+			main = this,
+			mainButtonClass = `${this.props.class}__main`;
+
+		let oldStatusClass = this.getButtonClass(mainButtonClass, state.status);
+		let newStatusClass = this.getButtonClass(mainButtonClass, option);
+
+		components.ddMainButton.classList.replace(oldStatusClass, newStatusClass);
+
+		if (option == 1 || option == 2) {
+			setTimeout(() => {
+				let newStatusClass = this.getButtonClass(mainButtonClass, option);
+				let mainStatusClass = this.getButtonClass(mainButtonClass, props.status);
+
+				components.main.classList.replace(newStatusClass, mainStatusClass);
+
+				state.status = props.status;
+				main.state = state;
+			}, STATE_DISPLAY_DELAY);
+		} else {
+			state.status = option;
+			main.state = state;
+		}
 	}
 
 }

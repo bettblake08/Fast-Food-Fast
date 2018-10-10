@@ -59,7 +59,10 @@ class OrderManagement {
 
 			let orderModel = new Order({
 				parent: orderManagement,
-				order
+                order,
+                access:"admin",
+                onStatusUpdateSuccess:() => {
+                }
 			});
 
 			orderManagementContent.appendChild(orderModel.getOrderComponent());

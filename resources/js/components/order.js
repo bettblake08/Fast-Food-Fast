@@ -1,4 +1,6 @@
-import {DropdownButtons} from "../ui/dropdown_buttons";
+import DropdownButtons from "../ui/dropdown_buttons";
+import {apiV1, webUrl} from "../abstract/variables";
+import {refreshToken, getAccessToken} from "../abstract/mixins";
 
 class OrderedItem {
 	constructor(params) {
@@ -93,12 +95,15 @@ class Order {
                         status  :   order status
 						created_at  :   order time
 			access	:	type of priviledge on the model
+			onStatusUpdateSuccess	:	function to run when status has been updated
             
         :attribute
             state   :   Contains the state of order item containing:
 
             components   :   Contains text input elements
         */
+
+		params.onStatusUpdateSuccess = params.onStatusUpdateSuccess == undefined ? () => {} : params.onStatusUpdateSuccess;
 
 		this._state = {
 			order:params.order,
@@ -108,9 +113,8 @@ class Order {
 		};
 
 		let	main = document.createElement("div"),
+			orderDetails = document.createElement("div"),
 			orderId = document.createElement("div"),
-			orderItems = document.createElement("div"),
-			orderItemsTitle = document.createElement("div"),
 			orderItemsList = document.createElement("div"),
 			orderTotal = document.createElement("div"),
 			orderTime = document.createElement("div"),
@@ -121,13 +125,7 @@ class Order {
 		orderId.classList.add("f_normal");
 		orderId.innerHTML = params.order.id;
 
-		orderItemsTitle.classList.add("order__items__title");
-		orderItemsTitle.classList.add("f_normal");
-
-		orderItemsList.classList.add("order__items__list");
-        
-		orderItems.classList.add("order__items");
-		orderItems.appendChild(orderItemsTitle);
+		orderItemsList.classList.add("order__items");
 
 		orderTotal.classList.add("order__total");
 		orderTotal.classList.add("f_normal");
@@ -143,24 +141,28 @@ class Order {
 		orderStatus.classList.add("f_normal");
 		orderStatus.innerHTML = status.text;
 
+		orderStatusButtons.classList.add("order__statusButtons");
+		
+		orderDetails.classList.add("order__details");
+		orderDetails.appendChild(orderId);
+		orderDetails.appendChild(orderTotal);
+		orderDetails.appendChild(orderTime);
+		orderDetails.appendChild(orderStatus);
+		orderDetails.appendChild(orderItemsList);
+
 		main.classList.add("order");
-		main.appendChild(orderId);
-		main.appendChild(orderItems);
-		main.appendChild(orderTotal);
-		main.appendChild(orderTime);
-		main.appendChild(orderStatus);
-		main.appendChild(orderItemsList);
+		main.appendChild(orderDetails);
 		main.appendChild(orderStatusButtons);
+		
 
 		this._components = {
 			main,
 			orderId,
-			orderItems,
-			orderItemsTitle,
 			orderItemsList,
 			orderTotal,
 			orderTime,
-			orderStatus
+			orderStatus,
+			orderStatusButtons
 		};
 
 		let parentState = params.parent.state;
@@ -215,20 +217,22 @@ class Order {
 	setOrderStatusButtons(){
 		if (this.state.access == "admin") {
 			this.components.orderStatusButtons.innerHTML = "";
-			let dropdownButtons = [];
+			let dropdownButtons = [],
+				orderItem = this;
+
 
 			switch(this.state.order.status){
 			case 0:{
 				dropdownButtons = [{
 					name: "Process",
 					action: () => {
-
+						orderItem.setNewOrderStatus(1);
 					}
 				},
 				{
 					name: "Cancel",
 					action: () => {
-
+						orderItem.setNewOrderStatus(2);
 					}
 				}];
 				break;
@@ -238,7 +242,7 @@ class Order {
 					{
 						name: "Complete",
 						action: () => {
-
+							orderItem.setNewOrderStatus(3);
 						}
 					},
 				];
@@ -261,8 +265,19 @@ class Order {
 			this.components.orderStatusButtons.appendChild(
 				buttons.getDropDownButtonsComponent()
 			);
-			
 		}
+	}
+
+	setOrderStatus(status){
+		let oldStatus = this.getOrderStatus(this.state.order.status),
+			newStatus = this.getOrderStatus(status),
+			orderStatus = this.components.orderStatus;
+
+		orderStatus.classList.replace(oldStatus.class,newStatus.class);
+		orderStatus.innerHTML = newStatus.text;
+
+		this.state.order.status = status;
+		this.setOrderStatusButtons();
 	}
 
 	getOrderStatus(status){
@@ -299,6 +314,49 @@ class Order {
 		return this.components.main;
 	}
 
+	setNewOrderStatus(status){
+		let orderItem = this,
+			url = `${apiV1}/order/${this.state.order.id}`;
+		
+		this.state.dropdownButtons[0].setStatus(3);
+
+		fetch(url, {
+			method:"PUT",
+			body:JSON.stringify({
+				status:status
+			}),
+			headers:{
+				"Authorization":`Bearer ${getAccessToken()}`,
+				"Content-Type": "application/json"
+			}
+		}).then((response)=>{
+
+			switch(response.status){
+			case 200:{
+				return response.json();
+			}
+			case 401:{
+				orderItem.state.dropdownButtons[0].setStatus(1);
+
+				refreshToken({
+					onSuccess: () => {
+						orderItem.setNewOrderStatus(status);
+					},
+					onFailure: () => {
+						window.location.href = webUrl + "/admin/login";
+					}
+				});
+				break;
+			}
+			}
+		}).then((response)=>{
+			if(response != undefined){
+				orderItem.state.dropdownButtons[0].setStatus(2);
+				orderItem.setOrderStatus(status);
+				orderItem.props.onStatusUpdateSuccess();
+			}
+		});
+	}
 }
 
 
