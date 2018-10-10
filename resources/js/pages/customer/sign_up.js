@@ -285,10 +285,10 @@ class SignUpForm {
 	}
 }
 
-let loginForm = new SignUpForm();
+let signUpForm = new SignUpForm();
 
 document.addEventListener("DOMContentLoaded", () => {
-	loginForm.init();
+	signUpForm.init();
 
 	let headerLogo = document.querySelector(".header__logo img");
 	headerLogo.src = logo;

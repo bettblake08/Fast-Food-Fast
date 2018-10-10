@@ -10,3 +10,8 @@ def customer_login():
 @customer_pages.route("/signup")
 def customer_signup():
     return render_template('customer/sign_up.html')
+
+
+@customer_pages.route("/order")
+def customer_order_page():
+    return render_template('customer/order.html')

@@ -4,7 +4,6 @@
 <head>
 
     <title>{% block title %}{% endblock%}</title>
-    
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,6 +11,8 @@
     {{stylesheet_tag('main_css') |   safe}}
 
     {% block styles %}{% endblock%}
+
+    {{javascript_tag('customer_header_js') | safe}}
 
     {% block scripts %}{% endblock%}
 
@@ -22,19 +23,19 @@
 
     <div class="header header--normal">
         <div class="header__left">
-            <a href="../index.html">
+            <a href="/">
                 <div class="header__logo">
-                    <img src="../Assets/images/logo.png" alt="FastFoodFast">
+                    <img alt="FastFoodFast">
                 </div>
             </a>
         </div>
 
         <div class="header__menu">
-            <a href="order.html">
+            <a href="/customer/order">
                 <div class="header__menu__link f_h2">Menu</div>
             </a>
 
-            <a href="orderHistory.html">
+            <a href="/customer/orderHistory">
                 <div class="header__menu__link f_h2">History</div>
             </a>
         </div>

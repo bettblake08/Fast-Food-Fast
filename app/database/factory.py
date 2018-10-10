@@ -31,7 +31,7 @@ def generate_test_data():
         OrderItemModel(
             name="English Breakfast",
             price=600 * 100,
-            c_id=2),
+            c_id=1),
         OrderItemModel(
             name="Chicken Burger",
             price=400 * 100,

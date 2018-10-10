@@ -14,6 +14,9 @@ var entries = {
 	admin_css: [
 		cssRoot + "pages/admin.css"
 	],
+	customer_header_js: [
+		jsRoot + "components/headers/customer.js"
+	],
 	customer_login_css: [
 		cssRoot + "pages/customer/sign_in.css"
 	],
@@ -25,8 +28,14 @@ var entries = {
 	],
 	customer_signup_js: [
 		jsRoot + "pages/customer/sign_up.js"
+	],
+	customer_order_css: [
+		cssRoot + "pages/customer/order.css"
+	],
+	customer_order_js: [
+		jsRoot + "pages/customer/order.js"
 	]
-}
+};
 
 const config = {
 	entry: entries,

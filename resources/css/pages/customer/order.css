@@ -27,6 +27,28 @@
     width:100%;
 }
 
+.foodItem__content__error{
+    float:left;
+    width:100%;
+    text-align: center;
+    line-height: 10rem;
+    color:#aaa;
+}
+
+.foodMenu__category{
+    width:100%;
+    float: left;
+}
+
+.foodMenu__category h2{
+    color:rgb(223, 0, 0);
+    width:100%;
+    float:left;
+    line-height: 5rem;
+    border-bottom: solid .2rem rgb(223, 0, 0);
+    margin-bottom: 2rem;
+}
+
 .foodItem{
     float:left;
     width:100%;

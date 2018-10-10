@@ -4,11 +4,14 @@
 
 {% block styles %}
 
-{{stylesheet_tag('customer_order_menu_css')| safe}}
+{{stylesheet_tag('customer_order_css')| safe}}
 
 {% endblock %}
 
 {% block scripts %}
+
+{{javascript_tag('customer_order_js') | safe}}
+
 {% endblock %}
 
 
@@ -19,76 +22,7 @@
 <div class="content">
 
     <div class="foodMenu">
-        <div class="foodMenu__topBar">
-            <div class="foodMenu__title f_h1">Menu</div>
-        </div>
 
-        <div class="foodMenu__content">
-
-            <!-- Food Item -->
-            <div class="foodItem">
-                <div class="foodItem__image">
-                    <img src="../Assets/images/item--1.jpg" alt="Cheese Burger">
-                </div>
-                <div class="foodItem__name f_normal">Chicken Burger</div>
-                <div class="foodItem__price f_normal">KSH 500</div>
-                <div class="foodItem__quantity">
-                    <div class="foodItem__quantity__sub ">-</div>
-                    <div class="foodItem__quantity__value f_normal">1</div>
-                    <div class="foodItem__quantity__add ">+</div>
-                </div>
-
-                <div class="foodItem__total f_normal">KSH 500</div>
-            </div>
-            <!-- Food Item -->
-
-            <!-- Food Item -->
-            <div class="foodItem">
-                <div class="foodItem__image">
-                    <img src="../Assets/images/item--2.jpg" alt="Beef Burger">
-                </div>
-                <div class="foodItem__name f_normal">Beef Burger</div>
-                <div class="foodItem__price f_normal">KSH 500</div>
-                <div class="foodItem__quantity">
-                    <div class="foodItem__quantity__sub ">-</div>
-                    <div class="foodItem__quantity__value f_normal">0</div>
-                    <div class="foodItem__quantity__add ">+</div>
-                </div>
-
-                <div class="foodItem__total f_normal">KSH 0</div>
-            </div>
-            <!-- Food Item -->
-
-
-
-            <!-- Food Item -->
-            <div class="foodItem">
-                <div class="foodItem__image">
-                    <img src="../Assets/images/item--3.jpg" alt="Coke Soda">
-                </div>
-                <div class="foodItem__name f_normal">Coke 350ml</div>
-                <div class="foodItem__price f_normal">KSH 100</div>
-                <div class="foodItem__quantity">
-                    <div class="foodItem__quantity__sub ">-</div>
-                    <div class="foodItem__quantity__value f_normal">4</div>
-                    <div class="foodItem__quantity__add ">+</div>
-                </div>
-
-                <div class="foodItem__total f_normal">KSH 400</div>
-            </div>
-            <!-- Food Item -->
-
-
-        </div>
-
-        <div class="foodMenu__bottom">
-
-            <div class="foodMenu__orderBtn">
-                <div class="btn_1 f_button_2">Order</div>
-            </div>
-
-            <div class="foodMenu__total f_normal">KSH 0</div>
-        </div>
     </div>
 
 </div>
@@ -97,6 +31,6 @@
 <!-- Section -->
 
 
-{{javascript_tag('customer_order_menu_js') | safe}}
+
 
 {% endblock %}
