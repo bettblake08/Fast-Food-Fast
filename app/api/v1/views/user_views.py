@@ -100,9 +100,20 @@ class UserViews():
 
         orders = OrderModel.get_all_orders_by_user(user['id'])
 
+        menu_item_ids = set()
+
+        for order in orders:
+            for orderedItem in order.items:
+                menu_item_ids.add(orderedItem.item)
+        
+        menu = OrderItemModel.get_list_of_items([item for item in menu_item_ids])
+
         return make_response(
             jsonify({
-                'message':"Successfully fetched user order history!",
-                'content': [order.json() for order in orders]
+                "message":"Successfully fetched user order history!",
+                "content": {
+                    "orders": [order.json() for order in orders],
+                    "menu": [menuItem.json() for menuItem in menu]
+                }
                 }), 200
             )

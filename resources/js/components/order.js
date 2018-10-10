@@ -134,9 +134,7 @@ class Order {
 		orderTime.innerHTML = params.order.created_at;
 
         let status = this.getOrderStatus(params.order.status);
-        
-        console.log(status);
-        
+
 		orderStatus.classList.add(status.class);
 		orderStatus.innerHTML = status.text;
 
