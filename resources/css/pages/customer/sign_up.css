@@ -6,7 +6,6 @@
     margin-top: -10vh;
 }
 
-<<<<<<< HEAD:resources/css/pages/customer/sign_up.css
 .signUp__background{
      background-image: url("../../../images/back--1.jpg");
      background-position:center;
@@ -16,17 +15,6 @@
      height: 100vh;
      position: absolute;
      z-index: 0;
-=======
-.signUp__background {
-    background-image: url("../../images/back--1.jpg");
-    background-position: center;
-    background-size: cover;
-    width: 100%;
-    float: left;
-    height: 100vh;
-    position: absolute;
-    z-index: 0;
->>>>>>> gh-pages:UI/Assets/css/Main/signUp.css
 }
 
 .signUp__foreground {
@@ -88,7 +76,6 @@
     width: 15rem;
     float: left;
     height: 5rem;
-<<<<<<< HEAD:resources/css/pages/customer/sign_up.css
     margin:2rem 2rem 0 0;
 }
 
@@ -123,7 +110,4 @@
     width: 0;
     overflow: hidden;
     position: absolute;
-=======
-    margin: 2rem 2rem 0 0;
->>>>>>> gh-pages:UI/Assets/css/Main/signUp.css
 }

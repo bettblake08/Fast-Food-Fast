@@ -34,10 +34,10 @@ var entries = {
 	],
 	customer_order_js: [
 		jsRoot + "pages/customer/order.js"
-	],
+	],/* 
 	admin_header_js: [
 		jsRoot + "components/headers/admin.js"
-	],
+	], */
 	admin_login_css: [
 		cssRoot + "pages/admin/sign_in.css"
 	],
