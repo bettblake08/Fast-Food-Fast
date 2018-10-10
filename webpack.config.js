@@ -55,6 +55,12 @@ var entries = {
 	],
 	admin_order_management_js: [
 		jsRoot + "pages/admin/order_management.js"
+	],
+	admin_menu_css: [
+		cssRoot + "pages/admin/menu.css"
+	],
+	admin_menu_js: [
+		jsRoot + "pages/admin/menu.js"
 	]
 };
 
