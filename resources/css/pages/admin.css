@@ -871,3 +871,19 @@ body::-webkit-scrollbar-thumb {
 .ddButtons__button--danger:hover {
     opacity: 1;
 }
+
+.view--active,
+.view--disabled{
+    float:left;
+    overflow: hidden;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.view--active{
+    width:100%;
+}
+
+.view--disabled{
+    width: 0;
+}

@@ -35,7 +35,9 @@ class Views {
 			views
 		};
 
-		this.updateView(0);
+		if(params.views.length != 0){
+			this.updateView(0);
+		}
 	}
 
 	get state() {
@@ -53,8 +55,21 @@ class Views {
 	set components(value) {
 		this._components = value;
 	}
-    
+	
+	addView(view){		
+		let viewComponent = document.createElement("div");
+
+		viewComponent.classList.add("view--disabled");
+		viewComponent.appendChild(view.getViewComponent());
+
+		this.components.views.push(viewComponent);
+		this.components.main.appendChild(viewComponent);
+	}
+
+
 	updateView(newView){
+		console.log("View updated :" + newView);
+		
 		let oldViewComponent = this.components.views[this.state.view],
 			newViewComponent = this.components.views[newView];
         
@@ -62,6 +77,10 @@ class Views {
 		newViewComponent.classList.replace("view--disabled", "view--active");
 
 		this.state.view = newView;
+	}
+
+	getViewsComponent(){
+		return this.components.main;
 	}
 }
 
