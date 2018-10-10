@@ -20,19 +20,19 @@
 
 @media (max-width: 75em) {
     .login__form {
-        width: 50%;
+        width: 30%;
     }
 }
 
 @media (max-width: 56.25em) {
     .login__form {
-        width: 60%;
+        width: 40%;
     }
 }
 
 @media (max-width: 37.5em) {
     .login__form {
-        width: 70%;
+        width: 50%;
     }
 }
 

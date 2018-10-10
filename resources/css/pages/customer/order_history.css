@@ -1,30 +1,37 @@
-.content{
-    float:left;
+.content {
+    float: left;
     width: 100%;
 }
 
-.orderHistory{
-    width:60%;
-    float:left;
-    margin-left:20%;
+.orderHistory {
+    width: 60%;
+    float: left;
+    margin-left: 20%;
 }
 
-.orderHistory__topBar{
-    float:left;
+@media (max-width: 75em) {
+    .orderHistory {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+
+.orderHistory__topBar {
+    float: left;
     width: 100%;
     margin-bottom: 1rem;
     border-bottom: solid .2rem rgb(223, 0, 0);
 }
 
-.orderHistory__title{
-    color:rgb(223, 0, 0);
-    float:left;
+.orderHistory__title {
+    color: rgb(223, 0, 0);
+    float: left;
     line-height: 5rem;
 }
 
-.orderHistory__view{
-    float:left;
-    width:100%;
+.orderHistory__view {
+    float: left;
+    width: 100%;
 }
 
 .order {
@@ -118,12 +125,13 @@
     float: left;
     color: #FFF;
     background-color: rgb(223, 0, 0);
-    line-height: 5rem;
+    height: 5rem;
+    padding: 1rem;
     text-align: center !important;
 }
 
 .order__status--complete,
-.order__status--cancelled{
+.order__status--cancelled {
     width: 10%;
     float: left;
     line-height: 5rem;
@@ -143,13 +151,36 @@
 .order__time {
     width: 15%;
     float: left;
-    line-height: 5rem;
+    height: 5rem;
+    padding: 2rem;
     text-align: center !important;
-    color:#111;
+    color: #111;
 }
 
-.orderHistory__header{
-    float:left;
+@media (max-width: 75em) {
+    .order__items {
+        width: 35%;
+    }
+
+    .order__time {
+        padding:1rem;
+        width: 20%;
+    }
+
+    .order__total {
+        padding: 1rem;
+        width: 20%;
+    }
+}
+
+@media (max-width: 37.5em) {
+    .order__total {
+        width: 15%;
+    }
+}
+
+.orderHistory__header {
+    float: left;
     width: 100%;
     margin-bottom: 2rem;
 }
@@ -158,9 +189,9 @@
 .hd__items,
 .hd__total,
 .hd__status,
-.hd__time{
+.hd__time {
     float: left;
-    line-height: 5rem;
+    padding:2rem 0;
     text-align: center !important;
     color: rgb(223, 0, 0);
 }
@@ -177,10 +208,30 @@
     width: 10%;
 }
 
-.hd__status{
+.hd__status {
     width: 10%;
 }
 
 .hd__time {
     width: 15%;
+}
+
+@media (max-width: 75em) {
+    .hd__items {
+        width: 35%;
+    }
+
+    .hd__total {
+        width: 20%;
+    }
+
+    .hd__time {
+        width: 20%;
+    }
+}
+
+@media (max-width: 37.5em) {
+    .hd__total {
+        width: 15%;
+    }
 }

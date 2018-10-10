@@ -61,18 +61,11 @@
 
 @media (max-width: 56.25em) {
     .lview__foreground {
-        padding: 15vh 10% 0 15%;
+        padding: 15vh 5% 0 5%;
     }
 
     .lview__content {
-        width: 80%;
-        padding: 2rem;
-    }
-}
-
-@media (max-width: 37.5em) {
-    .lview__content {
-        width: 90%;
-        padding: 2rem;
+        width: 100%;
+        padding: 2rem 5%;
     }
 }

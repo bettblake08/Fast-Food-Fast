@@ -10,19 +10,19 @@ html {
 
 @media (max-width: 56.25em) {
     html {
-        font-size: 9px;
+        font-size: 8px;
     }
 }
 
 @media (max-width: 75em) {
     html {
-        font-size: 8px;
+        font-size: 7px;
     }
 }
 
 @media (max-width: 37.5em) {
     html {
-        font-size: 8px;
+        font-size: 6px;
     }
 }
 
@@ -233,7 +233,7 @@ body::-webkit-scrollbar-thumb {
 .btn_1{
     color: rgb(223, 0, 0);
     border: solid 0.1rem rgb(223, 0, 0);
-    opacity: 0.6;
+    opacity: 0.9;
     background-color:transparent;
 }
 
@@ -321,10 +321,37 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
 }
 
+.header__left {
+    float: left;
+    height: 100%;
+    position: relative;
+    width: 20%;
+    margin: 0 15% 0 10%;
+}
+
+
+@media (max-width: 100em) {
+    .header__left {
+        width: 25%;
+        margin: 0 5% 0 10%;
+    }
+}
+
+@media (max-width: 56.25em) {
+    .header__left {
+        width: 25%;
+        margin: 0 5% 0 10%;
+    }
+}
+
 .header__logo{
     float:left;
     width:17rem;
     height: 3rem;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
 }
 
 .header__logo img{
@@ -335,7 +362,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .header__right {
-    height: 5vh;
+    height: 100%;
     float: right;
     width: 50%;
     position: relative;
@@ -344,9 +371,13 @@ body::-webkit-scrollbar-thumb {
 
 .header__right__text {
     float: right;
-    margin-right: 3rem;
-    line-height: 10vh;
+    line-height: 3rem;
     color:#FFF;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    right: 28rem;
+    position: absolute;
 }
 
 @media (max-width: 75em) {
@@ -370,47 +401,31 @@ body::-webkit-scrollbar-thumb {
     }
 
     .header__right__text {
-        margin-right: 2rem;
+        display: none;
     }
 }
 
 .header__signup,
 .header__signin {
     width: 10rem;
-    height: 100%;
-    float: right;
-    margin: 3vh 1% 2vh 1%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
 }
 
-@media (max-width: 37.5em) {
-    .header__signup,
-    .header__signin {
-        display: none;
-    }
+.header__signup{
+    right: 15rem;
+}
+
+.header__signin {
+    right: 3rem;
 }
 
 .header__title {
     float: left;
     color: #FFF;
     line-height: 5vh;
-}
-
-.header__left {
-    float: left;
-    height: 5vh;
-    position: absolute;
-    width: 20%;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    margin: 0 15% 0 10%;
-}
-
-@media (max-width: 37.5em) {
-    .header__left {
-        width: 45%;
-        margin: 0 0 0 5%;
-    }
 }
 
 .header__menu{
@@ -697,4 +712,18 @@ body::-webkit-scrollbar-thumb {
 
 .text_input__label {
     display: none;
+}
+
+.footer {
+    float:left;
+    width:100%;
+    padding:0 5rem;
+}
+
+.footer__link{
+    height: 5rem;
+    line-height: 5rem;
+    float:left;
+    color: #333;
+    margin-right:2rem;
 }
