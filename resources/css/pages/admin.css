@@ -319,20 +319,12 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
 }
 
-
 .header__right {
-    height: 5vh;
+    height: 10vh;
     float: right;
     width: 50%;
     position: relative;
     padding-right: 3%;
-}
-
-.header__right__text {
-    float: right;
-    margin-right: 3rem;
-    line-height: 10vh;
-    color:#FFF;
 }
 
 @media (max-width: 75em) {
@@ -354,10 +346,6 @@ body::-webkit-scrollbar-thumb {
         width: 48%;
         margin: 0 2% 0 0;
     }
-
-    .header__right__text {
-        margin-right: 2rem;
-    }
 }
 
 .header__signup,
@@ -373,6 +361,15 @@ body::-webkit-scrollbar-thumb {
     .header__signin {
         display: none;
     }
+}
+
+.header__logOut {
+    width: 10rem;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
+    right: 2rem;
 }
 
 .header__left {
@@ -407,25 +404,14 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
-.header--normal{
+.header--normal {
     width: 100%;
     -webkit-transition: all .5s ease;
     transition: all .5s ease;
-}
-
-.header--normal {
     background-color: transparent;
     position: relative;
     -webkit-box-shadow: 0 0.1rem 2rem -0.5rem #000;
     box-shadow: 0 0.1rem 2rem -0.5rem #000;
-}
-
-.header--normal .header__right__text {
-    color: rgb(223, 0, 0);
-}
-
-.header--normal .header__title {
-    color: rgb(223, 0, 0);
 }
 
 .has-float-label {
