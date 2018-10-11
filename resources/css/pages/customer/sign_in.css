@@ -77,6 +77,11 @@
     transform: translateX(-50%);
 }
 
+.login__error{
+    margin:-2rem 0 2rem 0;
+    float:left;
+}
+
 .login__link {
     height: 3rem;
     float: right;
