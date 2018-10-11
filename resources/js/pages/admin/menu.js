@@ -7,6 +7,7 @@ import mainmealImg from "../../../images/main.png";
 import snacksImg from "../../../images/snacks.png";
 import drinksImg from "../../../images/drinks.png";
 import TextInput from "../../ui/textInput";
+import DropDowmInput from "../../ui/dropdown";
 
 class MenuItem{
 	constructor(params) {
@@ -258,6 +259,11 @@ class MenuView {
 		let main = this,
 			categories = [[],[],[],[]];
 
+		if(menu.length == 0){
+			this.setMenuError("No items in this category. Please add something!");
+			return;
+		}
+
 		menu.forEach(orderItem => {
 			let item = new MenuItem({
 				item: orderItem,
@@ -337,7 +343,8 @@ class AddMenuItemForm{
 	constructor(params) {
 		this._state = {
 			buttons:[],
-			textInputs:[]
+			textInputs:[],
+			dropdowns:[]
 		};
 
 		let form = this,
@@ -366,7 +373,7 @@ class AddMenuItemForm{
 				if (input.length == 0) {
 					return {
 						status: false,
-						message: "Username field empty."
+						message: "Item name field empty."
 					};
 				}
 
@@ -425,6 +432,35 @@ class AddMenuItemForm{
 		addMenuItemPrice.appendChild(itemPriceInput.getInput());
 
 		addMenuItemCategory.classList.add("addMenuItem__category");
+
+		let categoryOptions = new DropDowmInput({
+			class: "dropdown",
+			textClass: "f_input_dd_1",
+			label: "Menu Category",
+			name: "menuCategory",
+			parent: form,
+			status: 0,
+			options: [{
+				value: 1,
+				text: "Breakfast"
+			},
+			{
+				value: 2,
+				text: "Main Meal"
+			},
+			{
+				value: 3,
+				text: "Snacks"
+			},
+			{
+				value: 4,
+				text: "Drinks"
+			}
+			]
+		});
+
+		categoryOptions.init();
+		addMenuItemCategory.appendChild(categoryOptions.getDropDownInput());
         
 		addMenuItemForm.classList.add("addMenuItem__form");
 		addMenuItemForm.appendChild(addMenuItemName);
