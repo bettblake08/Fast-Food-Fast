@@ -14,6 +14,15 @@ var entries = {
 	admin_css: [
 		cssRoot + "pages/admin.css"
 	],
+	main_header_js: [
+		jsRoot + "components/headers/main.js"
+	],
+	index_css: [
+		cssRoot + "pages/index.css"
+	],
+	index_js: [
+		jsRoot + "pages/index.js"
+	],
 	customer_header_js: [
 		jsRoot + "components/headers/customer.js"
 	],
