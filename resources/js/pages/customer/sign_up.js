@@ -51,7 +51,7 @@ class SignUpForm {
 				if (input.length == 0){
 					return {
 						status: false,
-						message: "Username field empty."
+						message: "Username field is empty."
 					};
 				}
 
@@ -81,14 +81,23 @@ class SignUpForm {
 				if (input.length == 0) {
 					return {
 						status: false,
-						message: "Email field empty."
+						message: "Email field is empty."
+					};
+				}
+				
+				if(input.length > 30 ){
+					return {
+						status: false,
+						message: "Email address is too long. Please input an email address less than 30 characters."
 					};
 				}
 
-				if (input.length > 30) {
+				let emailCheck = /^([a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,5})$/;
+
+				if (!emailCheck.test(input)) {
 					return {
 						status: false,
-						message: "Username too long. Please input a username less than 30 characters."
+						message: "Invalid email. Please input a valid email address."
 					};
 				}
 
@@ -112,14 +121,18 @@ class SignUpForm {
 				if (input.length == 0) {
 					return {
 						status: false,
-						message: "Password field empty."
+						message: "Password field is empty."
 					};
 				}
 
-				if (input.length > 30) {
+				let passwordCheck = /^((?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$#.!])).{8,16}$/;
+
+				if (!passwordCheck.test(input)) {
 					return {
 						status: false,
-						message: "Username too long. Please input a username less than 30 characters."
+						message: "Password is incorrect." +
+							"Please input a password with 1 upper case, 1 lower case, " +
+							"1 digit and 1 special character including [@$#.!] ."
 					};
 				}
 
@@ -142,14 +155,18 @@ class SignUpForm {
 				if (input.length == 0) {
 					return {
 						status: false,
-						message: "Re-enter password field empty."
+						message: "Password field is empty."
 					};
 				}
 
-				if (input.length > 30) {
+				let passwordCheck = /^((?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$#.!])).{8,16}$/;
+
+				if (!passwordCheck.test(input)) {
 					return {
 						status: false,
-						message: "Username too long. Please input a username less than 30 characters."
+						message: "Password is incorrect." +
+							"Please input a password with 1 upper case, 1 lower case, " +
+							"1 digit and 1 special character including [@$#.!] ."
 					};
 				}
 
