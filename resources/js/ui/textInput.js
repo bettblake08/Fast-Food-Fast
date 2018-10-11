@@ -46,9 +46,10 @@ class TextInput{
 		const textInputErrorComment = document.createElement("div");
 
 		textInputErrorComment.classList.add("errorComment--disabled");
+		textInputErrorComment.classList.add(`${params.class}__error`);
 		textInputErrorComment.classList.add("f_comment_1");
         
-		textInputComment.classList.add("comment");
+		textInputComment.classList.add(`${params.class}__comment--active`);
 		textInputComment.classList.add("f_comment_1");
 		textInputComment.innerHTML = params.comment == undefined ? "" : params.comment;
         

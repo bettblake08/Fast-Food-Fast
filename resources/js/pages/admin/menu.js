@@ -326,7 +326,6 @@ class MenuView {
 
 }
 
-
 class AddMenuItemForm{
 	constructor(params) {
 		this._state = {

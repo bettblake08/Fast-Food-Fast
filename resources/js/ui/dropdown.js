@@ -31,7 +31,8 @@ class DropDownInput {
 
 		this._props = params;
 
-		let main = document.createElement("div"),
+		let input = this,
+			main = document.createElement("div"),
 			inputLabel = document.createElement("label"),
 			inputSelect = document.createElement("select"),
 			inputComment = document.createElement("div"),
@@ -55,6 +56,9 @@ class DropDownInput {
 		inputSelect.setAttribute("id", params.name);
 		inputSelect.classList.add(params.textClass);
 		inputSelect.appendChild(inputDefaultOption);
+		inputSelect.addEventListener("focusout",()=>{
+			input.updateStatus();
+		});
 
 		params.options.forEach(option => {
 			let inputOption = document.createElement("option");
@@ -67,15 +71,12 @@ class DropDownInput {
 
 		main.classList.add(params.class);
 		main.classList.add(this.getSelectClass(params.class, params.status));
-        
-		main.addEventListener("click", params.action);
-		
 		main.appendChild(inputLabel);
 		main.appendChild(inputSelect);
 		main.appendChild(inputComment);
 		main.appendChild(inputErrorComment);
 
-		this._component = {
+		this._components = {
 			main,
 			inputLabel,
 			inputSelect,
@@ -95,12 +96,12 @@ class DropDownInput {
 		this._state = value;
 	}
 
-	get component() {
-		return this._component;
+	get components() {
+		return this._components;
 	}
 
-	set component(value) {
-		this._component = value;
+	set components(value) {
+		this._components = value;
 	}
 
 	get props() {
@@ -111,12 +112,21 @@ class DropDownInput {
 		this._props = value;
 	}
 
+	updateStatus(){
+		if(this.getInputValue() == ""){
+			this.displayError("No item selected!",5000);
+		}
+		else{
+			this.setStatus(2,5000);
+		}
+	}
+
 	getDropDownInput() {
-		return this.component.main;
+		return this.components.main;
 	}
     
 	getInputValue(){
-		return this.component.inputSelect.value;
+		return this.components.inputSelect.value;
 	}
 
 	init() {
@@ -129,46 +139,46 @@ class DropDownInput {
 		let inputComment = this.components.inputComment,
 			inputErrorComment = this.components.inputErrorComment;
 
-		inputComment.replace(
+		inputComment.classList.replace(
 			`${this.props.class}__comment--active`,
 			`${this.props.class}__comment--disabled`);
 
 		inputErrorComment.innerHTML = message;
-		inputErrorComment.replace(
-			`${this.props.class}__comment--disabled`,
-			`${this.props.class}__comment--active`);
+		inputErrorComment.classList.replace(
+			`${this.props.class}__error--disabled`,
+			`${this.props.class}__error--active`);
             
 		this.setStatus(1,ERROR_DISPLAY_DELAY);
 
 		setTimeout(()=>{
-			inputComment.replace(
+			inputComment.classList.replace(
 				`${this.props.class}__comment--disabled`,
 				`${this.props.class}__comment--active`);
 
 			inputErrorComment.innerHTML = "";
-			inputErrorComment.replace(
-				`${this.props.class}__comment--active`,
-				`${this.props.class}__comment--disabled`);
+			inputErrorComment.classList.replace(
+				`${this.props.class}__error--active`,
+				`${this.props.class}__error--disabled`);
 		}, ERROR_DISPLAY_DELAY);
 	}
 
 	setStatus(option, STATE_DISPLAY_DELAY = 3000) {
 		let state = this.state,
-			component = this.component,
+			components = this.components,
 			props = this.props,
 			main = this;
 
 		let oldStatusClass = this.getSelectClass(props.class, state.status);
 		let newStatusClass = this.getSelectClass(props.class, option);
 
-		component.main.classList.replace(oldStatusClass, newStatusClass);
+		components.main.classList.replace(oldStatusClass, newStatusClass);
 
 		if (option == 1 || option == 2) {
 			setTimeout(() => {
 				let newStatusClass = this.getSelectClass(props.class, option);
 				let mainStatusClass = this.getSelectClass(props.class, props.status);
 
-				component.main.classList.replace(newStatusClass, mainStatusClass);
+				components.main.classList.replace(newStatusClass, mainStatusClass);
 
 				state.status = props.status;
 				main.state = state;
@@ -192,6 +202,10 @@ class DropDownInput {
 		case 4:
 			return `${className}--warning`;
 		}
+	}
+
+	focus(){
+		this.components.main.focus();
 	}
 
 }
