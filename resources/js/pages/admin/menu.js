@@ -238,21 +238,12 @@ class MenuView {
     
 	setMenuError(message) {
 		let components = this.components,
-			fetchMenuError = document.createElement("div");
+			fetchMenuError = `<div class="menu__content__error f_h1">${message}</div>`;
 
-		fetchMenuError.classList.add("menu__content__error");
-		fetchMenuError.classList.add("f_h1");
-		fetchMenuError.innerHTML = message;
-
-		components.menuCategoryBreakfastContent.innerHTML = "";
-		components.menuCategoryMainMealContent.innerHTML = "";
-		components.menuCategorySnacksContent.innerHTML = "";
-		components.menuCategoryDrinksContent.innerHTML = "";
-
-		components.menuCategoryBreakfastContent.appendChild(fetchMenuError);
-		components.menuCategoryMainMealContent.appendChild(fetchMenuError);
-		components.menuCategorySnacksContent.appendChild(fetchMenuError);
-		components.menuCategoryDrinksContent.appendChild(fetchMenuError);
+		components.menuCategoryBreakfastContent.innerHTML = fetchMenuError;
+		components.menuCategoryMainMealContent.innerHTML = fetchMenuError;
+		components.menuCategorySnacksContent.innerHTML = fetchMenuError;
+		components.menuCategoryDrinksContent.innerHTML = fetchMenuError;
 	}
     
 	updateMenu(menu) {
@@ -272,15 +263,12 @@ class MenuView {
             
 			categories[orderItem.c_id-1].push(item.getOrderItem());
 		});
-        
-		let fetchMenuError = document.createElement("div");
 
-		fetchMenuError.classList.add("menu__content__error");
-		fetchMenuError.classList.add("f_h1");
-		fetchMenuError.innerHTML = "No items in this category. Please add something!";
+		let message = "No items in this category. Please add something!",
+			fetchMenuError = `<div class="menu__content__error f_h1">${message}</div>`;
     
 		if (categories[0].length == 0){
-			this.components.menuCategoryBreakfastContent.appendChild(fetchMenuError);
+			this.components.menuCategoryBreakfastContent.innerHTML = fetchMenuError;
 		}
 		else{
 			categories[0].forEach(item => {
@@ -289,7 +277,7 @@ class MenuView {
 		}
         
 		if (categories[1].length == 0) {
-			this.components.menuCategoryMainMealContent.appendChild(fetchMenuError);
+			this.components.menuCategoryMainMealContent.innerHTML = fetchMenuError;
 		} else {
 			categories[1].forEach(item => {
 				this.components.menuCategoryMainMealContent.appendChild(item);
@@ -297,7 +285,7 @@ class MenuView {
 		}
 
 		if (categories[2].length == 0) {
-			this.components.menuCategorySnacksContent.appendChild(fetchMenuError);
+			this.components.menuCategorySnacksContent.innerHTML = fetchMenuError;
 		} else {
 			categories[2].forEach(item => {
 				this.components.menuCategorySnacksContent.appendChild(item);
@@ -305,7 +293,7 @@ class MenuView {
 		}
 
 		if (categories[3].length == 0) {
-			this.components.menuCategoryDrinksContent.appendChild(fetchMenuError);
+			this.components.menuCategoryDrinksContent.innerHTML = fetchMenuError;
 		} else {
 			categories[3].forEach(item => {
 				this.components.menuCategoryDrinksContent.appendChild(item);
@@ -373,14 +361,14 @@ class AddMenuItemForm{
 				if (input.length == 0) {
 					return {
 						status: false,
-						message: "Item name field empty."
+						message: "Item name field is empty."
 					};
 				}
 
 				if (input.length > 120) {
 					return {
 						status: false,
-						message: "Item name too long. Please input an item name less than 30 characters."
+						message: "Item name is too long. Please input an item name less than 30 characters."
 					};
 				}
 
@@ -394,7 +382,7 @@ class AddMenuItemForm{
 			parent: this,
 			name: "itemPrice",
 			label: "Price",
-			placeholder: "Eg. 1400.45 .Price in Kenyan Shillings",
+			placeholder: "Eg. 1400.45. Price in Kenyan Shillings",
 			class: "text_input",
 			textClass: "f_input_1",
 			type: "text",
@@ -403,7 +391,7 @@ class AddMenuItemForm{
 				if (input.length == 0) {
 					return {
 						status: false,
-						message: "Item price field empty."
+						message: "Item price field is empty."
 					};
 				}
 

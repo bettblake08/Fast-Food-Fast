@@ -50,6 +50,7 @@ class TextInput{
         
 		textInputComment.classList.add("comment");
 		textInputComment.classList.add("f_comment_1");
+		textInputComment.innerHTML = params.comment == undefined ? "" : params.comment;
         
 		textInputLabel.setAttribute("htmlFor",params.name);
 		textInputLabel.innerHTML = params.label;
@@ -143,7 +144,7 @@ class TextInput{
 			state = this.state,
 			errorComment = component.textInputErrorComment,
 			main = this;
-    
+
 		errorComment.classList.replace("errorComment--disabled", "errorComment--active");
 		errorComment.innerHTML = state.errorMsg;
 
@@ -193,13 +194,13 @@ class TextInput{
 		return this.component.main;
 	}
 
-    focus(){
-        this.component.textInput.focus();
-    }
+	focus(){
+		this.component.textInput.focus();
+	}
 
-    getInputValue(){
-        return this.component.textInput.value;
-    }
+	getInputValue(){
+		return this.component.textInput.value;
+	}
 
 }
 

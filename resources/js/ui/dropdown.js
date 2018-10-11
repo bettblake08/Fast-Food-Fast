@@ -49,7 +49,7 @@ class DropDownInput {
 		inputErrorComment.classList.add(`${params.class}__error--disabled`);
 		inputErrorComment.classList.add("f_comment_1");
 
-		inputDefaultOption.innerHTML = params.placeholder == undefined ? "--select--" : params.placeholder;
+		inputDefaultOption.innerHTML = params.placeholder == undefined ? "-- Select --" : params.placeholder;
 		inputDefaultOption.value = "";
         
 		inputSelect.setAttribute("id", params.name);
