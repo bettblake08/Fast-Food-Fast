@@ -593,29 +593,10 @@ body::-webkit-scrollbar-thumb {
     border-bottom: solid 0.2rem #b33030;
 }
 
-.text_input__error--active,
-.text_input__error--disabled {
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-    margin-top:1rem;
-}
-
-.text_input__error--active {
+.text_input__error{
     width: 100%;
+    margin-top:1rem;
     float: left;
-    background-color: rgba(216, 77, 71, 1);
-    color: #fff;
-    padding: 1rem;
-    position: relative;
-}
-
-.text_input__error--disabled {
-    width: 0;
-    overflow: hidden;
-    position: absolute;
 }
 
 .text_input__comment--active,

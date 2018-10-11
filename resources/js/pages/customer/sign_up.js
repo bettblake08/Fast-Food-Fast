@@ -254,7 +254,7 @@ class SignUpForm {
 			headers: {
 				"Content-Type": "application/json"
 			},
-			method:"POST"         
+			method:"POST"
 		}).then((response) => {
 
 			switch(response.status){

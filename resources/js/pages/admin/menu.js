@@ -526,6 +526,7 @@ class AddMenuItemForm{
     
 	addNewMenuItem(){
 		let textInputs = this.state.textInputs,
+			dropdowns = this.state.dropdowns,
 			form = this;
 
 		let invalidInput = textInputs.find(input => {
@@ -534,7 +535,11 @@ class AddMenuItemForm{
 
 		if(invalidInput != undefined){
 			invalidInput.focus();
-			return;    
+			return;
+		}
+
+		if(!dropdowns[0].isValid()){
+			dropdowns[0].focus();
 		}
         
 		fetch(`${apiV1}/menu`,{
@@ -542,7 +547,7 @@ class AddMenuItemForm{
 			body:JSON.stringify({
 				name: textInputs[0].getInputValue(),
 				price: parseFloat(textInputs[1].getInputValue()),
-				c_id:""
+				c_id: dropdowns[0].getInputValue()
 			}),
 			headers:{
 				"Authorization":`Bearer ${getAccessToken()}`,
@@ -563,6 +568,10 @@ class AddMenuItemForm{
 						window.location.href = webUrl + "/admin/login";
 					}
 				});
+				break;
+			}
+			case 403:{
+				window.location.href = webUrl + "/admin/login";
 				break;
 			}
 			}

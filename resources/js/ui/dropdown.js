@@ -18,7 +18,9 @@ class DropDownInput {
                         1:  fail - temporary state
                         2:  success - temporary state
                         3:  loading
-                        4:  warning
+						4:  warning
+						5: 	fail
+						6:	success
         */
 
 		if (params.action == undefined){
@@ -114,10 +116,10 @@ class DropDownInput {
 
 	updateStatus(){
 		if(this.getInputValue() == ""){
-			this.displayError("No item selected!",5000);
+			this.displayError("No item selected!");
 		}
 		else{
-			this.setStatus(2,5000);
+			this.setStatus(6);
 		}
 	}
 
@@ -127,6 +129,10 @@ class DropDownInput {
     
 	getInputValue(){
 		return this.components.inputSelect.value;
+	}
+
+	isValid(){
+		return this.state.status == 6;
 	}
 
 	init() {
@@ -194,8 +200,10 @@ class DropDownInput {
 		case 0:
 			return `${className}`;
 		case 1:
+		case 5:
 			return `${className}--fail`;
 		case 2:
+		case 6:
 			return `${className}--success`;
 		case 3:
 			return `${className}--loading`;
