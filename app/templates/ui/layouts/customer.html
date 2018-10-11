@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {{stylesheet_tag('main_css') |   safe}}
+    {{stylesheet_tag('customer_css') |   safe}}
 
     {% block styles %}{% endblock%}
 
@@ -24,9 +24,7 @@
     <div class="header header--normal">
         <div class="header__left">
             <a href="/">
-                <div class="header__logo">
-                    <img alt="FastFoodFast">
-                </div>
+                <div class="header__logo"></div>
             </a>
         </div>
 
@@ -38,6 +36,10 @@
             <a href="/customer/orderHistory">
                 <div class="header__menu__link f_h2">History</div>
             </a>
+        </div>
+
+        <div class="header__right">
+            <div class="header__logOut"></div>
         </div>
 
     </div>

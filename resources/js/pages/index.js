@@ -1,9 +1,9 @@
 import MainHeader from "../components/headers/main";
 
 let mainHeader = new MainHeader({
-    type:"white"
+	type:"white"
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    mainHeader.init();
+	mainHeader.init();
 });

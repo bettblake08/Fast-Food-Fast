@@ -11,6 +11,9 @@ var entries = {
 	main_css: [
 		cssRoot + "pages/main.css"
 	],
+	customer_css: [
+		cssRoot + "pages/customer.css"
+	],
 	admin_css: [
 		cssRoot + "pages/admin.css"
 	],

@@ -2,6 +2,7 @@ import OrderItem from "../../components/order_item";
 import Button from "../../ui/button";
 import {apiV1, webUrl} from "../../abstract/variables";
 import {refreshToken,getAccessToken} from "../../abstract/mixins";
+import CustomerHeader from "../../components/headers/customer";
 
 class OrderForm{
 	constructor() {
@@ -266,8 +267,10 @@ class OrderForm{
 }
 
 let orderForm = new OrderForm();
+let header = new CustomerHeader();
 
 document.addEventListener("DOMContentLoaded", () => {
+	header.init();
 	orderForm.init();
 	orderForm.fetchMenu();
 });

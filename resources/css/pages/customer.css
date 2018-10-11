@@ -364,61 +364,39 @@ body::-webkit-scrollbar-thumb {
 .header__right {
     height: 100%;
     float: right;
-    width: 50%;
+    width: 20%;
     position: relative;
     padding-right: 3%;
 }
 
-.header__right__text {
-    float: right;
-    line-height: 3rem;
-    color:#FFF;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    top: 50%;
-    right: 28rem;
-    position: absolute;
-}
-
 @media (max-width: 75em) {
     .header__right {
-        width: 58%;
+        width: 30%;
         margin: 0 2% 0 0;
     }
 }
 
 @media (max-width: 56.25em) {
     .header__right {
-        width: 58%;
+        width: 35%;
         margin: 0 2% 0 0;
     }
 }
 
 @media (max-width: 37.5em) {
     .header__right {
-        width: 48%;
+        width: 35%;
         margin: 0 2% 0 0;
     }
-
-    .header__right__text {
-        display: none;
-    }
 }
-.header__signup,
-.header__signin {
+
+.header__logOut {
     width: 10rem;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     top: 50%;
     position: absolute;
-}
-
-.header__signup{
-    right: 15rem;
-}
-
-.header__signin {
-    right: 3rem;
+    right: 2rem;
 }
 
 .header__title {
@@ -432,7 +410,7 @@ body::-webkit-scrollbar-thumb {
     height:5vh;
     transform:translateY(-50%);
     position: absolute;
-    right:15%;
+    right:20%;
     top:50%;
 }
 
