@@ -530,7 +530,7 @@ body::-webkit-scrollbar-thumb {
     height:5vh;
     transform:translateY(-50%);
     position: absolute;
-    right:20%;
+    right:30%;
     top:50%;
 }
 

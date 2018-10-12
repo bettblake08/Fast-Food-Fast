@@ -96,9 +96,9 @@ class OrderItem{
 			params.onUpdate();
 		});
 
-		itemQuantity.appendChild(itemQuantitySub);
-		itemQuantity.appendChild(itemQuantityValue);
 		itemQuantity.appendChild(itemQuantityAdd);
+		itemQuantity.appendChild(itemQuantityValue);
+		itemQuantity.appendChild(itemQuantitySub);
 
 		itemTotal.classList.add("foodItem__total");
 		itemTotal.classList.add("f_normal");

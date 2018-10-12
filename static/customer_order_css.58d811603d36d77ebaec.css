@@ -38,8 +38,7 @@
     float:left;
     width:100%;
     text-align: center;
-    line-height: 4rem;
-    margin-bottom: 5rem;
+    line-height: 10rem;
     color:#aaa;
 }
 
@@ -130,11 +129,9 @@
 }
 
 @media (max-width: 75em) {
-    .foodItem {
-        grid-template-columns: 30% 40% 15% 15%;
-        grid-template-areas:
-            "image name price total"
-            "image name quantity quantity";
+    .foodItem{
+        grid-template-columns: 15% 50% 10% auto 15%;
+        grid-template-areas: "image name price quantity total";
     }
 
    .foodItem__name {

@@ -5,7 +5,7 @@
 
 .foodMenu {
     width: 60%;
-    margin:0 0 5rem 20%;
+    margin-left: 20%;
     float: left;
 }
 
@@ -34,12 +34,11 @@
     width: 100%;
 }
 
-.foodMenu__content__error{
+.foodItem__content__error{
     float:left;
     width:100%;
     text-align: center;
-    line-height: 4rem;
-    margin-bottom: 5rem;
+    line-height: 10rem;
     color:#aaa;
 }
 
@@ -62,7 +61,7 @@
     width:100%;
     margin-bottom: 3rem;
     display: grid;
-    grid-template-columns: 15% 45% 10% auto 15%;
+    grid-template-columns: 15% 50% 10% auto 15%;
     grid-template-rows: auto;
     grid-template-areas: "image name price quantity total";
     box-shadow: 0 0.1rem 2rem -0.5rem #000;
@@ -95,7 +94,7 @@
 
 .foodItem__quantity {
     grid-area:quantity;
-    padding: 2rem;
+    padding: 1rem 0;
 }
 
 .foodItem__quantity__add,
@@ -130,11 +129,9 @@
 }
 
 @media (max-width: 75em) {
-    .foodItem {
-        grid-template-columns: 30% 40% 15% 15%;
-        grid-template-areas:
-            "image name price total"
-            "image name quantity quantity";
+    .foodItem{
+        grid-template-columns: 15% 50% 10% auto 15%;
+        grid-template-areas: "image name price quantity total";
     }
 
    .foodItem__name {
@@ -181,16 +178,9 @@
 
 .foodMenu__total {
     float: right;
-    text-align: right;
-    padding-right:2rem;
+    width: 10rem;
     color: #111;
     line-height: 4rem;
-}
-
-@media (max-width: 56.25em) {
-    .foodMenu__total {
-        line-height: 6rem;
-    }
 }
 
 .foodMenu__orderBtn {

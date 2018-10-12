@@ -20,7 +20,7 @@ class OrderForm{
 			orderMenuOrderButton = document.createElement("div"),
 			orderMenuTotal = document.createElement("div"),
 			orderMenuCategoryBreakfast = document.createElement("div"),
-			orderMenuCategorySnack = document.createElement("div"),
+			orderMenuCategorySnacks = document.createElement("div"),
 			orderMenuCategoryDrinks = document.createElement("div"),
 			orderMenuCategoryMain = document.createElement("div"),
 			OrderForm = this;
@@ -36,7 +36,7 @@ class OrderForm{
         
 		let button = new Button({
 			class: "btn_1",
-			textClass: "f_button_1",
+			textClass: "f_button_2",
 			label: "Make order",
 			parent: this,
 			status: 0,
@@ -64,15 +64,15 @@ class OrderForm{
 		orderMenuCategoryMain.classList.add("foodMenu__category");
 		orderMenuCategoryMain.innerHTML = "<h2 class=\"f_h2\">Main Meals</h2>";
 
-		orderMenuCategorySnack.classList.add("foodMenu__category");
-		orderMenuCategorySnack.innerHTML = "<h2 class=\"f_h2\">Snacks</h2>";
+		orderMenuCategorySnacks.classList.add("foodMenu__category");
+		orderMenuCategorySnacks.innerHTML = "<h2 class=\"f_h2\">Snacks</h2>";
 
 		orderMenuCategoryDrinks.classList.add("foodMenu__category");
 		orderMenuCategoryDrinks.innerHTML = "<h2 class=\"f_h2\">Drinks</h2>";
 
 		orderMenuContent.appendChild(orderMenuCategoryBreakfast);
 		orderMenuContent.appendChild(orderMenuCategoryMain);
-		orderMenuContent.appendChild(orderMenuCategorySnack);
+		orderMenuContent.appendChild(orderMenuCategorySnacks);
 		orderMenuContent.appendChild(orderMenuCategoryDrinks);
 
 		main.appendChild(orderMenuTopbar);
@@ -88,7 +88,7 @@ class OrderForm{
 			orderMenuOrderButton,
 			orderMenuTotal,
 			orderMenuCategoryBreakfast,
-			orderMenuCategorySnack,
+			orderMenuCategorySnacks,
 			orderMenuCategoryDrinks,
 			orderMenuCategoryMain
 		};
@@ -116,62 +116,76 @@ class OrderForm{
 
 	setMenuError(message){
 		let components = this.components,
-			fetchMenuError = document.createElement("div");
-        
-		fetchMenuError.classList.add("foodItem__content__error");
-		fetchMenuError.classList.add("f_h1");
-		fetchMenuError.innerHTML = message;
+			fetchMenuError = `<div class="foodMenu__content__error f_h1">${message}</div>`;
 
-		components.orderMenuCategoryBreakfast.innerHTML = "<h2 class=\"f_h2\">Breakfast Meals</h2>";
-		components.orderMenuCategoryMain.innerHTML = "<h2 class=\"f_h2\">Main Meals</h2>";
-		components.orderMenuCategorySnack.innerHTML = "<h2 class=\"f_h2\">Snacks</h2>";
-		components.orderMenuCategoryDrinks.innerHTML = "<h2 class=\"f_h2\">Drinks</h2>";
-
-		components.orderMenuCategoryBreakfast.appendChild(fetchMenuError);
-		components.orderMenuCategoryMain.appendChild(fetchMenuError);
-		components.orderMenuCategorySnack.appendChild(fetchMenuError);
-		components.orderMenuCategoryDrinks.appendChild(fetchMenuError);
+		components.orderMenuCategoryBreakfast.innerHTML = "<h2 class=\"f_h2\">Breakfast Meals</h2>" + fetchMenuError;
+		components.orderMenuCategoryMain.innerHTML = "<h2 class=\"f_h2\">Main Meals</h2>" + fetchMenuError;
+		components.orderMenuCategorySnacks.innerHTML = "<h2 class=\"f_h2\">Snacks</h2>" + fetchMenuError;
+		components.orderMenuCategoryDrinks.innerHTML = "<h2 class=\"f_h2\">Drinks</h2>" + fetchMenuError;
 
 		this.components = components;
 	}
 
 	updateOrderMenu(menu){
-		let components = this.components,
-			main = this;
-        
-		if(menu.length == 0){
-			this.setMenuError("No items in the order menu. Please try order again later!");
+		let main = this,
+			categories = [
+				[],
+				[],
+				[],
+				[]
+			];
+
+		if (menu.length == 0) {
+			this.setMenuError("No items in this category. Please add something!");
 			return;
 		}
 
 		menu.forEach(orderItem => {
 			let item = new OrderItem({
-				item:orderItem,
-				parent:main,
+				item: orderItem,
+				parent: main,
 				onUpdate:()=>{
 					main.updateOrder();
 				}
 			});
-            
-			switch(orderItem.c_id){
-			case 1:{
-				components.orderMenuCategoryBreakfast.appendChild(item.getOrderItem());
-				break;
-			}
-			case 2:{
-				components.orderMenuCategoryMain.appendChild(item.getOrderItem());
-				break;
-			}
-			case 3:{
-				components.orderMenuCategorySnack.appendChild(item.getOrderItem());
-				break;
-			}
-			case 4:{
-				components.orderMenuCategoryDrinks.appendChild(item.getOrderItem());
-				break;
-			}
-			}
+
+			categories[orderItem.c_id - 1].push(item.getOrderItem());
 		});
+
+		let message = "No items in this category.",
+			fetchMenuError = `<div class="foodMenu__content__error f_h2">${message}</div>`;
+
+		if (categories[0].length == 0) {
+			this.components.orderMenuCategoryBreakfast.innerHTML = "<h2 class=\"f_h2\">Breakfast Meals</h2>" + fetchMenuError;
+		} else {
+			categories[0].forEach(item => {
+				this.components.orderMenuCategoryBreakfast.appendChild(item);
+			});
+		}
+
+		if (categories[1].length == 0) {
+			this.components.orderMenuCategoryMain.innerHTML = "<h2 class=\"f_h2\">Main Meals</h2>" + fetchMenuError;
+		} else {
+			categories[1].forEach(item => {
+				this.components.orderMenuCategoryMain.appendChild(item);
+			});
+		}
+
+		if (categories[2].length == 0) {
+			this.components.orderMenuCategorySnacks.innerHTML = "<h2 class=\"f_h2\">Snacks</h2>" + fetchMenuError;
+		} else {
+			categories[2].forEach(item => {
+				this.components.orderMenuCategorySnacks.appendChild(item);
+			});
+		}
+
+		if (categories[3].length == 0) {
+			this.components.orderMenuCategoryDrinks.innerHTML = "<h2 class=\"f_h2\">Drinks</h2>" + fetchMenuError;
+		} else {
+			categories[3].forEach(item => {
+				this.components.orderMenuCategoryDrinks.appendChild(item);
+			});
+		}
         
 	}
 

@@ -131,10 +131,10 @@
 
 @media (max-width: 75em) {
     .foodItem {
-        grid-template-columns: 30% 40% 15% 15%;
+        grid-template-columns: 40% 40% 10% 10%;
         grid-template-areas:
             "image name price total"
-            "image name quantity quantity";
+            "image name quantity total";
     }
 
    .foodItem__name {
