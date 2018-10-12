@@ -38,11 +38,8 @@ class UserViews():
                             help="The item list is required")
 
         data = parser.parse_args()
-
         user = get_jwt_identity()
-
         total = 0
-        order_items = []
 
         try:
             for ordered_item in json.loads(data['items']):
@@ -74,7 +71,7 @@ class UserViews():
 
         order = OrderModel(
             user_id=user['id'],
-            items=order_items,
+            items=json.loads(data["items"]),
             total=total,
             status=0)
 
@@ -102,7 +99,9 @@ class UserViews():
         menu_item_ids = set()
 
         for order in orders:
-            
+            if not order.items:
+                continue
+
             for orderedItem in order.items:
                 menu_item_ids.add(orderedItem.item)
         
