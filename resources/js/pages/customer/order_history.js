@@ -85,6 +85,10 @@ class OrderHistory{
 				});
 				break;
 			}
+			case 422:{
+				window.location.href = webUrl + "/customer/login";
+				break;
+			}
 			}
 
 

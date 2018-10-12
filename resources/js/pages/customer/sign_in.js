@@ -189,7 +189,7 @@ class LoginForm {
 				refresh_token: response.refresh_token
 			}));
 
-			window.location.href = webUrl + "/admin/orderManagement";
+			window.location.href = webUrl + "/customer/order";
 		});
 	}
 }
