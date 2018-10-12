@@ -14,7 +14,7 @@
 }
 
 .lview__background{
-    background-image: url("../../images/back--1.jpg");
+    background-image: url(/assets/4cece64080a23b6469d08ec41b3f25c2.jpg);
     background-position:center;
     background-size:cover;
     z-index:0;
@@ -70,11 +70,6 @@
     float: left;
 }
 
-@media (max-width: 75em) {
-    .lview__button {
-        width: 20rem;
-    }
-}
 
 @media (max-width: 56.25em) {
     .lview__foreground {
@@ -87,8 +82,3 @@
     }
 }
 
-@media (max-width: 37.5em) {
-    .lview__button {
-        width: 25rem;
-    }
-}
