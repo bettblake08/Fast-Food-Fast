@@ -132,7 +132,7 @@ class Order {
 		orderTotal.classList.add("f_normal");
 		orderTotal.innerHTML = `KSH ${(params.order.total/100)}`;
 
-		var dateCreated = moment(params.order.created_at, "YYYY-MM-DD HH:mm:ss").utc(3).local();
+		var dateCreated = moment(params.order.created_at, "YYYY-MM-DD HH:mm:ss").local();
 
 		orderTime.classList.add("order__time");
 		orderTime.classList.add("f_normal");
