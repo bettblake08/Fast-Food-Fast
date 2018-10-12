@@ -1,4 +1,4 @@
-from flask import jsonify, make_response
+from flask import jsonify, make_response, session
 from flask_restful import reqparse
 from flask_jwt_extended import create_access_token, create_refresh_token, \
     set_access_cookies, set_refresh_cookies, unset_jwt_cookies, get_raw_jwt
@@ -64,6 +64,11 @@ class LoginViews():
                 'refresh_token': refresh_token
             })
 
+            session["loggedInUser"] = {
+                'loggedIn': True,
+                'role': current_user.role
+            }
+
             return resp,200
         else:
             return make_response(
@@ -81,6 +86,10 @@ class LoginViews():
         
         try:
             revoked_token.insert()
+
+            session["loggedInUser"] = {
+                'loggedIn': False
+            }
 
             resp = jsonify({
                 'message': 'Access token has been revoked!'}

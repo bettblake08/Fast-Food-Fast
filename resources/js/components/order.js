@@ -1,6 +1,7 @@
 import DropdownButtons from "../ui/dropdown_buttons";
 import {apiV1, webUrl} from "../abstract/variables";
 import {refreshToken, getAccessToken} from "../abstract/mixins";
+import moment from "moment";
 
 class OrderedItem {
 	constructor(params) {
@@ -131,9 +132,11 @@ class Order {
 		orderTotal.classList.add("f_normal");
 		orderTotal.innerHTML = `KSH ${(params.order.total/100)}`;
 
+		var dateCreated = moment(params.order.created_at, "YYYY-MM-DD HH:mm:ss").utc(3).local();
+
 		orderTime.classList.add("order__time");
 		orderTime.classList.add("f_normal");
-		orderTime.innerHTML = params.order.created_at;
+		orderTime.innerHTML = dateCreated.format("YYYY-MM-DD HH:mm");
 
 		let status = this.getOrderStatus(params.order.status);
 		

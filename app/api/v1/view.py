@@ -1,7 +1,7 @@
 from functools import wraps
 
 from flask import (Blueprint, json, jsonify, make_response, redirect, request,
-                   url_for)
+                   url_for, session)
 from flask_jwt_extended import (JWTManager, create_access_token,
                                 get_jwt_claims, get_jwt_identity,
                                 jwt_refresh_token_required, jwt_required,
@@ -66,6 +66,11 @@ def refresh_token():
         'message': "Refresh successful!",
         'access_token': create_access_token(identity=user, fresh=True)
     })
+
+    session["loggedInUser"] = {
+        'loggedIn': True,
+        'role': user.role
+    }
 
     return resp,201
 
