@@ -609,7 +609,7 @@ body::-webkit-scrollbar-thumb {
     transform: translateY(-50%);
     top: 50%;
     position: absolute;
-    right: 10%;
+    right: 2rem;
     object-fit: cover;
     object-position: center;
     display: none;
@@ -669,12 +669,10 @@ body::-webkit-scrollbar-thumb {
     float: left;
     transform: translateX(-50%);
     margin-left:50%;
-    width:100%;
 }
 
 .header__dropDownMenu__logOut button{
     line-height: 8rem;
-    height: 8rem;
 }
 
 .has-float-label {

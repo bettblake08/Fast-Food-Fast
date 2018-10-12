@@ -609,7 +609,7 @@ body::-webkit-scrollbar-thumb {
     transform: translateY(-50%);
     top: 50%;
     position: absolute;
-    right: 10%;
+    right: 2rem;
     object-fit: cover;
     object-position: center;
     display: none;
@@ -674,7 +674,6 @@ body::-webkit-scrollbar-thumb {
 
 .header__dropDownMenu__logOut button{
     line-height: 8rem;
-    height: 8rem;
 }
 
 .has-float-label {

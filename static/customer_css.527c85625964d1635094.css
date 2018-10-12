@@ -603,13 +603,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 .header__menuButton{
-    width: 8rem;
-    height: 8rem;
+    width: 5rem;
+    height: 5rem;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     top: 50%;
     position: absolute;
-    right: 10%;
+    right: 2rem;
     object-fit: cover;
     object-position: center;
     display: none;
@@ -631,7 +631,6 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
     top:10vh;
     left:5%;
-    background-color: #FFF;
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
@@ -644,16 +643,13 @@ body::-webkit-scrollbar-thumb {
 .header__dropDownMenu--active{
     opacity: 1;
     visibility: visible;
-    padding:3rem 0 0 0;
-    -webkit-box-shadow: 0 0.1rem 2rem -0.5rem #000;
-    box-shadow: 0 0.1rem 2rem -0.5rem #000;
 }
 
 .header__dropDownMenu__option {
     color: rgb(223, 0, 0);
     float: left;
     transform: translateX(-50%);
-    margin-left:50%;
+    margin:0 0 2rem 50%;
     line-height: 8rem;
     border-bottom: solid .2rem #FFF;
     -webkit-transition: all 0.2s ease;
@@ -668,13 +664,7 @@ body::-webkit-scrollbar-thumb {
 .header__dropDownMenu__logOut{
     float: left;
     transform: translateX(-50%);
-    margin-left:50%;
-    width:100%;
-}
-
-.header__dropDownMenu__logOut button{
-    line-height: 8rem;
-    height: 8rem;
+    margin:0 0 2rem 50%;
 }
 
 .has-float-label {
