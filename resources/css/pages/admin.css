@@ -1114,6 +1114,26 @@ body::-webkit-scrollbar-thumb {
     padding: .5rem 0;
 }
 
+@media (max-width: 75em) {
+    .dropdown,
+    .dropdown--fail,
+    .dropdown--success,
+    .dropdown--loading,
+    .dropdown--warning {
+        height: 6rem;
+    }
+}
+
+@media (max-width: 56.25em) {
+    .dropdown,
+    .dropdown--fail,
+    .dropdown--success,
+    .dropdown--loading,
+    .dropdown--warning {
+        height: 7rem;
+    }
+}
+
 .dropdown option,
 .dropdown--fail option,
 .dropdown--success option,
@@ -1207,25 +1227,29 @@ body::-webkit-scrollbar-thumb {
 
 .main{
     width: 85%;
+    left:15%;
     height: 90vh;
-    float: left;
-    overflow: hidden;
+    position: fixed;
+    overflow: scroll;
 }
 
 @media (max-width: 100em) {
     .main {
         width: 80%;
+        left:20%;
     }
 }
 
 @media (max-width: 75em) {
    .main {
        width: 75%;
+       left:25%;
    }
 }
 
 @media (max-width: 56.25em) {
     .main{
+        left:0;
         width:100%;
     }
 }

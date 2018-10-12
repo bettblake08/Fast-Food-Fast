@@ -237,7 +237,7 @@ class MenuView {
     
 	setMenuError(message) {
 		let components = this.components,
-			fetchMenuError = `<div class="menu__content__error f_h1">${message}</div>`;
+			fetchMenuError = `<div class="menu__content__error f_h2">${message}</div>`;
 
 		components.menuCategoryBreakfastContent.innerHTML = fetchMenuError;
 		components.menuCategoryMainMealContent.innerHTML = fetchMenuError;
@@ -264,7 +264,7 @@ class MenuView {
 		});
 
 		let message = "No items in this category. Please add something!",
-			fetchMenuError = `<div class="menu__content__error f_h1">${message}</div>`;
+			fetchMenuError = `<div class="menu__content__error f_h2">${message}</div>`;
     
 		if (categories[0].length == 0){
 			this.components.menuCategoryBreakfastContent.innerHTML = fetchMenuError;
@@ -463,7 +463,7 @@ class AddMenuItemForm{
 
 		let save = new Button({
 			class: "btn_1",
-			textClass: "f_button_1",
+			textClass: "f_button_2",
 			label: "Save",
 			parent: form,
 			status: 0,
@@ -474,7 +474,7 @@ class AddMenuItemForm{
         
 		let cancel = new Button({
 			class: "btn_1",
-			textClass: "f_button_1",
+			textClass: "f_button_2",
 			label: "Cancel",
 			parent: form,
 			status: 0,

@@ -11,6 +11,19 @@
     width:100%;
 }
 
+@media (max-width: 75em) {
+    .ordersView {
+        padding: 5rem 10%;
+    }
+}
+
+@media (max-width: 37.5em) {
+    .ordersView {
+        padding: 5rem 5%;
+    }
+}
+
+
 .ordersView__topBar{
     width: 100%;
     float:left;
@@ -23,6 +36,7 @@
     line-height: 5rem;
     color:rgb(223, 0, 0);
 }
+
 .order {
     width: 100%;
     float: left;
@@ -45,6 +59,32 @@
 
 .order__details div{
     align-self: start;
+}
+
+@media (max-width: 75em) {
+    .order__details {
+        grid-template-columns: 15% 20% 45% 20%;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "id total time status"
+            "items items items items";
+    }
+}
+
+@media (max-width: 37.5em) {
+    .order {
+        grid-template-columns: 78% 2% 20%;
+        grid-template-rows: auto;
+        grid-template-areas: "details . statusButtons";
+    }
+    .order__details {
+        grid-template-columns: 40% 20% 40%;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "id total total"
+            "status time time"
+            "items items items";
+    }
 }
 
 .order__id {
@@ -147,7 +187,7 @@
 
 .order__time {
     grid-area: time;
-    height: 5rem;
+    float:left;
     line-height: 3rem;
     padding: 1rem;
     text-align: center !important;

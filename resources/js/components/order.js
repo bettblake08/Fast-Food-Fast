@@ -39,7 +39,7 @@ class OrderedItem {
 		orderedItemQuantity.innerHTML = params.item.quantity;
 
 		orderedItemPrice.classList.add("order__item__price");
-		orderedItemPrice.classList.add("f_normal");
+		orderedItemPrice.classList.add("f_comment_1");
 		orderedItemPrice.innerHTML = `KSH ${(params.item.price/100)}`;
 
 		main.classList.add("order__item");
