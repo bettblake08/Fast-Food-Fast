@@ -24,8 +24,8 @@ function refreshToken(actions){
 }
 
 function getAccessToken(){
-    let tokens = JSON.parse(localStorage.getItem("tokens"));
-    return tokens.access_token;
+	let tokens = JSON.parse(localStorage.getItem("tokens"));
+    return tokens == null ? "" : tokens.access_token;
 }
 
 export {

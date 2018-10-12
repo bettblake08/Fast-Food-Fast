@@ -190,6 +190,70 @@ body::-webkit-scrollbar-thumb {
     font-size: 1.3rem;
 }
 
+@media (max-width: 56.25em) {
+    .f_banner_1,
+    .f_button_1,
+    .f_button_2,
+    .f_comment_1,
+    .f_h1,
+    .f_h2,
+    .f_h3,
+    .f_input_1,
+    .f_input_dd_1,
+    .f_input_ta,
+    .f_label_1,
+    .f_normal,
+    .f_subtitle_1,
+    .f_tab_h1,
+    .f_tab_h2,
+    .f_title{
+        font-size:110%;
+    }
+}
+
+@media (max-width: 75em) {
+    .f_banner_1,
+    .f_button_1,
+    .f_button_2,
+    .f_comment_1,
+    .f_h1,
+    .f_h2,
+    .f_h3,
+    .f_input_1,
+    .f_input_dd_1,
+    .f_input_ta,
+    .f_label_1,
+    .f_normal,
+    .f_subtitle_1,
+    .f_tab_h1,
+    .f_tab_h2,
+    .f_title {
+        font-size: 130%;
+    }
+}
+
+@media (max-width: 37.5em) {
+   .f_banner_1,
+   .f_button_1,
+   .f_button_2,
+   .f_comment_1,
+   .f_h1,
+   .f_h2,
+   .f_h3,
+   .f_input_1,
+   .f_input_dd_1,
+   .f_input_ta,
+   
+   .f_label_1,
+   .f_normal,
+   .f_subtitle_1,
+   .f_tab_h1,
+   .f_tab_h2,
+   .f_title {
+       font-size: 150%;
+   }
+}
+
 
 .btn_1,
 .btn_1--fail,

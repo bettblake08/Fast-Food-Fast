@@ -190,6 +190,70 @@ body::-webkit-scrollbar-thumb {
     font-size: 1.3rem;
 }
 
+@media (max-width: 56.25em) {
+
+    .f_banner_1,
+    .f_button_1,
+    .f_button_2,
+    .f_comment_1,
+    .f_h1,
+    .f_h2,
+    .f_h3,
+    .f_input_1,
+    .f_input_dd_1,
+    .f_input_ta,
+    .f_label_1,
+    .f_normal,
+    .f_subtitle_1,
+    .f_tab_h1,
+    .f_tab_h2,
+    .f_title {
+        font-size: 110%;
+    }
+}
+
+@media (max-width: 75em) {
+
+    .f_banner_1,
+    .f_button_1,
+    .f_button_2,
+    .f_comment_1,
+    .f_h1,
+    .f_h2,
+    .f_h3,
+    .f_input_1,
+    .f_input_dd_1,
+    .f_input_ta,
+    .f_label_1,
+    .f_normal,
+    .f_subtitle_1,
+    .f_tab_h1,
+    .f_tab_h2,
+    .f_title {
+        font-size: 130%;
+    }
+}
+
+@media (max-width: 37.5em) {
+    .f_banner_1,
+    .f_button_1,
+    .f_button_2,
+    .f_comment_1,
+    .f_h1,
+    .f_h2,
+    .f_h3,
+    .f_input_1,
+    .f_input_dd_1,
+    .f_input_ta,
+    .f_label_1,
+    .f_normal,
+    .f_subtitle_1,
+    .f_tab_h1,
+    .f_tab_h2,
+    .f_title {
+        font-size: 150%;
+    }
+}
 
 .btn_1,
 .btn_1--fail,
@@ -364,31 +428,61 @@ body::-webkit-scrollbar-thumb {
 .header__right {
     height: 100%;
     float: right;
-    width: 20%;
+    width: 50%;
     position: relative;
     padding-right: 3%;
 }
 
+.header__right__text {
+    float: right;
+    line-height: 3rem;
+    color:#FFF;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    right: 28rem;
+    position: absolute;
+}
+
 @media (max-width: 75em) {
     .header__right {
-        width: 30%;
+        width: 58%;
         margin: 0 2% 0 0;
     }
 }
 
 @media (max-width: 56.25em) {
     .header__right {
-        margin: 0;
+        width: 58%;
+        margin: 0 2% 0 0;
     }
 }
 
-.header__logOut {
+@media (max-width: 37.5em) {
+    .header__right {
+        width: 48%;
+        margin: 0 2% 0 0;
+    }
+
+    .header__right__text {
+        display: none;
+    }
+}
+.header__signup,
+.header__signin {
     width: 10rem;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     top: 50%;
     position: absolute;
-    right: 2rem;
+}
+
+.header__signup{
+    right: 15rem;
+}
+
+.header__signin {
+    right: 3rem;
 }
 
 .header__title {
@@ -402,7 +496,7 @@ body::-webkit-scrollbar-thumb {
     height:5vh;
     transform:translateY(-50%);
     position: absolute;
-    right:30%;
+    right:15%;
     top:50%;
 }
 

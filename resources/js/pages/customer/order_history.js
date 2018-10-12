@@ -1,6 +1,7 @@
 import {apiV1,webUrl} from "../../abstract/variables";
 import {refreshToken,getAccessToken} from "../../abstract/mixins";
 import Order from "../../components/order";
+import CustomerHeader from "../../components/headers/customer";
 
 class OrderHistory{
 	constructor() {
@@ -99,8 +100,10 @@ class OrderHistory{
 }
 
 let orderHistory = new OrderHistory();
+let header = new CustomerHeader();
 
 document.addEventListener("DOMContentLoaded", () => {
+	header.init();
 	orderHistory.init();
 	orderHistory.fetchOrderHistory();
 });

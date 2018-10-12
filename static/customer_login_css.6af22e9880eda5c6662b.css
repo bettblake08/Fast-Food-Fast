@@ -3,7 +3,7 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background-image: url("../../../images/back--1.jpg");
+    background-image: url(/assets/4cece64080a23b6469d08ec41b3f25c2.jpg);
     background-position:center;
     background-size:cover;
 }
@@ -20,14 +20,15 @@
 
 @media (max-width: 75em) {
     .login__form {
-        width: 40%;
-        padding:4rem 5rem;
+        width: 30%;
+        padding:3rem 5rem;
     }
 }
 
 @media (max-width: 56.25em) {
     .login__form {
         width: 50%;
+        padding:4rem 5rem;
     }
 }
 
@@ -104,3 +105,4 @@
     margin-left:2rem;
     color:rgb(223, 0, 0);
 }
+
