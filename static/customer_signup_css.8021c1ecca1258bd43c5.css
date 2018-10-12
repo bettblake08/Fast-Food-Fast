@@ -7,7 +7,7 @@
 }
 
 .signUp__background{
-     background-image: url("../../../images/back--1.jpg");
+     background-image: url(/assets/4cece64080a23b6469d08ec41b3f25c2.jpg);
      background-position:center;
      background-size:cover;
      width: 100%;
@@ -39,16 +39,22 @@
         width: 40%;
         left: 50%;
         transform: translateX(-50%);
+        padding:0 4%;
     }
         
     .signUp__form {
-        width: 80%;
+        width: 60%;
     }
 }
 
 @media (max-width: 56.25em) {
     .signUp__foreground {
         width: 50%;
+        padding:0 3%;
+    }
+
+    .signUp__form {
+        width: 70%;
     }
 }
 
@@ -57,10 +63,11 @@
         width: 80%;
         left: 50%;
         transform: translateX(-50%);
+        padding:0 2%;
     }
 
     .signUp__form {
-        width: 90%;
+        width: 80%;
     }
 }
 

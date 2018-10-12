@@ -26,7 +26,7 @@ class SignUpForm {
 
 		let button = new Button({
 			class:"btn_1",
-			textClass:"f_button_1",
+			textClass:"f_button_2",
 			label:"Sign Up",
 			parent:this,
 			status:0,

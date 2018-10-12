@@ -7,7 +7,7 @@
 }
 
 .signUp__background{
-     background-image: url("../../../images/back--1.jpg");
+     background-image: url(/assets/4cece64080a23b6469d08ec41b3f25c2.jpg);
      background-position:center;
      background-size:cover;
      width: 100%;
@@ -60,7 +60,7 @@
     }
 
     .signUp__form {
-        width: 90%;
+        width: 80%;
     }
 }
 

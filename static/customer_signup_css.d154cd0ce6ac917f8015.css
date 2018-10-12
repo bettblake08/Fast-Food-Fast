@@ -7,7 +7,7 @@
 }
 
 .signUp__background{
-     background-image: url("../../../images/back--1.jpg");
+     background-image: url(/assets/4cece64080a23b6469d08ec41b3f25c2.jpg);
      background-position:center;
      background-size:cover;
      width: 100%;
@@ -24,13 +24,13 @@
     right: 15%;
     margin-top: 10vh;
     background-color: rgba(0, 0, 0, 0.767);
-    padding:0 5%;
+    padding:0 30% 0 15%;
 }
 
 .signUp__form {
     position: relative;
     width: 50%;
-    margin: 1rem 0 5rem 0;
+    margin: 3rem 0 5rem 0;
     float: left;
 }
 
@@ -42,13 +42,17 @@
     }
         
     .signUp__form {
-        width: 80%;
+        width: 60%;
     }
 }
 
 @media (max-width: 56.25em) {
     .signUp__foreground {
         width: 50%;
+    }
+
+    .signUp__form {
+        width: 70%;
     }
 }
 
@@ -60,7 +64,7 @@
     }
 
     .signUp__form {
-        width: 90%;
+        width: 80%;
     }
 }
 
@@ -68,7 +72,7 @@
     color: #FFF;
     margin-bottom: 2rem;
     float: left;
-    padding: 2rem 0;
+    padding: 2rem 15% 0 15%;
 }
 
 .signUp__text {
