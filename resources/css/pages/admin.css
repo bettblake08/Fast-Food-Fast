@@ -509,6 +509,30 @@ body::-webkit-scrollbar-thumb {
     position: relative;
 }
 
+.header__menuButton {
+    width: 8rem;
+    height: 8rem;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
+    left: 0;
+    display: none;
+}
+
+.header__menuButton img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 56.25em) {
+    .header__menuButton {
+        display: block;
+    }
+}
+
 .header__logo {
     float: left;
     width: 17rem;
@@ -526,10 +550,37 @@ body::-webkit-scrollbar-thumb {
     object-position: center;
 }
 
+@media (max-width: 100em) {
+    .header__left {
+        width: 20%;
+    }
+}
+
+@media (max-width: 75em) {
+    .header__left {
+        width: 25%;
+    }
+}
+
+@media (max-width: 56.25em) {
+   .header__left {
+       width: 30%;
+       margin: 0 0 0 5%;
+   }
+
+   .header__logo {
+       left: 60%;
+   }
+}
+
 @media (max-width: 37.5em) {
     .header__left {
         width: 45%;
         margin: 0 0 0 5%;
+    }
+
+    .header__logo {
+        left: 70%;
     }
 }
 
@@ -767,18 +818,19 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
-#adminSideBarMenu {
-    float:left;
-    width:15%;
-    background-color:#111;
+.navMenu,
+.navMenu--active{
+    float: left;
     height: 90vh;
+    background-color:#111;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
-.navMenu {
-    width: 100%;
-    height: auto;
-    float: left;
+.navMenu{
+    width:15%;
 }
+
 
 .navMenu__subMenu{
     width: 100%;
@@ -795,6 +847,41 @@ body::-webkit-scrollbar-thumb {
 
 .navMenu__subMenu__hd:hover{
     background-color: rgb(223, 0, 0);
+}
+
+@media (max-width: 100em) {
+    .navMenu {
+        width: 20%;
+    }
+}
+
+@media (max-width: 75em) {
+    .navMenu {
+        width: 25%;
+    }
+}
+
+@media (max-width: 56.25em) {
+    .navMenu,
+    .navMenu--active {
+        position: absolute;
+        z-index: 999;
+        top: 10vh;
+        left: 0;
+        width: 80%;
+
+    }
+    .navMenu {
+        opacity: 0;
+        visibility: hidden;
+    }
+    .navMenu--active {
+        opacity: 1;
+        visibility: visible;
+    }
+    .navMenu__subMenu__hd {
+        padding: 3rem 0;
+    }
 }
 
 .ddButtons{
@@ -1116,4 +1203,29 @@ body::-webkit-scrollbar-thumb {
 .dropdown__error--active{
     background-color: #d84d47;
     color:#FFF;
+}
+
+.main{
+    width: 85%;
+    height: 90vh;
+    float: left;
+    overflow: hidden;
+}
+
+@media (max-width: 100em) {
+    .main {
+        width: 80%;
+    }
+}
+
+@media (max-width: 75em) {
+   .main {
+       width: 75%;
+   }
+}
+
+@media (max-width: 56.25em) {
+    .main{
+        width:100%;
+    }
 }

@@ -1,5 +1,6 @@
 import logoBlack from "../../../images/logo.png";
 import logoWhite from "../../../images/logo2.png";
+import menuIcon from "../../../images/icons/menu.png";
 import Button from "../../ui/button";
 import {
 	refreshToken,
@@ -21,7 +22,8 @@ class AdminHeader{
 
 		this._state = {
 			headerType: params.type == undefined ? "black" : params.type,
-			buttons: []
+			buttons: [],
+			toggleMenu:false
 		};
 
 		this._components = {};
@@ -35,17 +37,19 @@ class AdminHeader{
 		this._state = value;
 	}
 
-	get component() {
-		return this._component;
+	get components() {
+		return this._components;
 	}
 
-	set component(value) {
-		this._component = value;
+	set components(value) {
+		this._components = value;
 	}
 
 	init() {
 		let header = this,
-			logOutButton = document.querySelector(".header__logout");
+			logOutButton = document.querySelector(".header__logout"),
+			headerMenuButton = document.querySelector(".header__menuButton"),
+			sideBarMenu = document.querySelector(".navMenu");
 
 		let logout = new Button({
 			class: "btn_1",
@@ -61,7 +65,20 @@ class AdminHeader{
 		logout.init();
 		logOutButton.appendChild(logout.getButton());
 
+		let menuButtonImg = new Image();
+		menuButtonImg.src = menuIcon;
+		menuButtonImg.alt = "Dropdown menu button";
+
+		headerMenuButton.appendChild(menuButtonImg);
+
+		headerMenuButton.addEventListener("click", () => {
+			header.toggleSideBarMenu();
+		});
+
 		this.changeHeaderType(this.state.headerType);
+
+		this.components["headerMenuButton"] = headerMenuButton;
+		this.components["sideBarMenu"] = sideBarMenu;
 	}
 
 	changeHeaderType() {
@@ -84,6 +101,23 @@ class AdminHeader{
 		}
 
 		headerLogo.appendChild(logoImg);
+	}
+
+	toggleSideBarMenu() {
+		this.state.toggleMenu = this.state.toggleMenu ? false : true;
+
+		if (this.state.toggleMenu) {
+			this.components.sideBarMenu.classList.replace(
+				"navMenu",
+				"navMenu--active"
+			);
+			
+		} else {
+			this.components.sideBarMenu.classList.replace(
+				"navMenu--active",
+				"navMenu"
+			);
+		}
 	}
 
 	logOut() {

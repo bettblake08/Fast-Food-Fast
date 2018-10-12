@@ -3,6 +3,7 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     {{stylesheet_tag('admin_css')   |   safe}}
     {{javascript_tag('admin_header_js') | safe}}
@@ -18,6 +19,8 @@
     <div class="header header--normal">
 
         <div class="header__left">
+            <div class="header__menuButton"></div>
+
             <a href="/admin/orderManagement">
                 <div class="header__logo"></div>
             </a>
@@ -49,11 +52,21 @@
             </div>
 
         </div>
+
     </div>
+
 
     <!-- Sidebar Component -->
 
+    <!-- Main Component -->
+
+    <div class="main">
+
     {% block body %}{% endblock %}
+
+    </div>
+
+    <!-- Main Component -->
 
     </div>
 </body>
