@@ -11,6 +11,7 @@
     height: 100%;
     background-color: #f6f6f6;
     position: relative;
+    overflow: hidden;
 }
 
 .login__right {
@@ -18,6 +19,7 @@
     width: 50%;
     height: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 
@@ -37,6 +39,7 @@
     position: absolute;
     bottom: 5rem;
     transform: translateY(50%);
+    overflow: hidden;
 }
 
 .login__left__img img {
@@ -90,16 +93,16 @@
 
 @media (max-width: 37.5em) {
     .login__form {
-        width: 70%;
+        width: 90%;
     }
 }
 
 .login__logo {
     float: left;
-    width: 17rem;
-    height: 3rem;
+    width: 30rem;
+    height: 5rem;
     transform: translateX(-50%);
-    margin: 2rem 0 4rem 50%;
+    margin: 2rem 0 6rem 50%;
 }
 
 .login__logo img {
@@ -125,11 +128,19 @@
     position: absolute;
     bottom: 5rem;
     transform: translate(-50%, 50%);
+    overflow: hidden;
 }
 
 .login__right__img img {
     height: 100%;
     width: 100%;
+}
+
+@media (max-width: 75em) {
+    .login__right__img {
+        width: 140%;
+        height: 50%;
+    }
 }
 
 @media (max-width: 56.25em) {
@@ -138,7 +149,6 @@
         height: 50%;
     }
 }
-
 
 .login__text {
     float: left;

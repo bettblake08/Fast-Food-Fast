@@ -993,3 +993,15 @@ body::-webkit-scrollbar-thumb {
     color: #333;
     margin-right: 2rem;
 }
+
+@media (max-width: 37.5em) {
+    .footer {
+        padding:0 3rem;
+    }
+    .footer__link {
+        width:100%;
+        text-align: center;
+        height: 6rem;
+        line-height: 6rem;
+    }
+}

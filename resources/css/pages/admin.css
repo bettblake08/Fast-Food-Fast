@@ -4,17 +4,17 @@ html {
 
 @media (max-width: 100em) {
     html {
-        font-size: 8px;
-    }
-}
-
-@media (max-width: 56.25em) {
-    html {
-        font-size: 8px;
+        font-size: 9px;
     }
 }
 
 @media (max-width: 75em) {
+    html {
+        font-size: 8x;
+    }
+}
+
+@media (max-width: 56.25em) {
     html {
         font-size: 7px;
     }
@@ -190,6 +190,121 @@ body::-webkit-scrollbar-thumb {
     font-size: 1.3rem;
 }
 
+@media (max-width: 75em) {
+    .f_banner_1 {
+        font-size: 3.3rem;
+    }
+
+    .f_title {
+        font-size: 5.7rem;
+    }
+
+    .f_subtitle_1 {
+        font-size: 3.9rem;
+    }
+
+    .f_label_1 {
+        font-size: 2.1rem;
+    }
+
+    .f_h1 {
+        font-size: 3rem;
+    }
+
+    .f_h2 {
+        font-size: 2.7rem;
+    }
+
+    .f_h3 {
+        font-size: 2.4rem;
+    }
+
+    .f_normal {
+        font-size: 2.1rem;
+    }
+
+    .f_button_1 {
+        font-size: 1.8rem;
+    }
+
+    .f_button_2 {
+        font-size: 2.1rem;
+    }
+
+    .f_input_1 {
+        font-size: 2.1rem;
+    }
+
+    .f_input_dd_1 {
+        font-size: 1.9rem;
+    }
+
+    .f_input_ta {
+        font-size: 2.1rem;
+    }
+
+    .f_comment_1 {
+        font-size: 1.8rem;
+    }
+
+    .f_tab_h1 {
+        font-size: 2.1rem;
+    }
+
+    .f_tab_h2 {
+        font-size: 1.9rem;
+    }
+}
+
+@media (max-width: 37.5em) {
+    .f_banner_1 {
+        font-size: 3.3rem;
+    }
+
+    .f_label_1 {
+        font-size: 2.8rem;
+    }
+
+    .f_h1 {
+        font-size: 4rem;
+    }
+
+    .f_h2 {
+        font-size: 3.6rem;
+    }
+
+    .f_h3 {
+        font-size: 3.2rem;
+    }
+
+    .f_normal {
+        font-size: 2.8rem;
+    }
+
+    .f_input_1 {
+        font-size: 2.8rem;
+    }
+
+    .f_input_dd_1 {
+        font-size: 2.6rem;
+    }
+
+    .f_input_ta {
+        font-size: 2.8rem;
+    }
+
+    .f_comment_1 {
+        font-size: 2.4rem;
+    }
+
+    .f_tab_h1 {
+        font-size: 2.8rem;
+    }
+
+    .f_tab_h2 {
+        font-size: 2.6rem;
+    }
+}
 
 .btn_1,
 .btn_1--fail,
@@ -206,6 +321,20 @@ body::-webkit-scrollbar-thumb {
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
     cursor: pointer;
+}
+
+@media (max-width: 75em) {
+
+    .btn_1,
+    .btn_1--fail,
+    .btn_1--success,
+    .btn_1--loading,
+    .btn_1--warning,
+    .btn_1--danger,
+    .btn_1--white {
+        height: 6rem;
+        line-height: 6rem;
+    }
 }
 
 .btn_1--white {
@@ -610,6 +739,32 @@ body::-webkit-scrollbar-thumb {
 
 .text_input__label {
     display: none;
+}
+
+@media (max-width: 75em) {
+
+    .text_input input,
+    .text_input--normal input,
+    .text_input--fail input,
+    .text_input--success input,
+    .text_input--warning input,
+    .text_input--danger input,
+    .text_input--loading input {
+        height: 6rem;
+    }
+}
+
+@media (max-width: 37.5em) {
+
+    .text_input input,
+    .text_input--normal input,
+    .text_input--fail input,
+    .text_input--success input,
+    .text_input--warning input,
+    .text_input--danger input,
+    .text_input--loading input {
+        height: 8rem;
+    }
 }
 
 #adminSideBarMenu {

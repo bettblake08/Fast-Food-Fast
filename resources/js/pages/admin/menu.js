@@ -38,8 +38,7 @@ class MenuItem{
 			item:params.item
 		};
 
-		let OrderForm = this,
-			main = document.createElement("div"),
+		let main = document.createElement("div"),
 			itemImage = document.createElement("div"),
 			itemImageImg = new Image(),
 			itemName = document.createElement("div"),

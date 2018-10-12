@@ -48,7 +48,7 @@ class LoginForm {
 
 		let button = new Button({
 			class: "btn_1",
-			textClass: "f_button_1",
+			textClass: "f_button_2",
 			label: "Sign In",
 			parent: loginForm,
 			status: 0,
