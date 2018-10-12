@@ -69,7 +69,7 @@ def refresh_token():
 
     session["loggedInUser"] = {
         'loggedIn': True,
-        'role': user.role
+        'role': user['role']
     }
 
     return resp,201
