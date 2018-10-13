@@ -13,7 +13,7 @@ import {
 
 class AdminHeader{
 	constructor(params = {}) {
-		/* 
+		/*
         This is the MainHeader model constructor
 
         :args

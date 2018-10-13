@@ -172,6 +172,11 @@
    }
 }
 
+.foodMenu__error{
+    float:left;
+    margin:2rem 0;
+}
+
 .foodMenu__bottom {
     float: left;
     width: 100%;

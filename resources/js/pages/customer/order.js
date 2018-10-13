@@ -17,6 +17,7 @@ class OrderForm{
 			orderMenuTopbar = document.createElement("div"),
 			orderMenuTitle = document.createElement("div"),
 			orderMenuBottom = document.createElement("div"),
+			orderMenuError = document.createElement("div"),
 			orderMenuOrderButton = document.createElement("div"),
 			orderMenuTotal = document.createElement("div"),
 			orderMenuCategoryBreakfast = document.createElement("div"),
@@ -33,7 +34,11 @@ class OrderForm{
 		orderMenuTopbar.appendChild(orderMenuTitle);
 
 		orderMenuContent.classList.add("foodMenu__content");
-        
+
+		orderMenuError.classList.add("foodMenu__error");
+		orderMenuError.classList.add("errorComment--disabled");
+		orderMenuError.classList.add("f_comment_1");
+
 		let button = new Button({
 			class: "btn_1",
 			textClass: "f_button_2",
@@ -77,12 +82,14 @@ class OrderForm{
 
 		main.appendChild(orderMenuTopbar);
 		main.appendChild(orderMenuContent);
+		main.appendChild(orderMenuError);
 		main.appendChild(orderMenuBottom);
 
 		this._components = {
 			main,
 			orderMenuContent,
 			orderMenuTopbar,
+			orderMenuError,
 			orderMenuTitle,
 			orderMenuBottom,
 			orderMenuOrderButton,
@@ -112,6 +119,23 @@ class OrderForm{
     
 	init(){
 		document.querySelector(".foodMenu").appendChild(this.components.main);
+	}	
+
+	displayError(message, ERROR_DISPLAY_DELAY = 3000){
+		let errorDisplay = this.components.orderMenuError;
+
+		errorDisplay.innerHTML = message;
+		errorDisplay.classList.replace(
+			"errorComment--disabled",
+			"errorComment--active");
+
+		setTimeout(() => {
+			errorDisplay.innerHTML = "";
+			errorDisplay.classList.replace(
+				"errorComment--active",
+				"errorComment--disabled");
+
+		}, ERROR_DISPLAY_DELAY);
 	}
 
 	setMenuError(message){
@@ -233,7 +257,7 @@ class OrderForm{
 		});
         
 		if(orderedItems.length == 0){
-			alert("You have selected no items!");
+			this.displayError("You have not selected any items!");
 			return;
 		}
 
