@@ -1,0 +1,177 @@
+.content {
+    float: left;
+    width: 100%;
+}
+
+.orderHistory {
+    width: 60%;
+    float: left;
+    margin-left: 20%;
+}
+
+@media (max-width: 75em) {
+    .orderHistory {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+
+.orderHistory__topBar {
+    float: left;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-bottom: solid .2rem rgb(223, 0, 0);
+}
+
+.orderHistory__title {
+    color: rgb(223, 0, 0);
+    float: left;
+    line-height: 5rem;
+}
+
+.orderHistory__view {
+    float: left;
+    width: 100%;
+}
+
+.orderHistory__content{
+    float:left;
+    margin-top:2rem;
+    width:100%;
+}
+
+.order {
+    width: 100%;
+    float: left;
+    margin-bottom: 2rem;
+}
+
+.order__details {
+    grid-area: details;
+    grid-template-columns: 15% 35% 15% 25% 10%;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "id total . time status"
+        "items items items items items";
+    display: grid;
+}
+
+@media (max-width: 75em) {
+    .order__details {
+        grid-template-columns: 15% 35% 40% 10%;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "id total time status"
+            "items items items items";
+    }
+}
+
+@media (max-width: 37.5em) {
+    .order__details {
+        grid-template-columns: 40% 20% 40%;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "id total total"
+            "status time time"
+            "items items items";
+    }
+}
+
+.order__details div {
+    align-self: start;
+}
+
+.order__id {
+    grid-area: id;
+    color: #FFF;
+    background-color: rgb(223, 0, 0);
+    line-height: 5rem;
+    text-align: center !important;
+}
+
+.order__items {
+    grid-area: items;
+    overflow: hidden;
+    height: 0;
+    background-color: #FFF;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.order:hover .order__items {
+    height: auto;
+    border: solid .1rem rgb(223, 0, 0);
+    margin:3rem 0;
+}
+
+.order__item {
+    width: 100%;
+    float: left;
+    position: relative;
+    height: 5rem;
+    grid-template-columns: auto 30% 5rem;
+    grid-template-rows: auto;
+    grid-template-areas: "name price quantity";
+    display: grid;
+}
+
+.order__item__name {
+    grid-area: name;
+    color: #111;
+    padding: 0 2rem;
+    line-height: 5rem;
+}
+
+.order__item__price {
+    grid-area: price;
+    color: #111;
+    line-height: 5rem;
+    text-align: center !important;
+}
+
+.order__item__quantity {
+    grid-area: quantity;
+    color: #FFF;
+    background-color: rgb(223, 0, 0);
+    text-align: center !important;
+    line-height: 5rem;
+}
+
+.order__total {
+    grid-area: total;
+    color: #333;
+    background-color: #FFF;
+    height: 5rem;
+    line-height: 3rem;
+    padding: 1rem;
+    text-align: center !important;
+}
+
+.order__status--complete,
+.order__status--cancelled,
+.order__status--pending,
+.order__status--processing {
+    grid-area: status;
+    line-height: 5rem;
+    text-align: center !important;
+}
+
+.order__status--complete {
+    color: #FFF;
+    background-color: #00a84f;
+}
+
+.order__status--cancelled,
+.order__status--pending,
+.order__status--processing {
+    color: #333;
+    background-color: transparent;
+}
+
+.order__time {
+    grid-area: time;
+    line-height: 3rem;
+    padding: 1rem;
+    text-align: center !important;
+    color: #111;
+}
