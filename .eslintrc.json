@@ -25,5 +25,15 @@
             "error",
             "always"
         ]
-    }
+    },
+    "globals": {
+        "page": true,
+        "browser": true,
+        "context": true,
+        "jestPuppeteer": true,
+        "describe": true,
+        "it": true,
+        "expect": true,
+        "PATH": true
+        }
 }
