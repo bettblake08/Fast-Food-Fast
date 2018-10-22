@@ -69,7 +69,7 @@
     "preset": "jest-puppeteer",
     "globals": {
       "PATH": "http://localhost:5000",
-      "SCREENSHOT_PATH": "suite-4-test-3-2.jpg"
+      "SCREENSHOT_PATH": "tests/screenshots/"
     }
   }
 }
