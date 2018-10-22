@@ -146,4 +146,17 @@ describe("Customer Order Menu: ", () => {
 		expect(pageTite).toBe("Order History");
 	});
 
+	it("Test customer log out", async () => {
+		await page.click(".header__logOut button");
+
+		await page.waitFor(1000);
+		await page.screenshot({
+			path: `${SCR_PATH}5-1.jpg`
+		});
+
+		const pageTite = await page.title();
+
+		expect(pageTite).toBe("Sign In");
+	});
+
 });

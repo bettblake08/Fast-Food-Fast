@@ -41,7 +41,7 @@ class CustomerHeader{
 
 	init(){
 		let header = this,
-			logOutButton = document.querySelector(".header__logout"),
+			logOutButton = document.querySelector(".header__logOut"),
 			headerMenuButton = document.querySelector(".header__menuButton"),
 			headerDropDownMenu = document.querySelector(".header__dropDownMenu--disabled");
 		
