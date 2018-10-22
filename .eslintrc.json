@@ -34,6 +34,7 @@
         "describe": true,
         "it": true,
         "expect": true,
-        "PATH": true
+        "PATH": true,
+        "SCREENSHOT_PATH": true
         }
 }
