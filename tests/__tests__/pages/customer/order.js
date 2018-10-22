@@ -1,7 +1,7 @@
 const PAGE = PATH + "/customer/order";
 const SCR_PATH = `${SCREENSHOT_PATH}order-menu-tests-`;
 
-describe("Order Menu: ", () => {
+describe("Customer Order Menu: ", () => {
 	let orderButton = ".foodMenu__orderBtn button";
 
 	beforeAll(async () => {

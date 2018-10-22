@@ -1,15 +1,15 @@
-const PAGE = PATH + "/customer/login";
-const SCR_PATH = `${SCREENSHOT_PATH}sign-up-tests-`;
+const PAGE = PATH + "/admin/login";
+const SCR_PATH = `${SCREENSHOT_PATH}admin-log-in-tests-`;
 
-describe("Customer Sign In Page: ", () => {
+describe("Admin Sign In Page: ", () => {
 	let loginButton = ".login__save button",
 		loginUsernameInput = "#username",
 		loginPasswordInput = "#password",
 		user = {
-			name:"johndoe1",
-			nameLong: "johndoe1usernameistoolongforthespecifiedusernameInputintheloginform",
-			password: "johndoe@A1",
-			passwordInvalid: "johndoe@a1",
+			name:"johndoe2",
+			nameLong: "johndoe2usernameistoolongforthespecifiedusernameInputintheloginform",
+			password: "johndoe@A2",
+			passwordInvalid: "johndoe@a2",
 			passwordLong: "johndoe@A1passwordis2long4thespecifiedpasswordInput@theloginform"
 		};
 
@@ -89,7 +89,7 @@ describe("Customer Sign In Page: ", () => {
 
 		const newPageTitle = await page.title();
 
-		expect(newPageTitle).toBe("Order Menu");
+		expect(newPageTitle).toBe("Order Management");
 	}, 20000);
 
 });

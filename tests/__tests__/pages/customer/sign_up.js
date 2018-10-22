@@ -2,7 +2,7 @@ import faker from "faker";
 const PAGE = PATH + "/customer/signup";
 const SCR_PATH = `${SCREENSHOT_PATH}sign-up-tests-`;
 
-describe("Sign Up Page:", () => {
+describe("Customer Sign Up Page:", () => {
 	let signupButton = ".signUp__save button",
 		signupUsernameInput = "#username",
 		signupEmailInput = "#email",
