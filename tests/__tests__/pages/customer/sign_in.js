@@ -1,4 +1,5 @@
 const PAGE = PATH + "/customer/login";
+const SCR_PATH = `${SCREENSHOT_PATH}sign-up-tests-`;
 
 describe("Sign in: ", () => {
 	let loginButton = ".login__save button",
@@ -57,7 +58,7 @@ describe("Sign in: ", () => {
 		await page.waitFor(1000);
 
 		await page.screenshot({
-			path: "suite-4-test-3-1.jpg"
+			path: `${SCR_PATH}3-1.jpg`
 		});
 
 		let errorActive = await page.evaluate(() => {
@@ -68,7 +69,7 @@ describe("Sign in: ", () => {
 		await page.waitFor(5000);
 
 		await page.screenshot({
-			path: "suite-4-test-3-2.jpg"
+			path: `${SCR_PATH}3-2.jpg`
 		});
 
 		let errorDisabled = await page.evaluate(() => {

@@ -21,8 +21,8 @@ class SignUpForm {
 
 	init(){
 		let signUpButton = document.querySelector(".signUp__save"),
-		signUpInputs = document.querySelectorAll(".signUp__text"),
-		main = this;
+			signUpInputs = document.querySelectorAll(".signUp__text"),
+			main = this;
 
 		let button = new Button({
 			class:"btn_1",
@@ -92,7 +92,7 @@ class SignUpForm {
 					};
 				}
 
-				let emailCheck = /^([a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,5})$/;
+				let emailCheck = /^([a-zA-Z0-9-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,5})$/;
 
 				if (!emailCheck.test(input)) {
 					return {

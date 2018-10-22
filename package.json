@@ -9,6 +9,7 @@
     "watch": "webpack --progress -d --config ./webpack.config.js --mode development  --watch",
     "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize",
     "test:jest": "jest --runInBand",
+    "test:watch": "jest --runInBand --watch",
     "test:report": "nyc report --reporter=html"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "faker": "^4.1.0",
     "file-loader": "^2.0.0",
     "jest": "^23.6.0",
     "jest-puppeteer": "^3.4.0",
@@ -66,7 +68,8 @@
     ],
     "preset": "jest-puppeteer",
     "globals": {
-      "PATH": "http://localhost:5000"
+      "PATH": "http://localhost:5000",
+      "SCREENSHOT_PATH": "suite-4-test-3-2.jpg"
     }
   }
 }
