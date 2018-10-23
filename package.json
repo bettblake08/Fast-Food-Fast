@@ -41,6 +41,7 @@
     "faker": "^4.1.0",
     "file-loader": "^2.0.0",
     "jest": "^23.6.0",
+    "jest-dev-server": "^3.4.0",
     "jest-puppeteer": "^3.4.0",
     "manifest-revision-webpack-plugin": "^0.4.1",
     "mini-css-extract-plugin": "^0.4.3",
@@ -67,6 +68,7 @@
       "resources/js/"
     ],
     "preset": "jest-puppeteer",
+    "testEnvironment":"./tests/env.js",
     "globals": {
       "PATH": "http://localhost:5000",
       "SCREENSHOT_PATH": "tests/screenshots/"

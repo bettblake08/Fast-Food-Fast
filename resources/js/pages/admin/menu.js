@@ -7,7 +7,7 @@ import mainmealImg from "../../../images/main.png";
 import snacksImg from "../../../images/snacks.png";
 import drinksImg from "../../../images/drinks.png";
 import TextInput from "../../ui/textInput";
-import DropDowmInput from "../../ui/dropdown";
+import DropDownInput from "../../ui/dropdown";
 
 class MenuItem{
 	constructor(params) {
@@ -366,7 +366,7 @@ class AddMenuItemForm{
 				if (input.length > 120) {
 					return {
 						status: false,
-						message: "Item name is too long. Please input an item name less than 30 characters."
+						message: "Item name is too long. Please input an item name less than 120 characters."
 					};
 				}
 
@@ -419,7 +419,7 @@ class AddMenuItemForm{
 
 		addMenuItemCategory.classList.add("addMenuItem__category");
 
-		let categoryOptions = new DropDowmInput({
+		let categoryOptions = new DropDownInput({
 			class: "dropdown",
 			textClass: "f_input_dd_1",
 			label: "Menu Category",

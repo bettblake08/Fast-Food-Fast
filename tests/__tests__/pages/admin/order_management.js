@@ -2,7 +2,6 @@ const PAGE = PATH + "/admin/orderManagement";
 const SCR_PATH = `${SCREENSHOT_PATH}admin-order-management-tests-`;
 
 describe("Admin Order Management Page: ", () => {
-
 	beforeAll(async () => {
 		await page.goto(PAGE);
 		await page.waitFor(1000);
