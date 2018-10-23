@@ -1,6 +1,6 @@
 import faker from "faker";
 const PAGE = PATH + "/customer/signup";
-//const SCR_PATH = `${SCREENSHOT_PATH}sign-up-tests-`;
+const SCR_PATH = `${SCREENSHOT_PATH}sign-up-tests-`;
 
 describe("Customer Sign Up Page:", () => {
 	let signupButton = ".signUp__save button",
@@ -12,7 +12,6 @@ describe("Customer Sign Up Page:", () => {
 			name: faker.name.firstName() + faker.random.number(2,4),
 			nameExists: "johndoe1",
 			nameLong: "johnnewman1usernameistoolongforthespecifiedusernameInputintheloginform",
-			email: faker.internet.email(faker.name.firstName(),faker.name.lastName(),"rocketmail.com"),
 			emailExists: "johndoe1@rocketmail.com",
 			emailInvalid: "johnnewman1rocketmail.com",
 			emailLong: "johnnewman1emailistoolongfortheemailinput@rocketmail.com",
@@ -21,6 +20,8 @@ describe("Customer Sign Up Page:", () => {
 			passwordMismatch:"johnnewman@A2",
 			passwordLong: "johnnewman@A1passwordis2long4thespecifiedpasswordInput@theloginform"
 		};
+
+	user.email = user.name + "@rocketmail.com";
     
 	beforeEach(async () => {
 		await page.goto(PAGE);
@@ -266,12 +267,16 @@ describe("Customer Sign Up Page:", () => {
     
 	it("Test using username that already exists", async () => {
 		await page.type(signupUsernameInput, user.nameExists);
-		await page.type(signupEmailInput, user.email);
+		await page.type(signupEmailInput, user.emailExists);
 		await page.type(signupPasswordInput, user.password);
 		await page.type(signupRePasswordInput, user.password);
 		await page.click(signupButton);
 
 		await page.waitFor(() => !!document.querySelector(".errorComment--active"));
+
+		await page.screenshot({
+			path: `${SCR_PATH}14-1.jpg`
+		});
 
 		let errorActive = await page.evaluate(() => {
 			let display = document.querySelector(".signUp__error");
@@ -279,6 +284,10 @@ describe("Customer Sign Up Page:", () => {
 		});
 
 		await page.waitFor(5000);
+
+		await page.screenshot({
+			path: `${SCR_PATH}14-2.jpg`
+		});
 
 		let errorDisabled = await page.evaluate(() => {
 			let display = document.querySelector(".signUp__error");
@@ -298,6 +307,9 @@ describe("Customer Sign Up Page:", () => {
 
 		await page.waitFor(5000);
 
+		await page.screenshot({
+			path: `${SCR_PATH}15-1.jpg`
+		});
 		const newPageTitle = await page.title();
 		expect(newPageTitle).toBe("Sign In");
 	}, 10000);
