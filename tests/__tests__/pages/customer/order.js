@@ -147,16 +147,36 @@ describe("Customer Order Menu: ", () => {
 	});
 
 	it("Test customer log out", async () => {
-		await page.click(".header__logOut button");
+		await page.screenshot({
+			path: `${SCR_PATH}5-1.jpg`
+		});
+		
+		const menuButtonIsVisible = await page.$eval(".header__menuButton", (elem) => {
+			return elem.style.display !== "none";
+		});
+
+		if (menuButtonIsVisible){
+			await page.click(".header__menuButton");
+			await page.waitFor(300);
+
+			await page.screenshot({
+				path: `${SCR_PATH}5-2.jpg`
+			});
+
+			await page.click(".header__dropDownMenu__logOut button");
+		}
+		else {
+			await page.click(".header__logOut button");
+		}
 
 		await page.waitFor(1000);
 		await page.screenshot({
-			path: `${SCR_PATH}5-1.jpg`
+			path: `${SCR_PATH}5-3.jpg`
 		});
 
 		const pageTite = await page.title();
 
-		expect(pageTite).toBe("Sign In");
-	});
+		expect(pageTite).toBe("Home");
+	},10000);
 
 });
