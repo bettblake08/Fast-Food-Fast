@@ -86,7 +86,7 @@ describe("Admin Menu Management Page: ", () => {
 
 			expect(result).toBe(true);
 		});
-
+		/* 
 		it("Test using no category selected", async () => {
 			let buttons = await page.$$(menuItemButtons);
 
@@ -112,7 +112,7 @@ describe("Admin Menu Management Page: ", () => {
 
 			expect(result).toBe(true);
 		});
-        
+         */
 
 		it("Test using long item name input", async () => {
 			await page.type(itemNameInput, menuItem.nameLong);
@@ -163,7 +163,8 @@ describe("Admin Menu Management Page: ", () => {
 			expect(errorActive).toBe(true);
 			expect(errorDisabled).toBe(true);
 		}, 10000);
-        
+		
+		/* 
 		it("Test using invalid item category selected", async () => {
 			await page.select(itemCategorySelect, "1");
 			await page.select(itemCategorySelect, "");
@@ -195,7 +196,8 @@ describe("Admin Menu Management Page: ", () => {
 			expect(errorActive).toBe(true);
 			expect(errorDisabled).toBe(true);
 		}, 10000);
-        
+         */
+		/* 
 		it("Test using valid item category selected", async () => {
 			await page.focus(itemCategorySelect);
 			await page.select(itemCategorySelect, "1");
@@ -219,7 +221,7 @@ describe("Admin Menu Management Page: ", () => {
 			expect(errorActive).toBe(true);
 			expect(errorDisabled).toBe(true);
 		}, 10000);
-
+ 		*/
 		it("Test using valid input data", async () => {
 			let buttons = await page.$$(menuItemButtons);
 			

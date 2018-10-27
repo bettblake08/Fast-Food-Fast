@@ -1,5 +1,5 @@
 const PAGE = PATH + "/customer/login";
-const SCR_PATH = `${SCREENSHOT_PATH}sign-up-tests-`;
+const SCR_PATH = `${SCREENSHOT_PATH}customer-sign-in-tests-`;
 
 describe("Customer Sign In Page: ", () => {
 	let loginButton = ".login__save button",

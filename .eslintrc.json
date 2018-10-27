@@ -35,6 +35,7 @@
         "it": true,
         "expect": true,
         "PATH": true,
+        "API_PATH": true,
         "SCREENSHOT_PATH": true
         }
 }

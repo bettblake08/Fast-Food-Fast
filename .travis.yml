@@ -24,7 +24,6 @@ script:
 after_script:
   - coverage xml
   - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
-  - flask db:destroy
   
 after_success: 
   - coveralls

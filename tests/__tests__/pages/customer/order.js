@@ -1,5 +1,5 @@
 const PAGE = PATH + "/customer/order";
-const SCR_PATH = `${SCREENSHOT_PATH}order-menu-tests-`;
+const SCR_PATH = `${SCREENSHOT_PATH}customer-order-menu-tests-`;
 
 describe("Customer Order Menu: ", () => {
 	let orderButton = ".foodMenu__orderBtn button";

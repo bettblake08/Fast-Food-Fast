@@ -8,7 +8,8 @@
     "dev": "webpack --progress -d --config ./webpack.config.js --mode development ",
     "watch": "webpack --progress -d --config ./webpack.config.js --mode development  --watch",
     "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize",
-    "test:jest": "jest --runInBand",
+    "test": "jest",
+    "test:jest": "jest --runInBand --no-cache",
     "test:watch": "jest --runInBand --watch",
     "test:report": "nyc report --reporter=html"
   },
@@ -68,9 +69,9 @@
       "resources/js/"
     ],
     "preset": "jest-puppeteer",
-    "testEnvironment":"./tests/env.js",
     "globals": {
       "PATH": "http://localhost:5000",
+      "API_PATH": "http://localhost:5000/api/v1",
       "SCREENSHOT_PATH": "tests/screenshots/"
     }
   }

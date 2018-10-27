@@ -3,12 +3,13 @@
 /dist/
 /fastfoodfast.egg-info/
 /node_modules/
-#/static/
 /.vscode/
+/coverage/
+
+tests/screenshots/**
 
 __pycache__/
 .pytest_cache/
 
 *.pyc
 .env
-#manifest.json
