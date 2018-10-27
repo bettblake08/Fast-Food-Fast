@@ -27,14 +27,14 @@ describe("Customer Sign Up Page:", () => {
 	user.email = user.name + "@rocketmail.com";
 	
 	beforeAll(async () => {
+		await page.coverage.startJSCoverage({
+			resetOnNavigation: false
+		});
+
 		await page.goto(PAGE, {
 			waitUntil:"domcontentloaded"
 		});
 		//globalCoverageSetup();
-
-		await page.coverage.startJSCoverage({
-			resetOnNavigation: false
-		});
 	});
 
 	beforeEach(async () => {
@@ -52,7 +52,6 @@ describe("Customer Sign Up Page:", () => {
 			await input.focus();
 		});
 		*/
-
 	});	
 
 	it("Test using no input details", async () => {
@@ -404,20 +403,25 @@ describe("Customer Sign Up Page:", () => {
 		await page.type(signupPasswordInput, user.password);
 		await page.type(signupRePasswordInput, user.password);
 		await page.click(signupButton);
-
+		/* 
 		let requestResult = await page.waitForRequest(
 			request => request.url() === `${API_PATH}/auth/signup` && request.method() === "POST"
 		);
 
 		expect(requestResult.url()).toBe(`${API_PATH}/auth/signup`);
-
-		let responseResult = await page.waitForResponse(`${API_PATH}/auth/signup`);
-		
-		expect(responseResult.status()).toBe(403);
-
-		await page.waitFor(1000);
+		*/
 		await page.screenshot({
 			path: `${SCR_PATH}14-1.jpg`
+		});
+
+		let responseResult = await page.waitForResponse(
+			response => response.url() === `${API_PATH}/auth/signup`
+		);
+
+		expect(responseResult.status()).toBe(403);
+
+		await page.screenshot({
+			path: `${SCR_PATH}14-2.jpg`
 		});
 
 		let errorActive = await page.evaluate(() => {
@@ -427,7 +431,7 @@ describe("Customer Sign Up Page:", () => {
 
 		await page.waitFor(5000);
 		await page.screenshot({
-			path: `${SCR_PATH}14-2.jpg`
+			path: `${SCR_PATH}14-3.jpg`
 		});
 
 		let errorDisabled = await page.evaluate(() => {
@@ -442,7 +446,7 @@ describe("Customer Sign Up Page:", () => {
 		await inputClear(signupEmailInput);
 		await inputClear(signupPasswordInput);
 		await inputClear(signupRePasswordInput);
-	}, 10000);
+	}, 40000);
 
 	/* 
 	it("Test using valid input data", async () => {
@@ -467,7 +471,6 @@ describe("Customer Sign Up Page:", () => {
  	*/
 
 	afterAll(async ()=>{
-		//globalCoverageTeardown();
 		const jsCoverage = await page.coverage.stopJSCoverage();
 		pti.write(jsCoverage);
 	});
