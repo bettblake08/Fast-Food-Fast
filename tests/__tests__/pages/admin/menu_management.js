@@ -68,7 +68,7 @@ describe("Admin Menu Management Page: ", () => {
 				priceInvalid: "14.ad"
 			};
 		
-		const SUITE_SCR_PATH = `${SCR_PATH}1-`;
+		const SUITE_SCR_PATH = `${SCR_PATH}s1-`;
 
 		it("Test using no input details", async () => {
 			let buttons = await page.$$(menuItemButtons);
