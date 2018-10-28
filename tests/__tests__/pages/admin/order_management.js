@@ -1,10 +1,13 @@
+import pti from "puppeteer-to-istanbul";
+
 const PAGE = PATH + "/admin/orderManagement";
 const SCR_PATH = `${SCREENSHOT_PATH}admin-order-management-tests-`;
 
 describe("Admin Order Management Page: ", () => {
 	beforeAll(async () => {
-		await page.goto(PAGE);
-		await page.waitFor(1000);
+		await page.goto(PAGE, {
+			waitUntil: "domcontentloaded"
+		});
 
 		const pageTitle = await page.title();
 
@@ -23,17 +26,20 @@ describe("Admin Order Management Page: ", () => {
 			});
 			return;
 		}
-	});
 
-	beforeEach(async () => {
-		await page.goto(PAGE);
+		await page.coverage.startJSCoverage({
+			resetOnNavigation: false
+		});
+
+		await page.goto(PAGE, {
+			waitUntil: "domcontentloaded"
+		});
 	});
 
 	it("Test order hover to view ordered items", async () => {
-		await page.waitFor(1000);
 		let orders = await page.$$(".order");
-
 		await orders[0].hover();
+
 		await page.waitFor(300);
 
 		await page.screenshot({
@@ -151,7 +157,7 @@ describe("Admin Order Management Page: ", () => {
 		});
 
 		orderItems.forEach(async elem => {
-			let status = await elem.$(".order__status--pending");
+			let status = await elem.$(".order__status--processing");
 
 			if (status != null) {
 				orderItemOnFocus = elem;
@@ -185,6 +191,11 @@ describe("Admin Order Management Page: ", () => {
 
 			expect(result).toBe(true);
 		}
+	});
+
+	afterAll(async () => {
+		const jsCoverage = await page.coverage.stopJSCoverage();
+		pti.write(jsCoverage);
 	});
 
 });
