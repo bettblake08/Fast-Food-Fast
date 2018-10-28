@@ -34,6 +34,10 @@
         "describe": true,
         "it": true,
         "expect": true,
+        "beforeAll": true,
+        "beforeEach": true,
+        "afterAll": true,
+        "afterEach": true,
         "PATH": true,
         "API_PATH": true,
         "SCREENSHOT_PATH": true
