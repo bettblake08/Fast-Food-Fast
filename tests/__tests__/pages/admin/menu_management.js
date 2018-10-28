@@ -1,3 +1,4 @@
+import pti from "puppeteer-to-istanbul";
 import faker from "faker";
 
 const PAGE = PATH + "/admin/menu";
@@ -5,8 +6,13 @@ const SCR_PATH = `${SCREENSHOT_PATH}admin-menu-management-tests-`;
 
 describe("Admin Menu Management Page: ", () => {
 	beforeAll(async () => {
-		await page.goto(PAGE);
-		await page.waitFor(1000);
+		await page.coverage.startJSCoverage({
+			resetOnNavigation: false
+		});
+
+		await page.goto(PAGE, {
+			waitUntil: "domcontentloaded"
+		});
 
 		const pageTitle = await page.title();
 
@@ -23,18 +29,26 @@ describe("Admin Menu Management Page: ", () => {
 			await page.screenshot({
 				path: `${SCR_PATH}0-2.jpg`
 			});
+			await page.goto(PAGE, {
+				waitUntil: "domcontentloaded"
+			});
 			return;
 		}
-	});
 
-	beforeEach(async () => {
-		await page.goto(PAGE);
 	});
     
 	it("Test add menu item button", async () => {
+		await page.screenshot({
+			path: `${SCR_PATH}1-1.jpg`
+		});
+
 		let topBarButtons = await page.$$(".menu__topBar__button button");
 		await topBarButtons[0].click();
 		await page.waitFor(500);
+
+		await page.screenshot({
+			path: `${SCR_PATH}1-2.jpg`
+		});
 
 		let activeView = await page.$(".view--active");
 		let menuForm = await activeView.$(".addMenuItem");
@@ -53,16 +67,17 @@ describe("Admin Menu Management Page: ", () => {
 				price: faker.commerce.price(0, 1000, 2, ""),
 				priceInvalid: "14.ad"
 			};
+		
+		const SUITE_SCR_PATH = `${SCR_PATH}1-`;
 
-		beforeEach(async ()=>{
-			let topBarButtons = await page.$$(".menu__topBar__button button");
-			await topBarButtons[0].click();
-		});
-        
 		it("Test using no input details", async () => {
 			let buttons = await page.$$(menuItemButtons);
 			await buttons[1].click();
 			await page.waitFor(300);
+
+			await page.screenshot({
+				path: `${SUITE_SCR_PATH}1-1.jpg`
+			});
 
 			const result = await page.evaluate(() => {
 				let input = document.querySelector("#itemName");
@@ -78,6 +93,10 @@ describe("Admin Menu Management Page: ", () => {
 			await page.type(itemNameInput, menuItem.name);
 			await buttons[1].click();
 			await page.waitFor(300);
+
+			await page.screenshot({
+				path: `${SUITE_SCR_PATH}2-1.jpg`
+			});
             
 			const result = await page.evaluate(() => {
 				let input = document.querySelector("#itemPrice");
@@ -85,6 +104,9 @@ describe("Admin Menu Management Page: ", () => {
 			});
 
 			expect(result).toBe(true);
+
+			await inputClear(itemNameInput);
+			await page.waitFor(3000);
 		});
 		/* 
 		it("Test using no category selected", async () => {
@@ -120,7 +142,7 @@ describe("Admin Menu Management Page: ", () => {
 			await page.waitFor(1000);
 
 			await page.screenshot({
-				path: `${SCR_PATH}1-4-1.jpg`
+				path: `${SUITE_SCR_PATH}4-1.jpg`
 			});
 
 			let errorActive = await page.evaluate(() => {
@@ -131,7 +153,7 @@ describe("Admin Menu Management Page: ", () => {
 			await page.waitFor(5000);
 
 			await page.screenshot({
-				path: `${SCR_PATH}1-4-2.jpg`
+				path: `${SUITE_SCR_PATH}4-2.jpg`
 			});
 
 			let errorDisabled = await page.evaluate(() => {
@@ -141,12 +163,21 @@ describe("Admin Menu Management Page: ", () => {
 
 			expect(errorActive).toBe(true);
 			expect(errorDisabled).toBe(true);
+
+			/*
+			await inputClear(itemNameInput);
+			await page.waitFor(3000);
+			*/
 		}, 10000);
         
 		it("Test using invalid item price input", async () => {
 			await page.type(itemPriceInput, menuItem.priceInvalid);
 			await page.focus(itemNameInput);
 			await page.waitFor(1000);
+
+			await page.screenshot({
+				path: `${SUITE_SCR_PATH}5-1.jpg`
+			});
 
 			let errorActive = await page.evaluate(() => {
 				let display = document.querySelectorAll(".text_input__error")[1];
@@ -155,6 +186,10 @@ describe("Admin Menu Management Page: ", () => {
 
 			await page.waitFor(5000);
 
+			await page.screenshot({
+				path: `${SUITE_SCR_PATH}5-2.jpg`
+			});
+
 			let errorDisabled = await page.evaluate(() => {
 				let display = document.querySelectorAll(".text_input__error")[1];
 				return display.classList.contains("errorComment--disabled");
@@ -162,7 +197,11 @@ describe("Admin Menu Management Page: ", () => {
 
 			expect(errorActive).toBe(true);
 			expect(errorDisabled).toBe(true);
-		}, 10000);
+
+			await inputClear(itemNameInput);
+			await inputClear(itemPriceInput);
+			await page.waitFor(3000);
+		}, 15000);
 		
 		/* 
 		it("Test using invalid item category selected", async () => {
@@ -233,12 +272,26 @@ describe("Admin Menu Management Page: ", () => {
 			await page.waitFor(3000);
 
 			await page.screenshot({
-				path: `${SCR_PATH}1-8-1.jpg`
+				path: `${SUITE_SCR_PATH}8-1.jpg`
 			});
+
 			const newPageTitle = await page.title();
 			expect(newPageTitle).toBe("Menu");
 		}, 10000);
 
 	});
 
+	afterAll(async () => {
+		const jsCoverage = await page.coverage.stopJSCoverage();
+		pti.write(jsCoverage);
+	});
+
+	async function inputClear(input) {
+		await page.click(input);
+		await page.keyboard.down("Control");
+		await page.keyboard.down("A");
+		await page.keyboard.up("Control");
+		await page.keyboard.up("A");
+		await page.keyboard.press("Backspace");
+	}
 });
