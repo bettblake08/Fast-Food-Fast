@@ -37,23 +37,6 @@ describe("Customer Sign Up Page:", () => {
 		//globalCoverageSetup();
 	});
 
-	beforeEach(async () => {
-		/* await page.evaluate(() => {
-			let inputs = document.querySelectorAll("input");
-
-			inputs.forEach(input => {
-				input.value = "";
-			});
-		});
-
-		let inputs = await page.$$("input");
-		
-		inputs.forEach(async input => {
-			await input.focus();
-		});
-		*/
-	});	
-
 	it("Test using no input details", async () => {
 		await page.click(signupButton);
 		await page.waitFor(1000);
@@ -398,40 +381,36 @@ describe("Customer Sign Up Page:", () => {
 	}, 15000);
     
 	it("Test using username that already exists", async () => {
-		await page.type(signupUsernameInput, user.nameExists);
-		await page.type(signupEmailInput, user.emailExists);
-		await page.type(signupPasswordInput, user.password);
-		await page.type(signupRePasswordInput, user.password);
-		await page.click(signupButton);
-		/* 
-		let requestResult = await page.waitForRequest(
-			request => request.url() === `${API_PATH}/auth/signup` && request.method() === "POST"
-		);
-
-		expect(requestResult.url()).toBe(`${API_PATH}/auth/signup`);
-		*/
+		await page.waitFor(3000);
 		await page.screenshot({
 			path: `${SCR_PATH}14-1.jpg`
 		});
 
-		let responseResult = await page.waitForResponse(
-			response => response.url() === `${API_PATH}/auth/signup`
-		);
+		await page.type(signupUsernameInput, user.nameExists);
+		await page.type(signupEmailInput, user.emailExists);
+		await page.type(signupPasswordInput, user.password);
+		await page.type(signupRePasswordInput, user.password);
 
-		expect(responseResult.status()).toBe(403);
+		await page.focus(signupButton);
+		await page.click(signupButton);
 
 		await page.screenshot({
 			path: `${SCR_PATH}14-2.jpg`
 		});
-
+ 
 		let errorActive = await page.evaluate(() => {
 			let display = document.querySelector(".signUp__error");
 			return display.classList.contains("errorComment--active");
 		});
 
-		await page.waitFor(5000);
+		await page.waitFor(2000);
 		await page.screenshot({
 			path: `${SCR_PATH}14-3.jpg`
+		});
+
+		await page.waitFor(3000);
+		await page.screenshot({
+			path: `${SCR_PATH}14-4.jpg`
 		});
 
 		let errorDisabled = await page.evaluate(() => {
@@ -448,29 +427,34 @@ describe("Customer Sign Up Page:", () => {
 		await inputClear(signupRePasswordInput);
 	}, 40000);
 
-	/* 
 	it("Test using valid input data", async () => {
-		await page.type(signupUsernameInput, user.name);
-		await page.type(signupEmailInput, user.email);
-		await page.type(signupPasswordInput, user.password);
-		await page.type(signupRePasswordInput, user.password);
-		await page.click(signupButton);
-
-		await page.waitForResponse(
-			response => response.url() === `${API_PATH}/auth/signup`);
-
-		await page.waitFor(2000);
+		await page.waitFor(3000);
 
 		await page.screenshot({
 			path: `${SCR_PATH}15-1.jpg`
 		});
 
+		await page.type(signupUsernameInput, user.name);
+		await page.type(signupEmailInput, user.email);
+		await page.type(signupPasswordInput, user.password);
+		await page.type(signupRePasswordInput, user.password);
+		await page.focus(signupButton);
+		await page.click(signupButton);
+
+		await page.screenshot({
+			path: `${SCR_PATH}15-2.jpg`
+		});
+
+		await page.waitFor(2000);
+		await page.screenshot({
+			path: `${SCR_PATH}15-3.jpg`
+		});
+
 		const newPageTitle = await page.title();
 		expect(newPageTitle).toBe("Sign In");
-	}, 10000);
- 	*/
+	}, 15000);
 
-	afterAll(async ()=>{
+	afterAll(async () => {
 		const jsCoverage = await page.coverage.stopJSCoverage();
 		pti.write(jsCoverage);
 	});
