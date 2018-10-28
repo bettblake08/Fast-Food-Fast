@@ -1,3 +1,5 @@
+import pti from "puppeteer-to-istanbul";
+
 const PAGE = PATH + "/customer/login";
 const SCR_PATH = `${SCREENSHOT_PATH}customer-sign-in-tests-`;
 
@@ -12,13 +14,23 @@ describe("Customer Sign In Page: ", () => {
 			passwordInvalid: "johndoe@a1",
 			passwordLong: "johndoe@A1passwordis2long4thespecifiedpasswordInput@theloginform"
 		};
+	
+	beforeAll(async () => {
+		await page.coverage.startJSCoverage({
+			resetOnNavigation: false
+		});
 
-	beforeEach(async () => {
-		await page.goto(PAGE);
+		await page.goto(PAGE, {
+			waitUntil: "domcontentloaded"
+		});
 	});
 
 	it("Test login using empty input details ",async () => {
 		await page.click(loginButton);
+
+		await page.screenshot({
+			path: `${SCR_PATH}1-1.jpg`
+		});
 
 		const result = await page.evaluate(() => {
 			let input = document.querySelector("#username");
@@ -32,17 +44,36 @@ describe("Customer Sign In Page: ", () => {
 		await page.type(loginUsernameInput, user.name);
 		await page.click(loginButton);
 
+		await page.screenshot({
+			path: `${SCR_PATH}2-1.jpg`
+		});
+
 		const focused = await page.evaluate(()=>{
 			let input = document.querySelector("#password");
 			return document.activeElement === input;
 		});
 
 		expect(focused).toBe(true);
+
+		await inputClear(loginUsernameInput);
+		await page.waitFor(1000);
+
+		await page.screenshot({
+			path: `${SCR_PATH}2-2.jpg`
+		});
 	});
 
 	it("Test login using empty username input", async () => {
+		await page.waitFor(4000);
+
 		await page.type(loginPasswordInput, user.password);
 		await page.click(loginButton);
+
+		await page.waitFor(300);
+		
+		await page.screenshot({
+			path: `${SCR_PATH}3-1.jpg`
+		});
 
 		const focused = await page.evaluate(() => {
 			let input = document.querySelector("#username");
@@ -50,7 +81,12 @@ describe("Customer Sign In Page: ", () => {
 		});
 
 		expect(focused).toBe(true);
-	});
+
+		await inputClear(loginPasswordInput);
+		await page.screenshot({
+			path: `${SCR_PATH}3-2.jpg`
+		});
+	}, 10000);
 
 	it("Test for empty username input on focus out ", async () => {
 		await page.type(loginUsernameInput, "");
@@ -58,7 +94,7 @@ describe("Customer Sign In Page: ", () => {
 		await page.waitFor(1000);
 
 		await page.screenshot({
-			path: `${SCR_PATH}3-1.jpg`
+			path: `${SCR_PATH}4-1.jpg`
 		});
 
 		let errorActive = await page.evaluate(() => {
@@ -69,7 +105,7 @@ describe("Customer Sign In Page: ", () => {
 		await page.waitFor(5000);
 
 		await page.screenshot({
-			path: `${SCR_PATH}3-2.jpg`
+			path: `${SCR_PATH}4-2.jpg`
 		});
 
 		let errorDisabled = await page.evaluate(() => {
@@ -79,17 +115,36 @@ describe("Customer Sign In Page: ", () => {
 	
 		expect(errorActive).toBe(true);
 		expect(errorDisabled).toBe(true);
-	},10000);
+	}, 10000);
 
 	it("Test login using valid inputs", async () => {
+		await page.waitFor(1000);
 		await page.type(loginUsernameInput, user.name);
 		await page.type(loginPasswordInput, user.password);
 		await page.click(loginButton);
-		await page.waitFor(5000);
+
+		await page.waitFor(3000);
+
+		await page.screenshot({
+			path: `${SCR_PATH}5-1.jpg`
+		});
 
 		const newPageTitle = await page.title();
 
 		expect(newPageTitle).toBe("Order Menu");
 	}, 20000);
 
+	afterAll(async () => {
+		const jsCoverage = await page.coverage.stopJSCoverage();
+		pti.write(jsCoverage);
+	});
+
+	async function inputClear(input) {
+		await page.click(input);
+		await page.keyboard.down("Control");
+		await page.keyboard.down("A");
+		await page.keyboard.up("Control");
+		await page.keyboard.up("A");
+		await page.keyboard.press("Backspace");
+	}
 });
