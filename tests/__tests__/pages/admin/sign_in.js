@@ -1,5 +1,3 @@
-import pti from "puppeteer-to-istanbul";
-
 const PAGE = PATH + "/admin/login";
 const SCR_PATH = `${SCREENSHOT_PATH}admin-log-in-tests-`;
 
@@ -16,10 +14,6 @@ describe("Admin Sign In Page: ", () => {
 		};
 
 	beforeAll(async () => {
-		await page.coverage.startJSCoverage({
-			resetOnNavigation: false
-		});
-
 		await page.goto(PAGE, {
 			waitUntil: "domcontentloaded"
 		});
@@ -64,17 +58,20 @@ describe("Admin Sign In Page: ", () => {
 	});
 
 	it("Test login using empty username input", async () => {
-		await page.waitFor(4000);
-
 		await page.type(loginPasswordInput, user.password);
-		await page.click(loginButton);
-
-		await page.waitFor(300);
+		await page.waitFor(5000);
 
 		await page.screenshot({
 			path: `${SCR_PATH}3-1.jpg`
 		});
 
+		await page.click(loginButton);
+
+		await page.waitFor(300);
+
+		await page.screenshot({
+			path: `${SCR_PATH}3-2.jpg`
+		});
 
 		const focused = await page.evaluate(() => {
 			let input = document.querySelector("#username");
@@ -83,11 +80,13 @@ describe("Admin Sign In Page: ", () => {
 
 		expect(focused).toBe(true);
 
+		await page.waitFor(1000);
+
 		await inputClear(loginPasswordInput);
 		await page.screenshot({
-			path: `${SCR_PATH}3-2.jpg`
+			path: `${SCR_PATH}3-3.jpg`
 		});
-	});
+	}, 10000);
 
 	it("Test for empty username input on focus out ", async () => {
 		await page.type(loginUsernameInput, "");
@@ -119,26 +118,26 @@ describe("Admin Sign In Page: ", () => {
 	},10000);
 
 	it("Test login using valid inputs", async () => {
-		await page.waitFor(1000);
+		await page.waitFor(5000);
 		await page.type(loginUsernameInput, user.name);
 		await page.type(loginPasswordInput, user.password);
+		await page.waitFor(1000);
 		await page.click(loginButton);
-
-		await page.waitFor(3000);
 
 		await page.screenshot({
 			path: `${SCR_PATH}5-1.jpg`
 		});
 
+		await page.waitFor(3000);
+
+		await page.screenshot({
+			path: `${SCR_PATH}5-2.jpg`
+		});
+
 		const newPageTitle = await page.title();
 
 		expect(newPageTitle).toBe("Order Management");
-	}, 20000);
-
-	afterAll(async () => {
-		const jsCoverage = await page.coverage.stopJSCoverage();
-		pti.write(jsCoverage);
-	});
+	}, 10000);
 
 	async function inputClear(input) {
 		await page.click(input);

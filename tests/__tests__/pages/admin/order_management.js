@@ -27,10 +27,6 @@ describe("Admin Order Management Page: ", () => {
 			return;
 		}
 
-		await page.coverage.startJSCoverage({
-			resetOnNavigation: false
-		});
-
 		await page.goto(PAGE, {
 			waitUntil: "domcontentloaded"
 		});
@@ -191,11 +187,6 @@ describe("Admin Order Management Page: ", () => {
 
 			expect(result).toBe(true);
 		}
-	});
-
-	afterAll(async () => {
-		const jsCoverage = await page.coverage.stopJSCoverage();
-		pti.write(jsCoverage);
 	});
 
 });

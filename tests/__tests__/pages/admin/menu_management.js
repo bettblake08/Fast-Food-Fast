@@ -6,10 +6,6 @@ const SCR_PATH = `${SCREENSHOT_PATH}admin-menu-management-tests-`;
 
 describe("Admin Menu Management Page: ", () => {
 	beforeAll(async () => {
-		await page.coverage.startJSCoverage({
-			resetOnNavigation: false
-		});
-
 		await page.goto(PAGE, {
 			waitUntil: "domcontentloaded"
 		});
@@ -279,11 +275,6 @@ describe("Admin Menu Management Page: ", () => {
 			expect(newPageTitle).toBe("Menu");
 		}, 10000);
 
-	});
-
-	afterAll(async () => {
-		const jsCoverage = await page.coverage.stopJSCoverage();
-		pti.write(jsCoverage);
 	});
 
 	async function inputClear(input) {

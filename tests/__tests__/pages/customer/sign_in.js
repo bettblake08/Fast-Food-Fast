@@ -1,5 +1,3 @@
-import pti from "puppeteer-to-istanbul";
-
 const PAGE = PATH + "/customer/login";
 const SCR_PATH = `${SCREENSHOT_PATH}customer-sign-in-tests-`;
 
@@ -16,10 +14,6 @@ describe("Customer Sign In Page: ", () => {
 		};
 	
 	beforeAll(async () => {
-		await page.coverage.startJSCoverage({
-			resetOnNavigation: false
-		});
-
 		await page.goto(PAGE, {
 			waitUntil: "domcontentloaded"
 		});
@@ -133,11 +127,6 @@ describe("Customer Sign In Page: ", () => {
 
 		expect(newPageTitle).toBe("Order Menu");
 	}, 20000);
-
-	afterAll(async () => {
-		const jsCoverage = await page.coverage.stopJSCoverage();
-		pti.write(jsCoverage);
-	});
 
 	async function inputClear(input) {
 		await page.click(input);

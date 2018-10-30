@@ -1,5 +1,4 @@
 import faker from "faker";
-import pti from "puppeteer-to-istanbul";
 
 const PAGE = PATH + "/customer/signup";
 const SCR_PATH = `${SCREENSHOT_PATH}customer-sign-up-tests-`;
@@ -27,14 +26,9 @@ describe("Customer Sign Up Page:", () => {
 	user.email = user.name + "@rocketmail.com";
 	
 	beforeAll(async () => {
-		await page.coverage.startJSCoverage({
-			resetOnNavigation: false
-		});
-
 		await page.goto(PAGE, {
 			waitUntil:"domcontentloaded"
 		});
-		//globalCoverageSetup();
 	});
 
 	it("Test using no input details", async () => {
@@ -453,11 +447,6 @@ describe("Customer Sign Up Page:", () => {
 		const newPageTitle = await page.title();
 		expect(newPageTitle).toBe("Sign In");
 	}, 15000);
-
-	afterAll(async () => {
-		const jsCoverage = await page.coverage.stopJSCoverage();
-		pti.write(jsCoverage);
-	});
 
 	async function inputClear(input){
 		await page.click(input);

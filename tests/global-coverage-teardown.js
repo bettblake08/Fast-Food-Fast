@@ -1,10 +1,12 @@
-const pti = require("puppeteer-to-istanbul");
+import pti from "puppeteer-to-istanbul";
 
-module.exports = async function globalCoverageTeardown() {
+async function globalCoverageTeardown() {
 	const [jsCoverage] = await Promise.all([
 		page.coverage.stopJSCoverage(),
 		//page.coverage.stopCSSCoverage(),
 	]);
 
 	pti.write(jsCoverage);
-};
+}
+
+export default globalCoverageTeardown;

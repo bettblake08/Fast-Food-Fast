@@ -1,5 +1,3 @@
-import pti from "puppeteer-to-istanbul";
-
 const PAGE = PATH + "/customer/order";
 const SCR_PATH = `${SCREENSHOT_PATH}customer-order-menu-tests-`;
 
@@ -19,10 +17,6 @@ describe("Customer Order Menu: ", () => {
 			await page.click(".login__save button");
 			await page.waitFor(2000);
 		}
-
-		await page.coverage.startJSCoverage({
-			resetOnNavigation: false
-		});
 
 		await page.goto(PAGE, {
 			waitUntil: "domcontentloaded"
@@ -172,10 +166,5 @@ describe("Customer Order Menu: ", () => {
 
 		expect(pageTite).toBe("Home");
 	},10000);
-
-	afterAll(async () => {
-		const jsCoverage = await page.coverage.stopJSCoverage();
-		pti.write(jsCoverage);
-	});
 
 });

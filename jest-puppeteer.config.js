@@ -1,7 +1,9 @@
+
 module.exports = {
 	launch: {
-		dumpio: false,
+		dumpio: true,
 		headless: true,
+		devtools:true,
 		defaultViewPort:{
 			width:1920,
 			height:1080
@@ -10,7 +12,8 @@ module.exports = {
 	browserContext: "default",
 };
 
-/* 
+
+/*
 module.exports = {
 	launch: {
 		dumpio: false,
@@ -24,4 +27,4 @@ module.exports = {
 	},
 	browserContext: "default",
 };
- */
+*/

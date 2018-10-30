@@ -9,8 +9,9 @@
     "watch": "webpack --progress -d --config ./webpack.config.js --mode development  --watch",
     "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize",
     "test": "jest",
-    "test:jest": "jest --runInBand --no-cache",
-    "test:watch": "jest --runInBand --watch",
+    "test:jest": "jest tests/__tests__/pages/ --runInBand --no-cache",
+    "test:jest:all": "jest run-all-test --detectOpenHandles",
+    "test:watch": "jest tests/__tests__/pages/ --runInBand --watch",
     "test:report": "nyc report --reporter=html"
   },
   "repository": {
@@ -42,6 +43,7 @@
     "faker": "^4.1.0",
     "file-loader": "^2.0.0",
     "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
     "jest-dev-server": "^3.4.0",
     "jest-puppeteer": "^3.4.0",
     "manifest-revision-webpack-plugin": "^0.4.1",
@@ -68,7 +70,10 @@
       "node_modules/",
       "resources/js/"
     ],
-    "preset": "jest-puppeteer",
+    "preset":"jest-puppeteer",
+    "testEnvironment": "<rootDir>/tests/env.js",
+    "globalSetup": "<rootDir>/tests/global-setup.js",
+    "globalTeardown": "<rootDir>/tests/global-teardown.js",
     "globals": {
       "PATH": "http://localhost:5000",
       "API_PATH": "http://localhost:5000/api/v1",
