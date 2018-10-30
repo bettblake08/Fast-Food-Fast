@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -31,13 +32,6 @@
         "browser": true,
         "context": true,
         "jestPuppeteer": true,
-        "describe": true,
-        "it": true,
-        "expect": true,
-        "beforeAll": true,
-        "beforeEach": true,
-        "afterAll": true,
-        "afterEach": true,
         "PATH": true,
         "API_PATH": true,
         "SCREENSHOT_PATH": true
