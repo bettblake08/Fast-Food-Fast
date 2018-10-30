@@ -183,6 +183,33 @@ class OrderItemModel(DBModel):
         except:
             return None
 
+    @classmethod
+    def get_list_of_items(cls,order_item_list):
+        """ This function is used to get all the order items stored in the database
+
+            Returns:
+                List (OrderItemModel) if found or None if not found
+
+        """
+        in_query = ""
+
+        for item in order_item_list:
+            in_query += str(item) + ","
+
+        query = "SELECT * FROM {} WHERE id IN ({})".format(
+            cls.table, in_query.rstrip(","))
+
+        try:
+            cls.database_connection.cursor.execute(query)
+            cls.database_connection.db_connection.commit()
+            results = cls.database_connection.cursor.fetchall()
+
+            if results:
+                return [cls.get_object(result) for result in results]
+                
+        except:
+            return None
+
     def save(self):
         """ This function is used to determine whether to insert or update data to the database
         """

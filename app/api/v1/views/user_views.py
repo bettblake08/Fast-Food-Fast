@@ -38,11 +38,8 @@ class UserViews():
                             help="The item list is required")
 
         data = parser.parse_args()
-
         user = get_jwt_identity()
-
         total = 0
-        order_items = []
 
         try:
             for ordered_item in json.loads(data['items']):
@@ -74,7 +71,7 @@ class UserViews():
 
         order = OrderModel(
             user_id=user['id'],
-            items=order_items,
+            items=json.loads(data["items"]),
             total=total,
             status=0)
 
@@ -99,10 +96,26 @@ class UserViews():
         user = get_jwt_identity()
 
         orders = OrderModel.get_all_orders_by_user(user['id'])
+        menu_item_ids = set()
+
+        for order in orders:
+            if not order.items:
+                continue
+
+            for orderedItem in order.items:
+                menu_item_ids.add(orderedItem.item)
+        
+        menu = OrderItemModel.get_list_of_items([item for item in menu_item_ids])
+
+        if len(menu) == 0:
+            menu = []
 
         return make_response(
             jsonify({
-                'message':"Successfully fetched user order history!",
-                'content': [order.json() for order in orders]
+                "message":"Successfully fetched user order history!",
+                "content": {
+                    "orders": [order.json() for order in orders],
+                    "menu": [menuItem.json() for menuItem in menu]
+                }
                 }), 200
             )

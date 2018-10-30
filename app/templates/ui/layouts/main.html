@@ -1,0 +1,51 @@
+<!DOCTYPE>
+<html>
+
+<head>
+
+    <title>{% block title %}{% endblock%}</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {{stylesheet_tag('main_css') |   safe}}
+    {% block styles %}{% endblock%}
+
+    {% block scripts %}{% endblock%}
+
+</head>
+
+<body>
+    <!-- Header Component -->
+
+    <div class="header">
+        <div class="header__left">
+            <a href="/">
+                <div class="header__logo"></div>
+            </a>
+        </div>
+
+        <div class="header__right">
+
+            <div class="header__signin">
+                <a href="/customer/login">
+                    <div class="btn_1--white f_button_1">Sign In</div>
+                </a>
+            </div>
+
+            <div class="header__signup">
+                <a href="/customer/signup">
+                    <div class="btn_1--white f_button_1">Sign Up</div>
+                </a>
+            </div>
+
+            <div class="header__right__text f_normal">Want to register ?</div>
+        </div>
+    </div>
+
+    <!-- Header Component -->
+
+    {% block body %}{%endblock%}
+</body>
+
+</html>

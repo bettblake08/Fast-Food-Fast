@@ -12,7 +12,7 @@ def user_required(role_id):
             2.  Admin
 
         Args:
-            param[role] (int) : Role Id
+            param[role] (string) : Role Id
     """
 
     def user_identify(fn):

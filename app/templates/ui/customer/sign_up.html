@@ -1,0 +1,77 @@
+{% extends "layouts/main_2.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block styles %}
+
+{{stylesheet_tag('customer_signup_css') | safe}}
+
+{% endblock %}
+
+{% block scripts %}
+
+{{javascript_tag('customer_signup_js') | safe}}
+
+{% endblock %}
+
+
+{% block body %}
+
+<!-- Header Component -->
+
+<div class="header header--normal">
+    <div class="header__left">
+        <a href="/">
+            <div class="header__logo">
+                <img alt="FastFoodFast">
+            </div>
+        </a>
+    </div>
+
+    <div class="header__right">
+        <div class="header__signin">
+            <a href="/customer/login">
+                <div class="btn_1 f_button_1">Sign In</div>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Header Component -->
+
+
+
+<!-- Section 1 -->
+
+<div class="signUp">
+    <div class="signUp__background"></div>
+    <div class="signUp__foreground">
+        <form>
+
+            <h1 class="f_title">Create an account now.</h1>
+
+            <div class="signUp__form">
+
+                <div class="signUp__text"></div>
+                <div class="signUp__text"></div>
+                <div class="signUp__text"></div>
+                <div class="signUp__text"></div>
+
+                <div class="signUp__error errorComment--disabled f_comment_1"></div>
+
+                <div class="signUp__success successComment--disabled">
+                    <div class="f_h1">Sign up Successful</div>
+                    <div class="f_normal">Redirecting to login in 3 seconds...</div>
+                </div>
+
+                <div class="signUp__save"></div>
+
+            </div>
+        </form>
+
+    </div>
+
+    <!-- Section 1 -->
+
+{% endblock %}

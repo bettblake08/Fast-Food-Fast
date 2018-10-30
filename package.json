@@ -1,0 +1,47 @@
+{
+  "name": "fast-food-fast",
+  "version": "1.0.0",
+  "description": "An online fast food restaurant",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -p --progress --config ./webpack.config.js",
+    "dev": "webpack --progress -d --config ./webpack.config.js --mode development ",
+    "watch": "webpack --progress -d --config ./webpack.config.js --mode development  --watch",
+    "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bettblake08/Fast-Food-Fast.git"
+  },
+  "keywords": [
+    "python"
+  ],
+  "author": "Brian Kipkirui Bett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bettblake08/Fast-Food-Fast/issues"
+  },
+  "homepage": "https://github.com/bettblake08/Fast-Food-Fast#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.6.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "file-loader": "^2.0.0",
+    "manifest-revision-webpack-plugin": "^0.4.1",
+    "mini-css-extract-plugin": "^0.4.3",
+    "moment": "^2.22.2",
+    "style-loader": "^0.23.0",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-md5-hash": "0.0.6"
+  }
+}

@@ -1,0 +1,39 @@
+{% extends "layouts/admin.html" %}
+
+{% block title %}Order Management{% endblock %}
+
+{% block styles %}
+
+{{stylesheet_tag('admin_order_management_css')| safe}}
+
+{% endblock %}
+
+{% block scripts %}
+
+{{javascript_tag('admin_order_management_js') | safe}}
+
+{% endblock %}
+
+
+{% block body %}
+
+<!-- Content -->
+
+<div class="content">
+
+    <div class="ordersView">
+
+        <div class="ordersView__topBar">
+            <div class="ordersView__title f_h1">Orders</div>
+        </div>
+
+        <div class="ordersView__content"></div>
+
+    </div>
+
+</div>
+
+
+<!-- Content -->
+
+{% endblock %}

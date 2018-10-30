@@ -1,0 +1,54 @@
+<!DOCTYPE>
+<html>
+
+<head>
+
+    <title>Sign In</title>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {{stylesheet_tag('main_css')    |   safe}}
+    {{stylesheet_tag('customer_login_css') |   safe}}
+
+    {{javascript_tag('customer_login_js') | safe}}
+    
+</head>
+
+<body>
+
+    <!-- Login Component -->
+
+    <div class="login">
+        <form method="post" encType="multipart/form-data">
+
+            <div class="login__form">
+                
+                <a href="/">
+                    <div class="login__logo"></div>
+                </a>
+
+                <div class="login__text"></div>
+                <div class="login__text"></div>
+                
+                <div class="login__error errorComment--disabled f_comment_1"></div>
+
+                <div class="login__link">
+                    <a href="/customer/signup">
+                        <div class="login__signup f_comment_1">Sign Up</div>
+                    </a>
+
+                    <div class="login__link__text f_comment_1">Want to register ?</div>
+                </div>
+
+                <div class="login__save"></div>
+
+            </div>
+        </form>
+    </div>
+    <!-- Login Component -->
+
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+.content{
+    width: 100%;
+    height:90vh;
+    float: left;
+    overflow: hidden;
+}
+
+.ordersView {
+    padding:5rem 10%;
+    float:left;
+    width:100%;
+}
+
+@media (max-width: 75em) {
+    .ordersView {
+        padding: 5rem 10%;
+    }
+}
+
+@media (max-width: 37.5em) {
+    .ordersView {
+        padding: 5rem 5%;
+    }
+}
+
+
+.ordersView__topBar{
+    width: 100%;
+    float:left;
+    margin-bottom: 3rem;
+    border-bottom: solid .2rem rgb(223, 0, 0);
+}
+
+.ordersView__title{
+    float:left;
+    line-height: 5rem;
+    color:rgb(223, 0, 0);
+}
+
+.order {
+    width: 100%;
+    float: left;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 85% 2% 15%;
+    grid-template-rows: auto;
+    grid-template-areas: "details . statusButtons";
+}
+
+.order__details {
+    grid-area:details;     
+    grid-template-columns: 15% 15% 35% 25% 10%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "id total . time status"
+    "items items items items items";
+    display: grid;
+}
+
+.order__details div{
+    align-self: start;
+}
+
+@media (max-width: 75em) {
+    .order__details {
+        grid-template-columns: 15% 20% 45% 20%;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "id total time status"
+            "items items items items";
+    }
+}
+
+@media (max-width: 37.5em) {
+    .order {
+        grid-template-columns: 78% 2% 20%;
+        grid-template-rows: auto;
+        grid-template-areas: "details . statusButtons";
+    }
+    .order__details {
+        grid-template-columns: 40% 20% 40%;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "id total total"
+            "status time time"
+            "items items items";
+    }
+}
+
+.order__id {
+    grid-area: id;
+    color: #FFF;
+    background-color: rgb(223, 0, 0);
+    line-height: 5rem;
+    text-align: center !important;
+}
+
+.order__items {
+    grid-area: items;
+    overflow: hidden;
+    height: 0;
+    margin-top:1rem;
+    background-color: #FFF;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.order:hover .order__items {
+    height: auto;
+    border: solid .1rem rgb(223, 0, 0);
+}
+
+.order__item {
+    width: 100%;
+    float: left;
+    position: relative;
+    height: 5rem;
+}
+
+.order__item__name {
+    color: #111;
+    float: left;
+    width: 100%;
+    height: 100%;
+    padding: 0 12rem 0 2rem;
+    line-height: 5rem;
+}
+
+.order__item__price {
+    color: #111;
+    width: 100%;
+    height: 100%;
+    width: 10rem;
+    line-height: 5rem;
+    position: absolute;
+    z-index: 100;
+    text-align: center !important;
+    right: 5rem;
+}
+
+.order__item__quantity {
+    color: #FFF;
+    background-color: rgb(223, 0, 0);
+    width: 5rem;
+    height: 100%;
+    position: absolute;
+    z-index: 100;
+    right: 0;
+    text-align: center !important;
+    line-height: 5rem;
+}
+
+.order__total {
+    grid-area: total;
+    color: #333;
+    background-color: #FFF;
+    height: 5rem;
+    line-height: 3rem;
+    padding:1rem;
+    text-align: center !important;
+}
+
+.order__status--complete,
+.order__status--cancelled,
+.order__status--pending,
+.order__status--processing {
+    grid-area: status;
+    line-height: 5rem;
+    text-align: center !important;
+}
+
+.order__status--complete {
+    color: #FFF;
+    background-color: #00a84f;
+}
+
+.order__status--cancelled,
+.order__status--pending,
+.order__status--processing {
+    color: #333;
+    background-color: transparent;
+}
+
+.order__statusButtons{
+    grid-area: statusButtons;
+}
+
+.order__time {
+    grid-area: time;
+    float:left;
+    line-height: 3rem;
+    padding: 1rem;
+    text-align: center !important;
+    color: #111;
+}

@@ -1,0 +1,41 @@
+{% extends "layouts/customer.html" %}
+
+{% block title %}Order History{% endblock %}
+
+{% block styles %}
+
+{{stylesheet_tag('customer_order_history_css')| safe}}
+
+{% endblock %}
+
+{% block scripts %}
+
+{{javascript_tag('customer_order_history_js') | safe}}
+
+{% endblock %}
+
+
+{% block body %}
+
+<!-- Section -->
+
+<div class="content">
+
+    <div class="orderHistory">
+        <div class="orderHistory__topBar">
+            <div class="orderHistory__title f_h1">Order History</div>
+        </div>
+
+        <div class="orderHistory__view">
+
+            <div class="orderHistory__content"></div>
+            
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Section -->
+
+{% endblock %}

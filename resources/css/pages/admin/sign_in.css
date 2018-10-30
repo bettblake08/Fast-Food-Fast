@@ -1,0 +1,165 @@
+.login {
+    float: left;
+    width: 100%;
+    height: 95vh;
+    overflow: hidden;
+}
+
+.login__left {
+    float: left;
+    width: 50%;
+    height: 100%;
+    background-color: #f6f6f6;
+    position: relative;
+    overflow: hidden;
+}
+
+.login__right {
+    float: left;
+    width: 50%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+
+@media (max-width: 56.25em) {
+    .login__right {
+        width: 100%;
+    }
+
+    .login__left {
+        display: none;
+    }
+}
+
+.login__left__img {
+    float: left;
+    width: 100%;
+    position: absolute;
+    bottom: 5rem;
+    transform: translateY(50%);
+    overflow: hidden;
+}
+
+.login__left__img img {
+    height: 100%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.login__info {
+    float: left;
+    width: 100%;
+    padding: 10vh 5rem 0 10%;
+}
+
+.login__info h1 {
+    float: left;
+    color: rgb(223, 0, 0);
+}
+
+.login__info h2 {
+    float: left;
+    margin-bottom: 5rem;
+}
+
+.login__info p {
+    float: left;
+}
+
+.login__form {
+    position: relative;
+    width: 50%;
+    margin: 15vh 0 10rem 50%;
+    padding: 2rem 5rem;
+    float: left;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 75em) {
+    .login__form {
+        width: 60%;
+    }
+}
+
+@media (max-width: 56.25em) {
+    .login__form {
+        float: left;
+        margin: 15vh 0 10rem 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 37.5em) {
+    .login__form {
+        width: 90%;
+    }
+}
+
+.login__logo {
+    float: left;
+    width: 30rem;
+    height: 5rem;
+    transform: translateX(-50%);
+    margin: 2rem 0 6rem 50%;
+}
+
+.login__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.login__form h1 {
+    color: #000;
+    margin-bottom: 4rem;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+
+.login__right__img {
+    float: left;
+    width: 70%;
+    height: 70%;
+    margin-left: 50%;
+    position: absolute;
+    bottom: 5rem;
+    transform: translate(-50%, 50%);
+    overflow: hidden;
+}
+
+.login__right__img img {
+    height: 100%;
+    width: 100%;
+}
+
+@media (max-width: 75em) {
+    .login__right__img {
+        width: 140%;
+        height: 50%;
+    }
+}
+
+@media (max-width: 56.25em) {
+    .login__right__img {
+        width: 100%;
+        height: 50%;
+    }
+}
+
+.login__text {
+    float: left;
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.login__save {
+    width: 15rem;
+    float: left;
+    height: 5rem;
+    margin: 2rem 0 1rem 50%;
+    transform: translateX(-50%);
+}
