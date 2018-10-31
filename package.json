@@ -9,8 +9,8 @@
     "watch": "webpack --progress -d --config ./webpack.config.js --mode development  --watch",
     "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize",
     "test": "jest",
-    "test:jest": "jest tests/__tests__/pages/ --runInBand --no-cache",
-    "test:jest:all": "jest run-all-test --detectOpenHandles",
+    "test:normal": "jest tests/__tests__/pages/ --runInBand --no-cache",
+    "test:all": "jest run-all-test --detectOpenHandles",
     "test:watch": "jest tests/__tests__/pages/ --runInBand --watch",
     "test:report": "nyc report --reporter=html"
   },
