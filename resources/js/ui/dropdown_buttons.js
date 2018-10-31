@@ -1,6 +1,7 @@
 import Button from "./button";
+import Component from "../abstract/component_model";
 
-class DropdownButtons{
+class DropdownButtons extends Component{
 	constructor(params) {
 		/*
         This is the DropdownButtons Model class constructor
@@ -14,39 +15,46 @@ class DropdownButtons{
                         name    :   button name
                         action  :   button action
         */
+		super(params);
 
-		this._state = {
+		this.state = {
 			toggle:false,
 			buttons:[]
 		};
 
+		this.create();
+
+		params.parent.state.dropdownButtons.push(this);
+	}
+
+	create(){
 		let dropdownButtons = this,
 			main = document.createElement("div"),
 			ddMainButton = document.createElement("div"),
 			ddButtons = document.createElement("div");
-        
+
 		let mainButton = new Button({
-			class:`${params.class}__main__button`,
-			textClass:params.textClass,
-			status:0,
-			label:params.label,
-			parent:dropdownButtons,
-			action:()=>{
+			class: `${this.props.class}__main__button`,
+			textClass: this.props.textClass,
+			status: 0,
+			label: this.props.label,
+			parent: dropdownButtons,
+			action: () => {
 				dropdownButtons.toggleButtonOptions();
 			}
 		});
 
 		mainButton.init();
 
-		ddMainButton.classList.add(`${params.class}__main`);
+		ddMainButton.classList.add(`${this.props.class}__main`);
 		ddMainButton.appendChild(mainButton.getButton());
-        
-		ddButtons.classList.add(`${params.class}__buttons--disabled`);
 
-		params.buttons.forEach(button => {
+		ddButtons.classList.add(`${this.props.class}__buttons--disabled`);
+
+		this.props.buttons.forEach(button => {
 			let newButton = new Button({
-				class: `${params.class}__button`,
-				textClass: params.textClass,
+				class: `${this.props.class}__button`,
+				textClass: this.props.textClass,
 				status: 0,
 				label: button.name,
 				parent: dropdownButtons,
@@ -58,51 +66,17 @@ class DropdownButtons{
 			newButton.init();
 			ddButtons.appendChild(newButton.getButton());
 		});
-        
-		main.classList.add(`${params.class}`);
+
+		main.classList.add(`${this.props.class}`);
 
 		main.appendChild(ddMainButton);
 		main.appendChild(ddButtons);
-        
-		this._components = {
+
+		this.components = {
 			main,
 			ddMainButton,
 			ddButtons
 		};
-        
-		this._props = params;
-        
-		/*  
-        parentState = params.parent.state;
-        parentState.dropdownButtons.push(this);
-        params.parent.state = parentState;
-        */
-
-		params.parent.state.dropdownButtons.push(this);
-	}
-    
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get components() {
-		return this._components;
-	}
-
-	set components(value) {
-		this._components = value;
-	}
-    
-	get props() {
-		return this._props;
-	}
-
-	set props(value) {
-		this._props = value;
 	}
 
 	getDropDownButtonsComponent(){
@@ -131,50 +105,7 @@ class DropdownButtons{
 
 		this.state = state;
 	}
-
-	getButtonClass(className, status) {
-		switch (status) {
-		case 0:
-			return `${className}`;
-		case 1:
-			return `${className}--fail`;
-		case 2:
-			return `${className}--success`;
-		case 3:
-			return `${className}--loading`;
-		case 4:
-			return `${className}--warning`;
-		}
-	}
-
-	setStatus(option, STATE_DISPLAY_DELAY = 3000) {
-		let state = this.state,
-			components = this.components,
-			props = this.props,
-			main = this,
-			mainButtonClass = `${this.props.class}__main`;
-
-		let oldStatusClass = this.getButtonClass(mainButtonClass, state.status);
-		let newStatusClass = this.getButtonClass(mainButtonClass, option);
-
-		components.ddMainButton.classList.replace(oldStatusClass, newStatusClass);
-
-		if (option == 1 || option == 2) {
-			setTimeout(() => {
-				let newStatusClass = this.getButtonClass(mainButtonClass, option);
-				let mainStatusClass = this.getButtonClass(mainButtonClass, props.status);
-
-				components.main.classList.replace(newStatusClass, mainStatusClass);
-
-				state.status = props.status;
-				main.state = state;
-			}, STATE_DISPLAY_DELAY);
-		} else {
-			state.status = option;
-			main.state = state;
-		}
-	}
-
+	
 }
 
 export default DropdownButtons;

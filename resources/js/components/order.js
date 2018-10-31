@@ -2,87 +2,10 @@ import DropdownButtons from "../ui/dropdown_buttons";
 import {apiV1, webUrl} from "../abstract/variables";
 import {refreshToken, getAccessToken} from "../abstract/mixins";
 import moment from "moment";
+import Component from "../abstract/component_model";
+import OrderedItem from "./ordered_item";
 
-class OrderedItem {
-	constructor(params) {
-		/* 
-            This is an order item model class constructor
-
-            :args
-                parent  :   Parent object instance
-                item    :   Item object containing
-                            name    :   Item name
-                            price   :   Item price
-                            id      :   Item id
-                onUpdate:   A function called after quantity update
-
-                
-            :attribute
-                state   :   Contains the state of order item containing:
-                            total   :   total price for all orders of this item
-                            quantity:   number of orders for this item
-                            item    :   item object
-						
-                components   :   Contains text input elements
-            */
-
-		let main = document.createElement("div"),
-			orderedItemName = document.createElement("div"),
-			orderedItemQuantity = document.createElement("div"),
-			orderedItemPrice = document.createElement("div");
-
-		orderedItemName.classList.add("order__item__name");
-		orderedItemName.classList.add("f_normal");
-		orderedItemName.innerHTML = params.item.name;
-
-		orderedItemQuantity.classList.add("order__item__quantity");
-		orderedItemQuantity.classList.add("f_normal");
-		orderedItemQuantity.innerHTML = params.item.quantity;
-
-		orderedItemPrice.classList.add("order__item__price");
-		orderedItemPrice.classList.add("f_comment_1");
-		orderedItemPrice.innerHTML = `KSH ${(params.item.price/100)}`;
-
-		main.classList.add("order__item");
-		main.appendChild(orderedItemName);
-		main.appendChild(orderedItemQuantity);
-		main.appendChild(orderedItemPrice);
-
-		this._components = {
-			main,
-			orderedItemName,
-			orderedItemQuantity,
-			orderedItemPrice
-		};
-
-		let parentState = params.parent.state;
-		parentState.orderedItems.push(this);
-		params.parent.state = parentState;
-	}
-
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get components() {
-		return this._components;
-	}
-
-	set components(value) {
-		this._components = value;
-	}
-
-	getOrderedItem() {
-		return this.components.main;
-	}
-
-}
-
-class Order {
+class Order extends Component {
 	constructor(params) {
 		/* 
         This is an order model class constructor
@@ -103,10 +26,11 @@ class Order {
 
             components   :   Contains text input elements
         */
+		super(params);
 
 		params.onStatusUpdateSuccess = params.onStatusUpdateSuccess == undefined ? () => {} : params.onStatusUpdateSuccess;
 
-		this._state = {
+		this.state = {
 			order:params.order,
 			orderedItems:[],
 			dropdownButtons:[],
@@ -158,7 +82,7 @@ class Order {
 		main.appendChild(orderStatusButtons);
 		
 
-		this._components = {
+		this.components = {
 			main,
 			orderId,
 			orderItemsList,
@@ -171,35 +95,9 @@ class Order {
 		let parentState = params.parent.state;
 		parentState.orders.push(this);
 		params.parent.state = parentState;
-		
-		this._props = params;
 
 		this.populateOrderedItemsList();
 		this.setOrderStatusButtons();
-	}
-
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get components() {
-		return this._components;
-	}
-
-	set components(value) {
-		this._components = value;
-	}
-
-	get props() {
-		return this._props;
-	}
-
-	set props(value) {
-		this._props = value;
 	}
     
 	populateOrderedItemsList(){

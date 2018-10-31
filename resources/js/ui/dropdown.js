@@ -1,4 +1,6 @@
-class DropDownInput {
+import InputModel from "./models/input";
+
+class DropDownInput extends InputModel{
 	constructor(params) {
 		/*
         This is the DropDown Model class constructor
@@ -22,17 +24,20 @@ class DropDownInput {
 						5: 	fail
 						6:	success
         */
-
-		if (params.action == undefined){
-			params.action = ()=>{};
+		if (params.action == undefined) {
+			params.action = () => {};
 		}
 
-		this._state = {
+		super(params);
+
+		this.state = {
 			status: params.status
 		};
 
-		this._props = params;
+		this.create();
+	}
 
+	create(){
 		let input = this,
 			main = document.createElement("div"),
 			inputLabel = document.createElement("label"),
@@ -42,27 +47,29 @@ class DropDownInput {
 			inputDefaultOption = document.createElement("option"),
 			inputOptions = [];
 
-		inputLabel.setAttribute("htmlFor", params.name);
+		inputLabel.setAttribute("htmlFor", this.props.name);
 		inputLabel.classList.add("f_h2");
-		inputLabel.innerHTML = params.label;
-        
-		inputComment.classList.add(`${params.class}__comment--active`);
-		inputComment.classList.add("f_comment_1");
+		inputLabel.innerHTML = this.props.label;
 
-		inputErrorComment.classList.add(`${params.class}__error--disabled`);
-		inputErrorComment.classList.add("f_comment_1");
+		inputComment.classList.add(
+			`${this.props.class}__comment--active`,
+			"f_comment_1");
 
-		inputDefaultOption.innerHTML = params.placeholder == undefined ? "-- Select --" : params.placeholder;
+		inputErrorComment.classList.add(
+			`${this.props.class}__error--disabled`,
+			"f_comment_1");
+
+		inputDefaultOption.innerHTML = this.props.placeholder == undefined ? "-- Select --" : this.props.placeholder;
 		inputDefaultOption.value = "";
-        
-		inputSelect.setAttribute("id", params.name);
-		inputSelect.classList.add(params.textClass);
+
+		inputSelect.setAttribute("id", this.props.name);
+		inputSelect.classList.add(this.props.textClass);
 		inputSelect.appendChild(inputDefaultOption);
-		inputSelect.addEventListener("focusout",()=>{
+		inputSelect.addEventListener("focusout", () => {
 			input.updateStatus();
 		});
 
-		params.options.forEach(option => {
+		this.props.options.forEach(option => {
 			let inputOption = document.createElement("option");
 			inputOption.value = option.value;
 			inputOption.innerHTML = option.text;
@@ -71,14 +78,16 @@ class DropDownInput {
 			inputSelect.appendChild(inputOption);
 		});
 
-		main.classList.add(params.class);
-		main.classList.add(this.getSelectClass(params.class, params.status));
+		main.classList.add(
+			this.props.class,
+			this.getInputClass(this.props.class, this.props.status));
+
 		main.appendChild(inputLabel);
 		main.appendChild(inputSelect);
 		main.appendChild(inputComment);
 		main.appendChild(inputErrorComment);
 
-		this._components = {
+		this.components = {
 			main,
 			inputLabel,
 			inputSelect,
@@ -86,32 +95,6 @@ class DropDownInput {
 			inputErrorComment,
 			inputOptions
 		};
-        
-		this._props = params;
-	}
-
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get components() {
-		return this._components;
-	}
-
-	set components(value) {
-		this._components = value;
-	}
-
-	get props() {
-		return this._props;
-	}
-
-	set props(value) {
-		this._props = value;
 	}
 
 	updateStatus(){
@@ -132,84 +115,13 @@ class DropDownInput {
 	}
 
 	isValid(){
-		return this.state.status == 6;
+		return this.state.status === 6;
 	}
 
 	init() {
 		let parentState = this.props.parent.state;
 		parentState.dropdowns.push(this);
 		this.props.parent.state = parentState;
-	}
-    
-	displayError(message, ERROR_DISPLAY_DELAY = 3000){
-		let inputComment = this.components.inputComment,
-			inputErrorComment = this.components.inputErrorComment;
-
-		inputComment.classList.replace(
-			`${this.props.class}__comment--active`,
-			`${this.props.class}__comment--disabled`);
-
-		inputErrorComment.innerHTML = message;
-		inputErrorComment.classList.replace(
-			`${this.props.class}__error--disabled`,
-			`${this.props.class}__error--active`);
-            
-		this.setStatus(1,ERROR_DISPLAY_DELAY);
-
-		setTimeout(()=>{
-			inputComment.classList.replace(
-				`${this.props.class}__comment--disabled`,
-				`${this.props.class}__comment--active`);
-
-			inputErrorComment.innerHTML = "";
-			inputErrorComment.classList.replace(
-				`${this.props.class}__error--active`,
-				`${this.props.class}__error--disabled`);
-		}, ERROR_DISPLAY_DELAY);
-	}
-
-	setStatus(option, STATE_DISPLAY_DELAY = 3000) {
-		let state = this.state,
-			components = this.components,
-			props = this.props,
-			main = this;
-
-		let oldStatusClass = this.getSelectClass(props.class, state.status);
-		let newStatusClass = this.getSelectClass(props.class, option);
-
-		components.main.classList.replace(oldStatusClass, newStatusClass);
-
-		if (option == 1 || option == 2) {
-			setTimeout(() => {
-				let newStatusClass = this.getSelectClass(props.class, option);
-				let mainStatusClass = this.getSelectClass(props.class, props.status);
-
-				components.main.classList.replace(newStatusClass, mainStatusClass);
-
-				state.status = props.status;
-				main.state = state;
-			}, STATE_DISPLAY_DELAY);
-		} else {
-			state.status = option;
-			main.state = state;
-		}
-	}
-
-	getSelectClass(className, status) {
-		switch (status) {
-		case 0:
-			return `${className}`;
-		case 1:
-		case 5:
-			return `${className}--fail`;
-		case 2:
-		case 6:
-			return `${className}--success`;
-		case 3:
-			return `${className}--loading`;
-		case 4:
-			return `${className}--warning`;
-		}
 	}
 
 	focus(){

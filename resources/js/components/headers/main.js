@@ -1,7 +1,6 @@
-import logoWhite from "../../../images/logo2.png";
-import logoBlack from "../../../images/logo.png";
+import HeaderModel from "./model";
 
-class MainHeader{
+class MainHeader extends HeaderModel{
 	constructor(params) {
 		/* 
         This is the MainHeader model constructor
@@ -9,47 +8,17 @@ class MainHeader{
         :args
             type    :   The header types
         */
-		this._state = {
+		super(params);
+
+		this.state = {
 			headerType: params.type == undefined ? "black" : params.type
 		};
 
-		this._components = {};
-	}
-
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get component() {
-		return this._component;
-	}
-
-	set component(value) {
-		this._component = value;
+		this.components = {};
 	}
 
 	init(){
-		let headerLogo = document.querySelector(".header__logo"),
-			logoImg = new Image();
-            
-		logoImg.alt = "FastFoodFast Logo";
-
-		switch (this.state.headerType){
-		case "black":{
-			logoImg.src = logoBlack;
-			break;
-		}
-		case "white":{
-			logoImg.src = logoWhite;
-			break;
-		}
-		}
-
-		headerLogo.appendChild(logoImg);        
+		this.changeHeaderType(this.state.headerType);   
 	}
 }
 

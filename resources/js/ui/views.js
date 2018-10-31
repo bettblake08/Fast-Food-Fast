@@ -1,4 +1,6 @@
-class Views {
+import Component from "../abstract/component_model";
+
+class Views extends Component{
 	constructor(params) {
 		/* 
         This is the views model class constructor
@@ -10,8 +12,9 @@ class Views {
 			state	:	The state values of the model class
 			components	:	The elements stored by the model class	
         */
+		super(params);
 
-		this._state = {
+		this.state = {
 			view:0
 		};
 
@@ -22,15 +25,16 @@ class Views {
 
 		params.views.forEach(view => {
 			let viewComponent = document.createElement("div");
+			
 			viewComponent.classList.add("view--disabled");
-
 			viewComponent.appendChild(view.getViewComponent());
+			
 			views.push(viewComponent);
 
 			main.appendChild(viewComponent);
 		});
         
-		this._components = {
+		this.components = {
 			main,
 			views
 		};
@@ -40,22 +44,6 @@ class Views {
 		}
 	}
 
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get components() {
-		return this._components;
-	}
-
-	set components(value) {
-		this._components = value;
-	}
-	
 	addView(view){		
 		let viewComponent = document.createElement("div");
 
@@ -66,10 +54,7 @@ class Views {
 		this.components.main.appendChild(viewComponent);
 	}
 
-
-	updateView(newView){
-		console.log("View updated :" + newView);
-		
+	updateView(newView){		
 		let oldViewComponent = this.components.views[this.state.view],
 			newViewComponent = this.components.views[newView];
         

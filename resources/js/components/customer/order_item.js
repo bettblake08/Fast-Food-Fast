@@ -1,9 +1,10 @@
-import breakfastImg from "../../images/breakfast.png";
-import mainmealImg from "../../images/main.png";
-import snacksImg from "../../images/snacks.png";
-import drinksImg from "../../images/drinks.png";
+import breakfastImg from "../../../images/breakfast.png";
+import mainmealImg from "../../../images/main.png";
+import snacksImg from "../../../images/snacks.png";
+import drinksImg from "../../../images/drinks.png";
+import Component from "../../abstract/component_model";
 
-class OrderItem{
+class OrderItem extends Component{
 	constructor(params) {
 		/* 
         This is an order item model class constructor
@@ -12,7 +13,8 @@ class OrderItem{
             parent  :   Parent object instance
             item    :   Item object containing
                         name    :   Item name
-                        price   :   Item price
+						price   :   Item price
+						c_id	:	Item category
                         id      :   Item id
             onUpdate:   A function called after quantity update
 
@@ -26,7 +28,9 @@ class OrderItem{
             component   :   Contains text input elements
         */
 
-		this._state = {
+		super(params);
+
+		this.state = {
 			total:0,
 			quantity:0,
 			item:params.item
@@ -43,26 +47,8 @@ class OrderItem{
 			itemQuantitySub = document.createElement("div"),
 			itemQuantityValue = document.createElement("div"),
 			itemTotal = document.createElement("div");
-        
-		switch(params.item.c_id){
-		case 1:{
-			itemImageImg.src = breakfastImg;
-			break;
-		}
-		case 2: {
-			itemImageImg.src = mainmealImg;
-			break;
-		}
-		case 3: {
-			itemImageImg.src = snacksImg;
-			break;
-		}
-		case 4: {
-			itemImageImg.src = drinksImg;
-			break;
-		}
-		}
 		
+		itemImageImg.src = this.getCategoryImage(params.item.c_id);
 		itemImageImg.alt = params.item.name;
 
 		itemImage.classList.add("foodItem__image");
@@ -111,7 +97,7 @@ class OrderItem{
 		main.appendChild(itemQuantity);
 		main.appendChild(itemTotal);
 
-		this._component = {
+		this.component = {
 			main,
 			itemImage,
 			itemImageImg,
@@ -128,23 +114,16 @@ class OrderItem{
 		parentState.orderItems.push(this);
 		params.parent.state = parentState;
 	}
-
-	get state() {
-		return this._state;
+	
+	getCategoryImage(category){
+		switch (category) {
+		case 1: return breakfastImg;
+		case 2: return mainmealImg;
+		case 3: return snacksImg;
+		case 4: return drinksImg;
+		}
 	}
 
-	set state(value) {
-		this._state = value;
-	}
-    
-	get component() {
-		return this._component;
-	}
-
-	set component(value) {
-		this._component = value;
-	}  
-    
 	updateQuantity(quantity = 1, option = true){
 		let state = this.state;
 		console.log("Updating order : " + state.item.name);

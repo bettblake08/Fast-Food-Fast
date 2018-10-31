@@ -1,23 +1,17 @@
-import {apiV1, webUrl} from "../../abstract/variables";
 import logo from "../../../images/logo2.png";
 import Button from "../../ui/button";
 import TextInput from "../../ui/textInput";
+import Component from "../../abstract/component_model";
+import { displayError, login } from "../../abstract/mixins";
 
-class LoginForm {
+class LoginForm extends Component{
 	constructor() {
-		this._state = {
+		super();
+		this.state = {
 			errorMsg: "",
 			buttons:[],
 			textInputs:[]
 		};
-	}
-
-	get state() {
-		return this._state;
-	}
-    
-	set state(value) {
-		this._state = value;
 	}
 
 	init(){
@@ -116,35 +110,14 @@ class LoginForm {
 		loginInputs[1].appendChild(passwordInput.getInput());
 	}
 
-	displayError(ERRORDELAY = 3000) {
-		console.log("Displaying error: " + this.state.errorMsg);
-
-		let state = this.state,
-			errorComment = document.querySelector(".login__error");
-
-		errorComment.classList.replace("errorComment--disabled", "errorComment--active");
-		errorComment.innerHTML = state.errorMsg;
-
-		setTimeout(() => {
-			errorComment.classList.replace(
-				"errorComment--active",
-				"errorComment--disabled"
-			);
-			errorComment.innerHTML = "";
-
-		}, ERRORDELAY);
-
-		state.errorMsg = "";
-		this.state = state;
+	displayErrorMessage(error) {
+		displayError(".login__error", error, 5000);
 	}
 
 	loginAuth() {
 		console.log("Login authentication started");
 
-		const component = this,
-			state = component.state;
-
-		let found = state.textInputs.find((input) => {
+		let found = this.state.textInputs.find((input) => {
 			return input.state.status != 2;
 		});
 
@@ -153,43 +126,11 @@ class LoginForm {
 			return;
 		}
 
-		fetch(`${apiV1}/auth/login`, {
-			body: JSON.stringify({
-				password:state.textInputs[1].getInputValue(),
-				username: state.textInputs[0].getInputValue()
-			}),
-			headers: {
-				"Content-Type": "application/json"
-			},
-			method: "POST"
-		}).then((response) => {
-
-			switch (response.status) {
-			case 200:
-			{
-				return response.json();
-			}
-			case 400:
-			case 401:
-			case 404:
-			{
-				response.json().then((result) => {
-					state.errorMsg = result.message;
-					this.state = state;
-					this.displayError();
-				});
-				break;
-			}
-			}
-		}).then((response) => {
-			console.log("Login Successful!");
-
-			localStorage.setItem("tokens", JSON.stringify({
-				access_token: response.access_token,
-				refresh_token: response.refresh_token
-			}));
-
-			window.location.href = webUrl + "/customer/order";
+		login({
+			password: this.state.textInputs[1].getInputValue(),
+			username: this.state.textInputs[0].getInputValue(),
+			successUrl: "/customer/order",
+			component: this
 		});
 	}
 }

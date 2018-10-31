@@ -2,21 +2,17 @@ import {apiV1, webUrl} from "../../abstract/variables";
 import Button from "../../ui/button";
 import TextInput from "../../ui/textInput";
 import logo from "../../../images/logo2.png";
+import Component from "../../abstract/component_model";
+import { displayError } from "../../abstract/mixins";
 
-class SignUpForm {
+class SignUpForm extends Component{
 	constructor() {
-		this._state = {
+		super();
+		
+		this.state = {
 			buttons:[],
 			textInputs:[]
 		};
-	}
-
-	get state() {
-		return this._state;
-	}
-    
-	set state(value) {
-		this._state = value;
 	}
 
 	init(){
@@ -194,28 +190,6 @@ class SignUpForm {
 		signUpInputs[3].appendChild(reEnterPasswordInput.getInput());
 	}
 
-	displayError(ERRORDELAY = 3000) {
-		console.log("Displaying error: " + this.state.errorMsg);
-
-		let state = this.state;
-		const errorComment = document.querySelector(".signUp__error");
-
-		errorComment.classList.replace("errorComment--disabled", "errorComment--active");
-		errorComment.innerHTML = state.errorMsg;
-
-		setTimeout(() => {
-			errorComment.classList.replace(
-				"errorComment--active",
-				"errorComment--disabled"
-			);
-			errorComment.innerHTML = "";
-
-		}, ERRORDELAY);
-
-		state.errorMsg = "";
-		this.state = state;
-	}
-
 	displaySuccess() {
 		let state = this.state;
 		const successComment = document.querySelector(".signUp__success");
@@ -234,7 +208,6 @@ class SignUpForm {
 		console.log("Login authentication started!");
         
 		let main = this,
-			state = this.state,
 			textInputs = this.state.textInputs,
 			buttons = this.state.buttons;
 
@@ -283,10 +256,7 @@ class SignUpForm {
 			case 403:
 			case 404: {
 				response.json().then((result)=>{
-					state.errorMsg = result.message;
-					main.state = state;
-					main.displayError();
-
+					displayError(".signUp__error", result.message, 3000);
 					buttons[0].setStatus(1,5000);
 				});
 			}
