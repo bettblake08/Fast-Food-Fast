@@ -8,7 +8,6 @@ class Config(object):
     JWT_BLACKLIST_TOKEN_CHECKS = ['access']
     WEBPACK_MANIFEST_PATH = "../manifest.json"
 
-    
 class ProductionConfig(Config):
     ENV = "production"
     FLASK_ENV = "production"
@@ -27,38 +26,37 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     ENV = "development"
     FLASK_ENV = "development"
-    DEBUG = True
     SERVER_NAME = 'localhost:5000'
     BCRYPT_LOG_ROUNDS = 4
 
     DB_HOST = "localhost"
     DB_USER = "postgres"
     DB_PASSWORD = "m21c07s96.A1"
+
+    SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
+    JWT_SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
+
+
+class DevelopmentDebugConfig(DevelopmentConfig):
+    DEBUG = True
     DB_NAME = "fastfoodfast"
 
-    SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
-    JWT_SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
+class DevelopmentNoDebugConfig(DevelopmentConfig):
+    DEBUG = False
+    DB_NAME = "fastfoodfast"
 
 
-class TestingConfig(Config):
-    ENV = "development"
+class TestingConfig(DevelopmentConfig):
     TESTING = True
     DEBUG = True
-    BCRYPT_LOG_ROUNDS = 4
-    SERVER_NAME = 'localhost:5000'
-    
-    DB_HOST = "localhost"
-    DB_USER = "postgres"
-    DB_PASSWORD = "m21c07s96.A1"
     DB_NAME = "fastfoodfasttest"
 
-    SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
-    JWT_SECRET_KEY = b'\x0c$V\x92\x1b1\x05xp@\xfa\xdc\x94\x87\xc4\x0f'
 
 
 app_config = {
-    "DEV": DevelopmentConfig,
+    "DEV": DevelopmentDebugConfig,
+    "DEV_NO_DEBUG": DevelopmentNoDebugConfig,
     "PROD": ProductionConfig,
     "TEST": TestingConfig,
-    "DEFAULT": DevelopmentConfig
+    "DEFAULT": DevelopmentDebugConfig
 }
