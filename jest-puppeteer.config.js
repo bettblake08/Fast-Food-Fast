@@ -1,9 +1,8 @@
 
 module.exports = {
 	launch: {
-		dumpio: true,
+		dumpio: false,
 		headless: true,
-		devtools:true,
 		defaultViewPort:{
 			width:1920,
 			height:1080

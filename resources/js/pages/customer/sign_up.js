@@ -44,7 +44,7 @@ class SignUpForm extends Component{
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0){
+				if (input.length === 0){
 					return {
 						status: false,
 						message: "Username field is empty."
@@ -74,7 +74,7 @@ class SignUpForm extends Component{
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Email field is empty."
@@ -114,7 +114,7 @@ class SignUpForm extends Component{
 			type: "password",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Password field is empty."
@@ -148,7 +148,7 @@ class SignUpForm extends Component{
 			type: "password",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Password field is empty."

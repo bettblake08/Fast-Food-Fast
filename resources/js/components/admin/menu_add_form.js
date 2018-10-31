@@ -48,7 +48,7 @@ class AddMenuItemForm extends Component{
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Item name field is empty."
@@ -78,7 +78,7 @@ class AddMenuItemForm extends Component{
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Item price field is empty."
@@ -205,7 +205,7 @@ class AddMenuItemForm extends Component{
 			form = this;
 
 		let invalidInput = textInputs.find(input => {
-			return input.state.status != 2;
+			return input.state.status !== 2;
 		});
 
 		if (invalidInput != undefined) {

@@ -116,7 +116,7 @@ class Order extends Component {
 	}
 
 	setOrderStatusButtons(){
-		if (this.state.access == "admin") {
+		if (this.state.access === "admin") {
 			this.components.orderStatusButtons.innerHTML = "";
 			let dropdownButtons = [],
 				orderItem = this;

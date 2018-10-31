@@ -5,6 +5,7 @@
 /node_modules/
 /.vscode/
 /coverage/
+/.nyc_output/
 
 tests/screenshots/**
 
@@ -13,3 +14,4 @@ __pycache__/
 
 *.pyc
 .env
+npm-debug.log

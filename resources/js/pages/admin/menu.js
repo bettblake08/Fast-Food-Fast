@@ -126,7 +126,7 @@ class MenuView extends Component{
 		let main = this,
 			categories = [[],[],[],[]];
 
-		if(menu.length == 0){
+		if(menu.length === 0){
 			this.setMenuError("No items in this category. Please add something!");
 			return;
 		}
@@ -143,7 +143,7 @@ class MenuView extends Component{
 		let message = "No items in this category. Please add something!",
 			fetchMenuError = `<div class="menu__content__error f_h2">${message}</div>`;
     
-		if (categories[0].length == 0){
+		if (categories[0].length === 0){
 			this.components.menuCategoryBreakfastContent.innerHTML = fetchMenuError;
 		}
 		else{
@@ -152,7 +152,7 @@ class MenuView extends Component{
 			});
 		}
         
-		if (categories[1].length == 0) {
+		if (categories[1].length === 0) {
 			this.components.menuCategoryMainMealContent.innerHTML = fetchMenuError;
 		} else {
 			categories[1].forEach(item => {
@@ -160,7 +160,7 @@ class MenuView extends Component{
 			});
 		}
 
-		if (categories[2].length == 0) {
+		if (categories[2].length === 0) {
 			this.components.menuCategorySnacksContent.innerHTML = fetchMenuError;
 		} else {
 			categories[2].forEach(item => {
@@ -168,7 +168,7 @@ class MenuView extends Component{
 			});
 		}
 
-		if (categories[3].length == 0) {
+		if (categories[3].length === 0) {
 			this.components.menuCategoryDrinksContent.innerHTML = fetchMenuError;
 		} else {
 			categories[3].forEach(item => {
@@ -183,7 +183,7 @@ class MenuView extends Component{
 		fetch(`${apiV1}/menu`
 		).then((response) => {
 
-			if (response.status == 200) {
+			if (response.status === 200) {
 				return response.json();
 			}
 

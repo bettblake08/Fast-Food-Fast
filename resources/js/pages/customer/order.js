@@ -130,7 +130,7 @@ class OrderForm extends Component{
 				[]
 			];
 
-		if (menu.length == 0) {
+		if (menu.length === 0) {
 			this.setMenuError("No items in this category. Please add something!");
 			return;
 		}
@@ -150,7 +150,7 @@ class OrderForm extends Component{
 		let message = "No items in this category.",
 			fetchMenuError = `<div class="foodMenu__content__error f_h2">${message}</div>`;
 
-		if (categories[0].length == 0) {
+		if (categories[0].length === 0) {
 			this.components.orderMenuCategoryBreakfast.innerHTML = "<h2 class=\"f_h2\">Breakfast Meals</h2>" + fetchMenuError;
 		} else {
 			categories[0].forEach(item => {
@@ -158,7 +158,7 @@ class OrderForm extends Component{
 			});
 		}
 
-		if (categories[1].length == 0) {
+		if (categories[1].length === 0) {
 			this.components.orderMenuCategoryMain.innerHTML = "<h2 class=\"f_h2\">Main Meals</h2>" + fetchMenuError;
 		} else {
 			categories[1].forEach(item => {
@@ -166,7 +166,7 @@ class OrderForm extends Component{
 			});
 		}
 
-		if (categories[2].length == 0) {
+		if (categories[2].length === 0) {
 			this.components.orderMenuCategorySnacks.innerHTML = "<h2 class=\"f_h2\">Snacks</h2>" + fetchMenuError;
 		} else {
 			categories[2].forEach(item => {
@@ -174,7 +174,7 @@ class OrderForm extends Component{
 			});
 		}
 
-		if (categories[3].length == 0) {
+		if (categories[3].length === 0) {
 			this.components.orderMenuCategoryDrinks.innerHTML = "<h2 class=\"f_h2\">Drinks</h2>" + fetchMenuError;
 		} else {
 			categories[3].forEach(item => {
@@ -203,7 +203,7 @@ class OrderForm extends Component{
 
 		fetch(`${apiV1}/menu`).then((response)=>{
 
-			if(response.status == 200){
+			if(response.status === 200){
 				return response.json();
 			}
             
@@ -227,7 +227,7 @@ class OrderForm extends Component{
 			}
 		});
         
-		if(orderedItems.length == 0){
+		if(orderedItems.length === 0){
 			displayError(".foodMenu__error", "You have not selected any items!", 3000);
 			return;
 		}
@@ -246,10 +246,10 @@ class OrderForm extends Component{
 			}
 		}).then((response) => {
             
-			if (response.status == 201) {
+			if (response.status === 201) {
 				return response.json();
 			}
-			else if(response.status == 401){
+			else if(response.status === 401){
 
 				refreshToken({
 					onSuccess: () => {
@@ -260,7 +260,7 @@ class OrderForm extends Component{
 					}
 				});
 			}
-			else if(response == 403){
+			else if(response === 403){
 				window.location.href = webUrl + "/customer/login";
 			}
             

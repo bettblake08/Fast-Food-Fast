@@ -1,4 +1,4 @@
-const pti = require("puppeteer-to-istanbul");
+//const pti = require("puppeteer-to-istanbul");
 const PuppeteerEnvironment = require("jest-environment-puppeteer");
 
 class CustomEnvironment extends PuppeteerEnvironment {

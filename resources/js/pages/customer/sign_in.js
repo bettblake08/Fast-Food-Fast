@@ -49,7 +49,7 @@ class LoginForm extends Component{
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Username field empty."
@@ -79,7 +79,7 @@ class LoginForm extends Component{
 			type: "password",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Password field empty."

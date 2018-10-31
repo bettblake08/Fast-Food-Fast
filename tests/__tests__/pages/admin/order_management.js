@@ -1,5 +1,3 @@
-import pti from "puppeteer-to-istanbul";
-
 const PAGE = PATH + "/admin/orderManagement";
 const SCR_PATH = `${SCREENSHOT_PATH}admin-order-management-tests-`;
 

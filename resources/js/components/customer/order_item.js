@@ -133,7 +133,7 @@ class OrderItem extends Component{
 			state.total += state.item.price;
 		}
 		else {
-			if(state.quantity == 0){    return;     }
+			if(state.quantity === 0){    return;     }
 
 			state.quantity -= quantity;
 			state.total -= state.item.price;

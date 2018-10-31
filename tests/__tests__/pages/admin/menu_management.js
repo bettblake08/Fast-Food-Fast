@@ -1,4 +1,3 @@
-import pti from "puppeteer-to-istanbul";
 import faker from "faker";
 
 const PAGE = PATH + "/admin/menu";

@@ -2,7 +2,7 @@ const {
 	teardown: teardownPuppeteer
 } = require("jest-environment-puppeteer");
 
-const pti = require("puppeteer-to-istanbul");
+//const pti = require("puppeteer-to-istanbul");
 const {	teardown: teardownDevServer } = require("jest-dev-server");
 
 
