@@ -21,7 +21,7 @@ describe("Customer Sign In Page: ", () => {
 
 	it("Test login using empty input details ",async () => {
 		await page.click(loginButton);
-
+		await page.waitFor(500);
 		await page.screenshot({
 			path: `${SCR_PATH}1-1.jpg`
 		});
@@ -37,7 +37,8 @@ describe("Customer Sign In Page: ", () => {
 	it("Test login using empty password input", async () => {
 		await page.type(loginUsernameInput, user.name);
 		await page.click(loginButton);
-
+		await page.waitFor(500);
+		
 		await page.screenshot({
 			path: `${SCR_PATH}2-1.jpg`
 		});
