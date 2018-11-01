@@ -10,9 +10,11 @@
     "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize",
     "test": "jest",
     "test:normal": "jest tests/__tests__/pages/ --runInBand --no-cache",
+    "test:ci": "jest run-all-test --ci --updateSnapshot",
     "test:all": "jest run-all-test --detectOpenHandles",
     "test:watch": "jest tests/__tests__/pages/ --runInBand --watch",
-    "test:report": "nyc report --reporter=html"
+    "test:report": "nyc report --reporter=html",
+    "test:report:cov": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "coveralls": "^3.0.2",
     "css-loader": "^1.0.0",
     "eslint": "^5.6.1",
     "eslint-config-standard": "^12.0.0",
@@ -70,7 +73,7 @@
       "node_modules/",
       "resources/js/"
     ],
-    "preset":"jest-puppeteer",
+    "preset": "jest-puppeteer",
     "testEnvironment": "<rootDir>/tests/env.js",
     "globalSetup": "<rootDir>/tests/global-setup.js",
     "globalTeardown": "<rootDir>/tests/global-teardown.js",

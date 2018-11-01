@@ -30,6 +30,8 @@ jobs:
             ./cc-test-reporter before-build
             python -m pytest -vv --cov=app app/tests/ --cov-report term-missing
             coverage xml
+            npm run test:ci
+            npm run test:report:cov
             ./cc-test-reporter after-build
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
