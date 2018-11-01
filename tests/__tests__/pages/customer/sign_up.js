@@ -375,7 +375,7 @@ describe("Customer Sign Up Page:", () => {
 	}, 15000);
     
 	it("Test using username that already exists", async () => {
-		await page.waitFor(3000);
+		await page.waitFor(5000);
 		await page.screenshot({
 			path: `${SCR_PATH}14-1.jpg`
 		});
@@ -384,24 +384,25 @@ describe("Customer Sign Up Page:", () => {
 		await page.type(signupEmailInput, user.emailExists);
 		await page.type(signupPasswordInput, user.password);
 		await page.type(signupRePasswordInput, user.password);
-
-		await page.focus(signupButton);
+		
+		await page.click(signupUsernameInput);
 		await page.click(signupButton);
-
+		
 		await page.screenshot({
 			path: `${SCR_PATH}14-2.jpg`
 		});
- 
-		let errorActive = await page.evaluate(() => {
-			let display = document.querySelector(".signUp__error");
-			return display.classList.contains("errorComment--active");
-		});
-
+		
 		await page.waitFor(2000);
 		await page.screenshot({
 			path: `${SCR_PATH}14-3.jpg`
 		});
 
+		let errorActive = await page.evaluate(() => {
+			let display = document.querySelector(".signUp__error");
+			return display.classList.contains("errorComment--active");
+		});
+
+		
 		await page.waitFor(3000);
 		await page.screenshot({
 			path: `${SCR_PATH}14-4.jpg`
@@ -419,7 +420,7 @@ describe("Customer Sign Up Page:", () => {
 		await inputClear(signupEmailInput);
 		await inputClear(signupPasswordInput);
 		await inputClear(signupRePasswordInput);
-	}, 40000);
+	}, 20000);
 
 	it("Test using valid input data", async () => {
 		await page.waitFor(3000);
@@ -439,7 +440,7 @@ describe("Customer Sign Up Page:", () => {
 			path: `${SCR_PATH}15-2.jpg`
 		});
 
-		await page.waitFor(2000);
+		await page.waitFor(4000);
 		await page.screenshot({
 			path: `${SCR_PATH}15-3.jpg`
 		});
