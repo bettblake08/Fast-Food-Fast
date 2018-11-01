@@ -112,21 +112,29 @@ describe("Customer Sign In Page: ", () => {
 	}, 10000);
 
 	it("Test login using valid inputs", async () => {
-		await page.waitFor(1000);
+		await page.screenshot({
+			path: `${SCR_PATH}5-1.jpg`
+		});
+
 		await page.type(loginUsernameInput, user.name);
 		await page.type(loginPasswordInput, user.password);
+		await page.waitFor(5000);
 		await page.click(loginButton);
+		
+		await page.screenshot({
+			path: `${SCR_PATH}5-2.jpg`
+		});
 
 		await page.waitFor(3000);
 
 		await page.screenshot({
-			path: `${SCR_PATH}5-1.jpg`
+			path: `${SCR_PATH}5-3.jpg`
 		});
 
 		const newPageTitle = await page.title();
 
 		expect(newPageTitle).toBe("Order Menu");
-	}, 20000);
+	}, 10000);
 
 	async function inputClear(input) {
 		await page.click(input);
