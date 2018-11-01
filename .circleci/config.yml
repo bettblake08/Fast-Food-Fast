@@ -15,7 +15,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: fastfoodfasttest
           POSTGRES_PASSWORD: "m21c07s96.A1"
-      - image: circleci/node:9.6.1
+      - image: circleci/node:8.10.0
     steps:
       - checkout
       - restore_cache:
