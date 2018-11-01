@@ -38,6 +38,7 @@ jobs:
             curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
             sudo apt install nodejs
             npm install
+            . venv/bin/activate
             npm run test:ci
             npm run test:report:cov
 
