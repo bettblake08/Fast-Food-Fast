@@ -3,6 +3,9 @@ module.exports = {
 	launch: {
 		dumpio: false,
 		headless: true,
+		args:[
+			"--no-sandbox"
+		],
 		defaultViewPort:{
 			width:1920,
 			height:1080
