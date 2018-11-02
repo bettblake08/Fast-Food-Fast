@@ -8,6 +8,7 @@
 /.nyc_output/
 
 tests/screenshots/**
+!tests/screenshots/__init__.txt
 
 __pycache__/
 .pytest_cache/
