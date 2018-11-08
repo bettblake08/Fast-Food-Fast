@@ -21,6 +21,14 @@ def init_db_test():
     db.init_db(app)
     generate_test_data()
 
+
+@app.cli.command("db:create:test")
+def create_test_db():
+    db = DB()
+    db.init_test_db(app)
+    generate_test_data()
+
+
 @app.cli.command("db:teardown")
 def teardown_db():
     db = DB()

@@ -8,11 +8,13 @@ from app.database.factory import generate_test_data
 app = create_app(os.getenv('APP_ENV'))
 
 class APITestcase(unittest.TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpClass(self):
         self.test_client = app.test_client()
         self.database = DB()
         self.database.init_test_db(app)
         generate_test_data()
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(self):
         self.database.teardown(app)
