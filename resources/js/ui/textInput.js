@@ -1,4 +1,6 @@
-class TextInput{
+import InputModel from "./models/input";
+
+class TextInput extends InputModel{
 
 	constructor(params) {
 		/* 
@@ -25,87 +27,71 @@ class TextInput{
             
         :attribute
             state   :   Contains the state of text object containing input value
-            component   :   Contains text input elements
+            components   :   Contains text input elements
             parent  :   Contains the parent object instance
         */
+		super(params);
 
-		this._state = {
+		this.state = {
 			inputValue:"",
 			status:params.status == undefined ? 0 : params.status,
 			test:params.test ==  undefined ? () => { return true; } : params.test
 		};
 
-		this._component = {};
-		this._props = params;
-		this._parent = params.parent;
+		this.parent = params.parent;
 
-		const main = document.createElement("div");
-		const textInput = document.createElement("input");
-		const textInputLabel = document.createElement("label");
-		const textInputComment = document.createElement("div");
-		const textInputErrorComment = document.createElement("div");
+		this.create();
+	}
+	
+	create(){
+		let main = document.createElement("div"),
+			textInput = document.createElement("input"),
+			inputLabel = document.createElement("label"),
+			inputComment = document.createElement("div"),
+			inputErrorComment = document.createElement("div");
 
-		textInputErrorComment.classList.add("errorComment--disabled");
-		textInputErrorComment.classList.add(`${params.class}__error`);
-		textInputErrorComment.classList.add("f_comment_1");
-        
-		textInputComment.classList.add(`${params.class}__comment--active`);
-		textInputComment.classList.add("f_comment_1");
-		textInputComment.innerHTML = params.comment == undefined ? "" : params.comment;
-        
-		textInputLabel.setAttribute("htmlFor",params.name);
-		textInputLabel.innerHTML = params.label;
+		inputErrorComment.classList.add(
+			"errorComment--disabled",
+			`${this.props.class}__error`,
+			"f_comment_1");
 
-		textInput.setAttribute("type",params.type);
-		textInput.setAttribute("id",params.name);
-		textInput.setAttribute("placeholder",params.placeholder);
-		textInput.classList.add(params.textClass);
-		textInput.addEventListener("focusout", () =>{
+		inputComment.classList.add(
+			`${this.props.class}__comment--active`,
+			"f_comment_1");
+
+		inputComment.innerHTML = this.props.comment == undefined ? "" : this.props.comment;
+
+		inputLabel.setAttribute("htmlFor", this.props.name);
+		inputLabel.innerHTML = this.props.label;
+
+		textInput.setAttribute("type", this.props.type);
+		textInput.setAttribute("id", this.props.name);
+		textInput.setAttribute("placeholder", this.props.placeholder);
+		textInput.classList.add(this.props.textClass);
+		textInput.addEventListener("focusout", () => {
 			this.testInput();
 		});
-        
-		main.classList.add("has-float-label");
-		main.classList.add(params.textClass);
-		main.classList.add(this.getInputClass(params.class, params.status));
+
+		main.classList.add(
+			"has-float-label",
+			this.props.textClass,
+			this.getInputClass(this.props.class, this.props.status)
+		);
 
 		main.appendChild(textInput);
-		main.appendChild(textInputLabel);
-		main.appendChild(textInputComment);
-		main.appendChild(textInputErrorComment);
+		main.appendChild(inputLabel);
+		main.appendChild(inputComment);
+		main.appendChild(inputErrorComment);
 
-		this._component = {
+		this.components = {
 			main,
 			textInput,
-			textInputLabel,
-			textInputComment,
-			textInputErrorComment
+			inputLabel,
+			inputComment,
+			inputErrorComment
 		};
 	}
 
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get component() {
-		return this._component;
-	}
-
-	set component(value) {
-		this._component = value;
-	}
-    
-	get props() {
-		return this._props;
-	}
-
-	set props(value) {
-		this._props = value;
-	}
-    
 	init(){
 		let props = this.props,
 			parentState = props.parent.state;
@@ -117,90 +103,30 @@ class TextInput{
 	}
 
 	testInput(){
-		let testResults = this.state.test(this.component.textInput.value);
+		let testResults = this.state.test(this.components.textInput.value);
 
 		if(!testResults.status){
-			this.setErrorMessage(testResults.message);
-			this.displayError(5000);
-			this.updateInputStatus(1);
+			this.displayError(testResults.message, 5000);
+			this.setStatus(1);
 		}
 		else {
-			this.updateInputStatus(2);
+			this.setStatus(2);
 			this.closeErrorDisplay();
 		}
         
 		return testResults.status;
 	}
-
-	setErrorMessage(message){
-		let state = this.state;
-		state.errorMsg = message;
-		this.state = state;
-	}
-
-	displayError(ERROR_DISPLAY_DELAY = 3000) {
-		console.log("Displaying error: " + this.state.errorMsg);
-
-		let component = this.component,
-			state = this.state,
-			errorComment = component.textInputErrorComment,
-			main = this;
-
-		errorComment.classList.replace("errorComment--disabled", "errorComment--active");
-		errorComment.innerHTML = state.errorMsg;
-
-		setTimeout(() => {
-			main.closeErrorDisplay();
-			main.setErrorMessage("");
-		}, ERROR_DISPLAY_DELAY);
-	}
-    
-	closeErrorDisplay(){
-		let errorComment = this.component.textInputErrorComment;
-
-		if (errorComment.classList.contains("errorComment--active")) {
-			errorComment.classList.replace(
-				"errorComment--active",
-				"errorComment--disabled"
-			);
-
-			errorComment.innerHTML = "";
-		}
-	}
-    
-	updateInputStatus(status){
-		let mainComponent = this.component.main,
-			state = this.state;
-
-		mainComponent.classList.replace(
-			this.getInputClass(this.props.class, this.state.status),
-			this.getInputClass(this.props.class, status)
-		);
-
-		state.status = status;
-		this.state = state;
-	}
-    
-	getInputClass(className, status){
-		switch(status){
-		case 0: return `${className}--normal`;
-		case 1: return `${className}--fail`;
-		case 2: return `${className}--success`;
-		case 3: return `${className}--loading`;
-		case 4: return `${className}--warning`;
-		}
-	}
     
 	getInput(){
-		return this.component.main;
+		return this.components.main;
 	}
 
 	focus(){
-		this.component.textInput.focus();
+		this.components.textInput.focus();
 	}
 
 	getInputValue(){
-		return this.component.textInput.value;
+		return this.components.textInput.value;
 	}
 
 }

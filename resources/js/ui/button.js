@@ -1,4 +1,6 @@
-class Button {
+import Component from "../abstract/component_model";
+
+class Button extends Component{
 	constructor(params) {
 		/*
         This is the Button Model class constructor
@@ -18,12 +20,11 @@ class Button {
                         5:  fail 
                         6:  success 
         */
+		super(params);
 
-		this._state = {
+		this.state = {
 			status: params.status
 		};
-
-		this._props = params;
 
 		let main = document.createElement("button");
 
@@ -33,37 +34,9 @@ class Button {
 		main.innerHTML = params.label;
 		main.addEventListener("click",params.action);
 
-		this._component = {
+		this.component = {
 			main
 		};
-	}
-    
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get component() {
-		return this._component;
-	}
-
-	set component(value) {
-		this._component = value;
-	}
-
-	get props() {
-		return this._props;
-	}
-
-	set props(value) {
-		this._props = value;
-	}
-
-	getButton(){
-		return this.component.main;
 	}
 
 	init(){
@@ -115,6 +88,10 @@ class Button {
 		case 4:
 			return `${className}--warning`;
 		}
+	}
+
+	getButton() {
+		return this.component.main;
 	}
 
 }

@@ -1,25 +1,20 @@
-import {apiV1, webUrl} from "../../abstract/variables";
+import { login, displayError } from "../../abstract/mixins";
 import logo from "../../../images/logo.png";
 import backImgLeft from "../../../images/item--4.jpg";
 import backImgRight from "../../../images/item--2.png";
 import Button from "../../ui/button";
 import TextInput from "../../ui/textInput";
+import Component from "../../abstract/component_model";
 
-class LoginForm {
+class LoginForm extends Component{
 	constructor() {
-		this._state = {
+		super({});
+
+		this.state = {
 			errorMsg: "",
 			buttons:[],
 			textInputs:[]
 		};
-	}
-
-	get state() {
-		return this._state;
-	}
-    
-	set state(value) {
-		this._state = value;
 	}
 
 	init(){
@@ -70,7 +65,7 @@ class LoginForm {
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Username field empty."
@@ -100,7 +95,7 @@ class LoginForm {
 			type: "password",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Password field empty."
@@ -131,37 +126,14 @@ class LoginForm {
 		loginInputs[1].appendChild(passwordInput.getInput());
 	}
 
-	displayError(ERRORDELAY = 3000) {
-		console.log("Displaying error: " + this.state.errorMsg);
-        
-		let state = this.state,
-			errorComment = document.querySelector(".login__error");
-
-		errorComment.classList.replace("errorComment--disabled", "errorComment--active");
-		errorComment.innerHTML = state.errorMsg;
-
-		setTimeout(() => {
-			errorComment.classList.replace(
-				"errorComment--active", 
-				"errorComment--disabled"
-			);
-			errorComment.innerHTML = "";
-
-		}, ERRORDELAY);
-
-		state.errorMsg = "";
-		this.state = state;
+	displayErrorMessage(error) {
+		displayError(".login__error", error, 5000);
 	}
 
 	loginAuth() {
 		console.log("Login authentication started");
-        
-		const component = this,
-			state = component.state,
-			password = document.querySelector("#password").value,
-			username = document.querySelector("#username").value;
 		
-		let found = state.textInputs.find((input)=>{
+		let found = this.state.textInputs.find((input)=>{
 			return input.state.status != 2;
 		});
 
@@ -169,42 +141,12 @@ class LoginForm {
 			found.focus();
 			return;
 		}
-		
-		fetch(`${apiV1}/auth/login`, { 
-			body: JSON.stringify({
-				password,
-				username                
-			}),
-			headers: {
-				"Content-Type": "application/json"
-			},
-			method:"POST"         
-		}).then((response) => {
 
-			switch(response.status){
-			case 200:{  
-				return response.json();    
-			}
-			case 400:
-			case 401:
-			case 404: {
-				response.json().then((result)=>{
-					state.errorMsg = result.message;
-					this.state = state;
-					this.displayError();
-				});
-				break;
-			}
-			}
-		}).then((response) => {
-			console.log("Login Successful!");
-
-			localStorage.setItem("tokens", JSON.stringify({
-				access_token: response.access_token,
-				refresh_token: response.refresh_token
-			}));
-
-			window.location.href = webUrl + "/admin/orderManagement";
+		login({
+			password: this.state.textInputs[1].getInputValue(),
+			username: this.state.textInputs[0].getInputValue(),
+			successUrl: "/admin/orderManagement",
+			component: this
 		});
 	}
 }

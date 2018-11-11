@@ -2,30 +2,17 @@ import {apiV1,webUrl} from "../../abstract/variables";
 import {refreshToken,getAccessToken} from "../../abstract/mixins";
 import Order from "../../components/order";
 import CustomerHeader from "../../components/headers/customer";
+import Component from "../../abstract/component_model";
 
-class OrderHistory{
+class OrderHistory extends Component{
 	constructor() {
-		this._state = {
+		super();
+
+		this.state = {
 			orders:[]
-        };
+		};
         
-        this._components = {};
-	}
-
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get components (){
-		return this._components;
-	}
-
-	set components(value){
-		this._components = value;
+		this.components = {};
 	}
 
 	init(){
@@ -63,7 +50,7 @@ class OrderHistory{
 	fetchOrderHistory(){
 		let orderHistory = this;
 
-		fetch(`${apiV1}/users/orders`,{
+		fetch(`${apiV1}/users/orders`, {
 			method:"GET",
 			headers:{
 				"Authorization":`Bearer ${getAccessToken()}`

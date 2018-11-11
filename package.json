@@ -7,7 +7,14 @@
     "build": "webpack -p --progress --config ./webpack.config.js",
     "dev": "webpack --progress -d --config ./webpack.config.js --mode development ",
     "watch": "webpack --progress -d --config ./webpack.config.js --mode development  --watch",
-    "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize"
+    "prod": "webpack -p --progress --config ./webpack.config.js --mode production --optimize-minimize",
+    "test": "jest",
+    "test:normal": "jest tests/__tests__/pages/ --runInBand --no-cache",
+    "test:ci": "jest run-all-test --ci --updateSnapshot",
+    "test:all": "jest run-all-test --detectOpenHandles",
+    "test:watch": "jest tests/__tests__/pages/ --runInBand --watch",
+    "test:report": "nyc report --reporter=html",
+    "test:report:cov": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -24,9 +31,11 @@
   "homepage": "https://github.com/bettblake08/Fast-Food-Fast#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
-    "babel-core": "^6.26.3",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
-    "babel-preset-es2015": "^6.24.1",
+    "coveralls": "^3.0.2",
     "css-loader": "^1.0.0",
     "eslint": "^5.6.1",
     "eslint-config-standard": "^12.0.0",
@@ -34,14 +43,44 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "faker": "^4.1.0",
     "file-loader": "^2.0.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "jest-dev-server": "^3.4.0",
+    "jest-puppeteer": "^3.4.0",
     "manifest-revision-webpack-plugin": "^0.4.1",
     "mini-css-extract-plugin": "^0.4.3",
     "moment": "^2.22.2",
+    "nyc": "^13.1.0",
+    "puppeteer": "^1.9.0",
+    "puppeteer-to-istanbul": "^1.2.2",
     "style-loader": "^0.23.0",
     "url-loader": "^1.1.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.0",
     "webpack-md5-hash": "0.0.6"
+  },
+  "jest": {
+    "verbose": true,
+    "roots": [
+      "./tests/"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "moduleDirectories": [
+      "node_modules/",
+      "resources/js/"
+    ],
+    "preset": "jest-puppeteer",
+    "testEnvironment": "<rootDir>/tests/env.js",
+    "globalSetup": "<rootDir>/tests/global-setup.js",
+    "globalTeardown": "<rootDir>/tests/global-teardown.js",
+    "globals": {
+      "PATH": "http://localhost:5000",
+      "API_PATH": "http://localhost:5000/api/v1",
+      "SCREENSHOT_PATH": "tests/screenshots/"
+    }
   }
 }

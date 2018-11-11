@@ -2,27 +2,23 @@ import {apiV1, webUrl} from "../../abstract/variables";
 import Button from "../../ui/button";
 import TextInput from "../../ui/textInput";
 import logo from "../../../images/logo2.png";
+import Component from "../../abstract/component_model";
+import { displayError } from "../../abstract/mixins";
 
-class SignUpForm {
+class SignUpForm extends Component{
 	constructor() {
-		this._state = {
+		super();
+		
+		this.state = {
 			buttons:[],
 			textInputs:[]
 		};
 	}
 
-	get state() {
-		return this._state;
-	}
-    
-	set state(value) {
-		this._state = value;
-	}
-
 	init(){
 		let signUpButton = document.querySelector(".signUp__save"),
-		signUpInputs = document.querySelectorAll(".signUp__text"),
-		main = this;
+			signUpInputs = document.querySelectorAll(".signUp__text"),
+			main = this;
 
 		let button = new Button({
 			class:"btn_1",
@@ -48,7 +44,7 @@ class SignUpForm {
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0){
+				if (input.length === 0){
 					return {
 						status: false,
 						message: "Username field is empty."
@@ -78,7 +74,7 @@ class SignUpForm {
 			type: "text",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Email field is empty."
@@ -92,7 +88,7 @@ class SignUpForm {
 					};
 				}
 
-				let emailCheck = /^([a-zA-Z0-9]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,5})$/;
+				let emailCheck = /^([a-zA-Z0-9-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,5})$/;
 
 				if (!emailCheck.test(input)) {
 					return {
@@ -118,7 +114,7 @@ class SignUpForm {
 			type: "password",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Password field is empty."
@@ -152,7 +148,7 @@ class SignUpForm {
 			type: "password",
 			status: 0,
 			test: (input) => {
-				if (input.length == 0) {
+				if (input.length === 0) {
 					return {
 						status: false,
 						message: "Password field is empty."
@@ -194,28 +190,6 @@ class SignUpForm {
 		signUpInputs[3].appendChild(reEnterPasswordInput.getInput());
 	}
 
-	displayError(ERRORDELAY = 3000) {
-		console.log("Displaying error: " + this.state.errorMsg);
-
-		let state = this.state;
-		const errorComment = document.querySelector(".signUp__error");
-
-		errorComment.classList.replace("errorComment--disabled", "errorComment--active");
-		errorComment.innerHTML = state.errorMsg;
-
-		setTimeout(() => {
-			errorComment.classList.replace(
-				"errorComment--active",
-				"errorComment--disabled"
-			);
-			errorComment.innerHTML = "";
-
-		}, ERRORDELAY);
-
-		state.errorMsg = "";
-		this.state = state;
-	}
-
 	displaySuccess() {
 		let state = this.state;
 		const successComment = document.querySelector(".signUp__success");
@@ -234,7 +208,6 @@ class SignUpForm {
 		console.log("Login authentication started!");
         
 		let main = this,
-			state = this.state,
 			textInputs = this.state.textInputs,
 			buttons = this.state.buttons;
 
@@ -283,10 +256,7 @@ class SignUpForm {
 			case 403:
 			case 404: {
 				response.json().then((result)=>{
-					state.errorMsg = result.message;
-					main.state = state;
-					main.displayError();
-
+					displayError(".signUp__error", result.message, 3000);
 					buttons[0].setStatus(1,5000);
 				});
 			}

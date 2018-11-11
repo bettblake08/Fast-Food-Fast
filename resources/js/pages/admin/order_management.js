@@ -8,32 +8,19 @@ import {
 } from "../../abstract/mixins";
 
 import Order from "../../components/order";
+import Component from "../../abstract/component_model";
 
-class OrderManagement {
+class OrderManagement extends Component {
 	constructor() {
-		this._state = {
+		super({});
+
+		this.state = {
 			orders: []
 		};
 
-		this._components = {};
+		this.components = {};
 	}
-
-	get state() {
-		return this._state;
-	}
-
-	set state(value) {
-		this._state = value;
-	}
-
-	get components() {
-		return this._components;
-	}
-
-	set components(value) {
-		this._components = value;
-	}
-
+	
 	init() {
 		let orderManagementContent = document.querySelector(".ordersView__content");
 		this.components["orderManagementContent"] = orderManagementContent;
@@ -59,10 +46,10 @@ class OrderManagement {
 
 			let orderModel = new Order({
 				parent: orderManagement,
-                order,
-                access:"admin",
-                onStatusUpdateSuccess:() => {
-                }
+				order,
+				access:"admin",
+				onStatusUpdateSuccess:() => {
+				}
 			});
 
 			orderManagementContent.appendChild(orderModel.getOrderComponent());

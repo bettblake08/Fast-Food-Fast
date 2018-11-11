@@ -1,17 +1,23 @@
-import OrderItem from "../../components/order_item";
+import OrderItem from "../../components/customer/order_item";
 import Button from "../../ui/button";
 import {apiV1, webUrl} from "../../abstract/variables";
-import {refreshToken,getAccessToken} from "../../abstract/mixins";
+import {refreshToken, getAccessToken, displayError} from "../../abstract/mixins";
 import CustomerHeader from "../../components/headers/customer";
+import Component from "../../abstract/component_model";
 
-class OrderForm{
+class OrderForm extends Component{
 	constructor() {
-		this._state = {
+		super();
+
+		this.state = {
 			orderItems:[],
 			buttons:[],
 			total:0
 		};
 
+	}
+    
+	init(){
 		let main = document.createElement("div"),
 			orderMenuContent = document.createElement("div"),
 			orderMenuTopbar = document.createElement("div"),
@@ -25,7 +31,7 @@ class OrderForm{
 			orderMenuCategoryDrinks = document.createElement("div"),
 			orderMenuCategoryMain = document.createElement("div"),
 			OrderForm = this;
-        
+
 		orderMenuTitle.classList.add("foodMenu__title");
 		orderMenuTitle.classList.add("f_h1");
 		orderMenuTitle.innerHTML = "Order Menu";
@@ -49,7 +55,7 @@ class OrderForm{
 				OrderForm.makeOrder();
 			}
 		});
-        
+
 		button.init();
 
 		orderMenuOrderButton.classList.add("foodMenu__orderBtn");
@@ -85,7 +91,9 @@ class OrderForm{
 		main.appendChild(orderMenuError);
 		main.appendChild(orderMenuBottom);
 
-		this._components = {
+		document.querySelector(".foodMenu").appendChild(main);
+
+		this.components = {
 			main,
 			orderMenuContent,
 			orderMenuTopbar,
@@ -99,44 +107,7 @@ class OrderForm{
 			orderMenuCategoryDrinks,
 			orderMenuCategoryMain
 		};
-	}
-
-	get state (){
-		return this._state;
-	}
-
-	set state(value){
-		this._state = value;
-	}
-
-	get components() {
-		return this._components;
-	}
-
-	set components(value) {
-		this._components = value;
-	}
-    
-	init(){
-		document.querySelector(".foodMenu").appendChild(this.components.main);
 	}	
-
-	displayError(message, ERROR_DISPLAY_DELAY = 3000){
-		let errorDisplay = this.components.orderMenuError;
-
-		errorDisplay.innerHTML = message;
-		errorDisplay.classList.replace(
-			"errorComment--disabled",
-			"errorComment--active");
-
-		setTimeout(() => {
-			errorDisplay.innerHTML = "";
-			errorDisplay.classList.replace(
-				"errorComment--active",
-				"errorComment--disabled");
-
-		}, ERROR_DISPLAY_DELAY);
-	}
 
 	setMenuError(message){
 		let components = this.components,
@@ -159,7 +130,7 @@ class OrderForm{
 				[]
 			];
 
-		if (menu.length == 0) {
+		if (menu.length === 0) {
 			this.setMenuError("No items in this category. Please add something!");
 			return;
 		}
@@ -179,7 +150,7 @@ class OrderForm{
 		let message = "No items in this category.",
 			fetchMenuError = `<div class="foodMenu__content__error f_h2">${message}</div>`;
 
-		if (categories[0].length == 0) {
+		if (categories[0].length === 0) {
 			this.components.orderMenuCategoryBreakfast.innerHTML = "<h2 class=\"f_h2\">Breakfast Meals</h2>" + fetchMenuError;
 		} else {
 			categories[0].forEach(item => {
@@ -187,7 +158,7 @@ class OrderForm{
 			});
 		}
 
-		if (categories[1].length == 0) {
+		if (categories[1].length === 0) {
 			this.components.orderMenuCategoryMain.innerHTML = "<h2 class=\"f_h2\">Main Meals</h2>" + fetchMenuError;
 		} else {
 			categories[1].forEach(item => {
@@ -195,7 +166,7 @@ class OrderForm{
 			});
 		}
 
-		if (categories[2].length == 0) {
+		if (categories[2].length === 0) {
 			this.components.orderMenuCategorySnacks.innerHTML = "<h2 class=\"f_h2\">Snacks</h2>" + fetchMenuError;
 		} else {
 			categories[2].forEach(item => {
@@ -203,7 +174,7 @@ class OrderForm{
 			});
 		}
 
-		if (categories[3].length == 0) {
+		if (categories[3].length === 0) {
 			this.components.orderMenuCategoryDrinks.innerHTML = "<h2 class=\"f_h2\">Drinks</h2>" + fetchMenuError;
 		} else {
 			categories[3].forEach(item => {
@@ -232,7 +203,7 @@ class OrderForm{
 
 		fetch(`${apiV1}/menu`).then((response)=>{
 
-			if(response.status == 200){
+			if(response.status === 200){
 				return response.json();
 			}
             
@@ -256,8 +227,8 @@ class OrderForm{
 			}
 		});
         
-		if(orderedItems.length == 0){
-			this.displayError("You have not selected any items!");
+		if(orderedItems.length === 0){
+			displayError(".foodMenu__error", "You have not selected any items!", 3000);
 			return;
 		}
 
@@ -275,10 +246,10 @@ class OrderForm{
 			}
 		}).then((response) => {
             
-			if (response.status == 201) {
+			if (response.status === 201) {
 				return response.json();
 			}
-			else if(response.status == 401){
+			else if(response.status === 401){
 
 				refreshToken({
 					onSuccess: () => {
@@ -289,7 +260,7 @@ class OrderForm{
 					}
 				});
 			}
-			else if(response == 403){
+			else if(response === 403){
 				window.location.href = webUrl + "/customer/login";
 			}
             
