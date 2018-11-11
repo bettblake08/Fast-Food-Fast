@@ -32,17 +32,6 @@ jobs:
             coverage xml
             ./cc-test-reporter after-build 
 
-      - run:
-          name: Test Frontend
-          command: |
-            curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
-            sudo apt-get install nodejs
-            sudo xargs -a puppeteer-deps.txt apt-get install
-            npm install
-            . venv/bin/activate
-            npm run test:ci
-            npm run test:report:cov
-
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
