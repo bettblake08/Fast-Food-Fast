@@ -37,6 +37,7 @@
     float: left;
     width: 100%;
     position: absolute;
+    z-index: 0;
     bottom: 5rem;
     transform: translateY(50%);
     overflow: hidden;
@@ -49,9 +50,10 @@
 }
 
 .login__info {
-    float: left;
     width: 100%;
     padding: 10vh 5rem 0 10%;
+    position: absolute;
+    z-index: 500;
 }
 
 .login__info h1 {
@@ -126,6 +128,7 @@
     height: 70%;
     margin-left: 50%;
     position: absolute;
+    z-index: -1;
     bottom: 5rem;
     transform: translate(-50%, 50%);
     overflow: hidden;
